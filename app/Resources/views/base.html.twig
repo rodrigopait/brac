@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>BRAC</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="{{ asset('assets/css/uikit.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/components/slidenav.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.almost-flat.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.gradient.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/w3.css') }}">
+    </head>
+    <body>
+        {% include 'topNavbar.html.twig' %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
