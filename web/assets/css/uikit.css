@@ -13,17 +13,11 @@ html {
   /* 2 */
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  /* 3 */
-  background: #ffffff;
-  color: #444444;
 }
 /*
  * Removes default margin.
  */
-body {
-    margin: 0;
-    
-}
+
 /* Links
  ========================================================================== */
 /*

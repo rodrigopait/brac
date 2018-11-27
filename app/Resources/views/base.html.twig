@@ -3,15 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <title>BRAC</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="{{ asset('assets/css/uikit.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/components/slidenav.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.almost-flat.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/components/slideshow.gradient.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/w3.css') }}">
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+            <link href="{{ asset('assets/css/fileinput.css') }}" media="all" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('assets/css/w3.css') }}">
+            
+            <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+        {% endblock %}
     </head>
     <body>
         {% include 'topNavbar.html.twig' %}

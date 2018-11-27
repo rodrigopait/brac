@@ -10,8 +10,10 @@ html {
       -ms-text-size-adjust: 100%;
 }
 body {
-    margin: 0;
-    background-image: url("../images/fondo.jpg");
+    /* background-image:url('../images/fondo.jpg');
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover; */
 }
 article,
 aside,
