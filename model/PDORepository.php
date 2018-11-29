@@ -5,7 +5,7 @@ abstract class PDORepository {
     const USERNAME = "root";
     const PASSWORD = "";
 	const HOST ="localhost";
-	const DB = "grupo3";
+	const DB = "brac";
     
     
     private function getConnection(){
