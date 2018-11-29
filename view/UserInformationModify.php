@@ -1,0 +1,17 @@
+<?php
+
+class UserInformationModify extends TwigView {
+    
+    public function show($rol, $user) {
+        
+        $templateDir="./templates";
+		$templateDirCompi="./templates-c";
+		$loader = new Twig_Loader_Filesystem($templateDir);
+		$twig = new Twig_Environment($loader);
+    	$template = $twig->loadTemplate("userInformationModify.html.twig");
+
+    	$template->display(array('rol' => $rol, 'usuario' => $user)); 
+                
+    }
+    
+}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container">
+        <h1 class="well">Listado de Vuelos</h1>
+        {% if flights %}
+        <div class="panel panel-default">
+            <table class="table">
+                <tr>
+                    <td align="center"><strong>Origen</strong></td>
+                    <td align="center"><strong>Destino</strong></td>
+                    <td align="center"><strong>Fecha Salida</strong></td>
+                    <td align="center"><strong>Fecha Llegada</strong></td>
+                    <td align="center"><strong>Precio</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for flight in flights %}
+                <tr>
+                    <td align="center">{{ flight.getCiudadOrigen }}, {{ flight.getPaisOrigen }}</td>
+                    <td align="center">{{ flight.getCiudadDestino }}, {{ flight.getPaisDestino }}</td>
+                    <td align="center">{{ flight.getFechaSalida }}</td>
+                    <td align="center">{{ flight.getFechaLlegada }}</td>
+                    <td align="center">${{ flight.getPrecio }}</td>
+                    {% if rol == 1 %}
+                    <td align="center"><a style="text-decoration: none;" href="./?action=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>
+        {% endif %}
+        <div align="center">
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+        </div>  
+    </div>
+{% endblock %}

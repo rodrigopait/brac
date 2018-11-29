@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container">
+        <h1 class="well">Listado de Autos</h1>
+        {% if cars %}
+        <div class="panel panel-default">
+            <table class="table">
+                <tr>
+                    <td align="center"><strong>Ubicacion</strong></td>
+                    <td align="center"><strong>Fecha Inicio</strong></td>
+                    <td align="center"><strong>Fecha Fin</strong></td>
+                    <td align="center"><strong>Modelo</strong></td>
+                    <td align="center"><strong>Capacidad</strong></td>
+                    <td align="center"><strong>Precio</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for car in cars %}
+                <tr>
+                    <td align="center">{{ car.getCiudadDestino }}, {{ car.getPaisDestino }}</td>
+                    <td align="center">{{ fechaDesde }}</td>
+                    <td align="center">{{ fechaHasta }}</td>
+                    <td align="center">{{ car.getModelo }}</td>
+                    <td align="center">{{ car.getCapacidad }}</td>
+                    <td align="center">${{ car.getPrecio }}</td>
+                    {% if rol == 1 %}
+                        <td align="center"><a style="text-decoration: none;" href="./?action=add_car_to_cart&id={{car.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado autos con los filtros ingresados.</div>
+        {% endif %}
+        <div align="center">
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+        </div>  
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container">
+        <h1 class="well">Listado de Usuarios</h1>
+        {% if usuarios %}
+        <div class="panel panel-default">
+            <table class="table">
+                <tr>
+                    <td align="center"><strong>Usuario</strong></td>
+                    <td align="center"><strong>Nombre</strong></td>
+                    <td align="center"><strong>Apellido</strong></td>
+                    <td align="center"><strong>Email</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                {% for user in usuarios %}
+                <tr>
+                    <td align="center">{{ user.getUsuario }}</td>
+                    <td align="center">{{ user.getNombre }}</td>
+                    <td align="center">{{ user.getApellido }}</td>
+                    <td align="center">{{ user.getEmail }}</td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=userPurchasesById&userId={{user.getId}}&username={{user.getUsuario}}">Ver compras <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=userRemove&userId={{user.getId}}">Eliminar <i class="glyphicon glyphicon-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No hay usuarios registrados en el sistema.</div>
+        {% endif %}
+        <div align="center">
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+        </div>  
+    </div>
+{% endblock %}

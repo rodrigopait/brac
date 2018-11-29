@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container">
+        <h1 class="well">Carrito de Compras</h1>
+        {% if cart.getAutos or cart.getHabitaciones or cart.getVuelos %}
+        <div class="panel panel-default">
+            <table class="table">
+                {% if cart.getVuelos != null %}
+                <tr>
+                    <td align="center"><strong>Vuelos</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"><strong>Origen</strong></td>
+                    <td align="center"><strong>Destino</strong></td>
+                    <td align="center"><strong>Fecha Salida</strong></td>
+                    <td align="center"><strong>Fecha Llegada</strong></td>
+                    <td align="center"></td>
+                    <td align="center"><strong>Precio</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for flight in cart.getVuelos %}
+                <tr>
+                    <td align="center">{{ flight.getCiudadOrigen }}, {{ flight.getPaisOrigen }}</td>
+                    <td align="center">{{ flight.getCiudadDestino }}, {{ flight.getPaisDestino }}</td>
+                    <td align="center">{{ flight.getFechaSalida }}</td>
+                    <td align="center">{{ flight.getFechaLlegada }}</td>
+                    <td align="center"></td>
+                    <td align="center">${{ flight.getPrecio }}</td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=remove_flight_from_cart&id={{flight.getId}}">Quitar <i class="glyphicon glyphicon-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td align="center"><strong>Subtotal</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"><strong>${{ cart.getFlightsPrice }}</strong></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                {% endif %}
+                {% if cart.getHabitaciones != null %}
+                <tr>
+                    <td align="center"><strong>Habitaciones</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"><strong>Ubicacion</strong></td>
+                    <td align="center"><strong>Fecha Inicio</strong></td>
+                    <td align="center"><strong>Fecha Fin</strong></td>
+                    <td align="center"><strong>Estrellas</strong></td>
+                    <td align="center"><strong>Capacidad</strong></td>
+                    <td align="center"><strong>Precio</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for habitacion in cart.getHabitaciones %}
+                <tr>
+                    <td align="center">{{ habitacion.getCiudadDestino }}, {{ habitacion.getPaisDestino }}</td>
+                    <td align="center">{{ habitacion.getFechaDesde }}</td>
+                    <td align="center">{{ habitacion.getFechaHasta }}</td>
+                    <td align="center">{{ habitacion.getEstrellas }}</td>
+                    <td align="center">{{ habitacion.getCapacidad }}</td>
+                    <td align="center">${{ habitacion.getPrecio }}</td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=remove_room_from_cart&id={{habitacion.getId}}">Quitar <i class="glyphicon glyphicon-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td align="center"><strong>Subtotal</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"><strong>${{ cart.getRoomsPrice }}</strong></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                {% endif %}
+                {% if cart.getAutos != null %}
+                <tr>
+                    <td align="center"><strong>Autos</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"><strong>Ubicacion</strong></td>
+                    <td align="center"><strong>Fecha Inicio</strong></td>
+                    <td align="center"><strong>Fecha Fin</strong></td>
+                    <td align="center"><strong>Modelo</strong></td>
+                    <td align="center"><strong>Capacidad</strong></td>
+                    <td align="center"><strong>Precio</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for car in cart.getAutos %}
+                <tr>
+                    <td align="center">{{ car.getCiudadDestino }}, {{ car.getPaisDestino }}</td>
+                    <td align="center">{{ car.getFechaDesde }}</td>
+                    <td align="center">{{ car.getFechaHasta }}</td>
+                    <td align="center">{{ car.getModelo }}</td>
+                    <td align="center">{{ car.getCapacidad }}</td>
+                    <td align="center">${{ car.getPrecio }}</td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=remove_car_from_cart&id={{car.getId}}">Quitar <i class="glyphicon glyphicon-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td align="center"><strong>Subtotal</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"><strong>${{ cart.getCarsPrice }}</strong></td>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td align="center"><strong>Total</strong></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
+                    <td align="center"><strong>${{ cart.getPrice }}</strong></td>
+                    <td align="center"></td>
+                </tr>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> Aún no has agregado nada al carrito!</div>
+        {% endif %}
+        <div align="center">
+            {% if cart.getVuelos != null or cart.getHabitaciones != null or cart.getAutos != null %}
+                <button class="btn btn-success navbar-btn" onClick="window.location.href='index.php?action=cartPurchase'">Comprar Carrito</button>
+            {% endif %}
+            <div class="btn-group"></button>
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+        </div>  
+    </div>
+{% endblock %}

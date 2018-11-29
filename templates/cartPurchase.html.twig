@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container" style="margin-left: 22%">
+        <h1 class="col-lg-9 well">Comprar Carrito </h1>
+        <div class="col-lg-9 well">
+            <div class="row">
+                <form name="form" method="post" action="index.php?action=cartPurchase_check" enctype="multipart/form-data">
+                    <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-3 form-group">
+                            <label>Tipo de tarjeta</label>
+                            <select>
+                                <option value="Visa">Visa</option>
+                                <option value="MasterCard">MasterCard</option>
+                                <option value="American Express">American Express</option>
+                                <option value="MercadoPago">MercadoPago</option>
+                                <option value="Banco Patagonia">Banco Patagonia</option>
+                                <option value="Cabal">Cabal</option>
+                                <option value="Diners">Diners</option>
+                                <option value="Argencard">Argencard</option>
+                                <option value="Nativa MasterCard">Nativa MasterCard</option>
+                                <option value="CMR">CMR</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5 form-group">
+                            <label>Numero de Tarjeta</label>
+                            <input type="text" maxlength="19" onkeypress="return justNumbers(event);" name="numeroTarjeta" id="numeroTarjeta"  class="form-control" required>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Valida hasta</label>
+                            <input type="date" class="form-control" name="validaHasta" id="validaHasta" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 form-group">
+                            <label>Titular tarjeta</label>
+                            <input type="text" placeholder="Nombre/s y apellido/s impresos en tarjeta" id="titularTarjeta" name="titularTarjeta" class="form-control" required/>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>DNI titular</label>
+                            <input type="text" maxlength="8" onkeypress="return justNumbers(event);" name="dniTitular" id="dniTitular"  class="form-control" required>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Codigo de seguridad</label>
+                            <input type="text" placeholder="Últimos 3 números del dorso" class="form-control" maxlength="3" onkeypress="return justNumbers(event);" name="codigoSeguridad" id="codigoSeguridad" required />
+                        </div>
+                    </div>
+                    <div align="center">
+                            <button type="submit" class="btn btn-success navbar-btn">Confirmar compra</button>
+                            <button class="btn btn-danger navbar-btn" onClick="window.location.href='index.php?action=cartList'">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

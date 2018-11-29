@@ -1,0 +1,64 @@
+body{
+    background-image:url('../images/background.jpg');
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.btn-brac {
+  color: #fff;
+  background-color: #cc559b;
+  border-color: #d43392;
+}
+.btn-brac:focus,
+.btn-brac.focus {
+  color: #fff;
+  background-color: #ef008c;
+  border-color: #bf1f7d;
+}
+.btn-brac:hover {
+  color: #fff;
+  background-color: #ef008c;
+  border-color: #bf1f7d;
+}
+.btn-brac:active,
+.btn-brac.active,
+.open > .dropdown-toggle.btn-brac {
+  color: #fff;
+  background-color: #ef008c;
+  border-color: #bf1f7d;
+}
+.btn-brac:active:hover,
+.btn-brac.active:hover,
+.open > .dropdown-toggle.btn-brac:hover,
+.btn-brac:active:focus,
+.btn-brac.active:focus,
+.open > .dropdown-toggle.btn-brac:focus,
+.btn-brac:active.focus,
+.btn-brac.active.focus,
+.open > .dropdown-toggle.btn-brac.focus {
+  color: #fff;
+  background-color: #ef008c;
+  border-color: #bf1f7d;
+}
+.btn-brac:active,
+.btn-brac.active,
+.open > .dropdown-toggle.btn-brac {
+  background-image: none;
+}
+.btn-brac.disabled:hover,
+.btn-brac[disabled]:hover,
+fieldset[disabled] .btn-brac:hover,
+.btn-brac.disabled:focus,
+.btn-brac[disabled]:focus,
+fieldset[disabled] .btn-brac:focus,
+.btn-brac.disabled.focus,
+.btn-brac[disabled].focus,
+fieldset[disabled] .btn-brac.focus {
+  background-color: #cc559b;
+  border-color: #d43392;
+}
+.btn-brac .badge {
+  color: #cc559b;
+  background-color: #fff;
+}
