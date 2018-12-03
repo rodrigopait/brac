@@ -13,36 +13,38 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
             <ul class="nav navbar-nav">
-                <li class="navbar-left"><a href="index.php?action=home"><img src="assets/images/Logo.png" width="100" height="20"></a></li>
-                <li><a href="index.php?action=flightSearch">Buscar Vuelo</a></li>
-                <li><a href="index.php?action=roomSearch">Buscar Habitacion</a></li>
-                <li><a href="index.php?action=carSearch">Buscar Auto</a></li>
+                <li class="navbar-left"><a href="index.php?controller=Default&method=home"><img src="assets/images/Logo.png" width="100" height="20"></a></li>
+                <li><a href="index.php?controller=Default&method=flightSearch">Buscar Vuelo</a></li>
+                <li><a href="index.php?controller=Default&method=roomSearch">Buscar Hotel</a></li>
+                <li><a href="index.php?controller=Default&method=carSearch">Buscar Auto</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if rol == 0 %}
-                <button type="button" class="btn btn-info navbar-btn" onClick="window.location.href='index.php?action=userRegistration'">Registrarme</button>
-                <button type="button" class="btn btn-brac navbar-btn" onClick="window.location.href='index.php?action=login'">Iniciar Sesion</button>            
+                    <button type="button" class="btn btn-info navbar-btn" onclick="window.location.href='index.php?controller=Default&method=userRegistration'">Registrarme</button>
+                    <button type="button" class="btn btn-brac navbar-btn" onclick="window.location.href='index.php?controller=Default&method=login'">Iniciar Sesion</button>
                 {% endif %}
                 {% if rol == 1 %}
-                <button type="button" class="btn btn-warning navbar-btn" onClick="window.location.href='index.php?action=cartList'">Ver Carrito <i class="glyphicon glyphicon-shopping-cart"></i></button>     
-                <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Perfil <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.php?action=userPurchases">Mis Compras</a></li>
-                        <li><a href="index.php?action=userInformation">Ver Perfil</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="index.php?action=logout">Cerrar Sesion</a></li>
-                    </ul>
-                </div>     
+                    <button type="button" class="btn btn-warning navbar-btn" onclick="window.location.href='index.php?controller=Default&controller=Default&method=cartList'">Ver Carrito
+                        <i class="glyphicon glyphicon-shopping-cart"></i>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mi Perfil <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.php?controller=Default&method=userPurchases">Mis Compras</a></li>
+                            <li><a href="index.php?controller=Default&method=userInformation">Ver Perfil</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="index.php?controller=Default&method=logout">Cerrar Sesion</a></li>
+                        </ul>
+                    </div>     
                 {% endif %}
                 {% if rol == 2 %}
-                <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="index.php?action=usersList">Listado Usuarios</a></li>
-                    <!--                         <li><a href="index.php?action=userInformation">Ver Perfil</a></li>-->
-                    <li role="separator" class="divider"></li>
-                    <li><a href="index.php?action=logout">Cerrar Sesion</a></li>
-                </ul>
+                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.php?controller=Default&method=usersList">Listado Usuarios</a></li>
+                        <!--                         <li><a href="index.php?controller=Default&method=userInformation">Ver Perfil</a></li>-->
+                        <li role="separator" class="divider"></li>
+                        <li><a href="index.php?controller=Default&method=logout">Cerrar Sesion</a></li>
+                    </ul>
                 {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->

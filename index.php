@@ -8,7 +8,7 @@ ini_set('display_startup_errors',1);
 ini_set('display_errors',1);
 error_reporting(-1);
 
-require_once('controller/ResourceController.php');
+require_once('controller/DefaultController.php');
 require_once('model/PDORepository.php');
 require_once('model/UserRepository.php');
 require_once('model/User.php');
@@ -41,10 +41,11 @@ require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
 
 
-if(isset($_GET["action"])) {
-	$method = $_GET["action"];
-    ResourceController::getInstance()->$method();
+if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
+    $method = $_GET["method"];
+    $controller = $_GET["controller"]."Controller";
+    $controller::getInstance()->$method();
 }else{
-    ResourceController::getInstance()->home();
+    DefaultController::getInstance()->home();
 }
 
