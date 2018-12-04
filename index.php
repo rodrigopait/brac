@@ -9,6 +9,12 @@ ini_set('display_errors',1);
 error_reporting(-1);
 
 require_once('controller/DefaultController.php');
+require_once('controller/FlightController.php');
+require_once('controller/RoomtController.php');
+require_once('controller/CarController.php');
+require_once('controller/UserController.php');
+require_once('controller/CartController.php');
+require_once('controller/LoginController.php');
 require_once('model/PDORepository.php');
 require_once('model/UserRepository.php');
 require_once('model/User.php');
