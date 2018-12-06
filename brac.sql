@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 08, 2018 at 02:20 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 7.1.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-12-2018 a las 15:43:06
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.1.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,13 +19,38 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `brac`
+-- Base de datos: `brac`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auto`
+-- Estructura de tabla para la tabla `aerolinia`
+--
+
+CREATE TABLE `aerolinia` (
+  `id` int(11) NOT NULL,
+  `Nombre` varchar(255) NOT NULL,
+  `reputacion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `aeropuerto`
+--
+
+CREATE TABLE `aeropuerto` (
+  `id` int(11) NOT NULL,
+  `Nombre` int(11) NOT NULL,
+  `Ciudad` int(11) NOT NULL,
+  `Pais` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auto`
 --
 
 CREATE TABLE `auto` (
@@ -31,24 +58,23 @@ CREATE TABLE `auto` (
   `precio` int(11) NOT NULL,
   `modelo` varchar(50) NOT NULL,
   `capacidad` int(11) NOT NULL,
-  `ciudad` varchar(100) NOT NULL,
-  `pais` varchar(100) NOT NULL
+  `concesionaria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `auto`
+-- Volcado de datos para la tabla `auto`
 --
 
-INSERT INTO `auto` (`id`, `precio`, `modelo`, `capacidad`, `ciudad`, `pais`) VALUES
-(1, 50000, 'Volkswagen Vento', 5, 'La Plata', 'Argentina'),
-(2, 1234, 'Peugeot', 4, 'La Plata', 'Argentina'),
-(3, 5555, 'Mini', 4, 'La Plata', 'Argentina'),
-(4, 9999, 'Cobra', 4, 'La Plata', 'Argentina');
+INSERT INTO `auto` (`id`, `precio`, `modelo`, `capacidad`, `concesionaria_id`) VALUES
+(1, 50000, 'Volkswagen Vento', 5, 0),
+(2, 1234, 'Peugeot', 4, 0),
+(3, 5555, 'Mini', 4, 0),
+(4, 9999, 'Cobra', 4, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auto_alquiler`
+-- Estructura de tabla para la tabla `auto_alquiler`
 --
 
 CREATE TABLE `auto_alquiler` (
@@ -60,7 +86,7 @@ CREATE TABLE `auto_alquiler` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `auto_alquiler`
+-- Volcado de datos para la tabla `auto_alquiler`
 --
 
 INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `compra_id`) VALUES
@@ -71,7 +97,7 @@ INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `compra_id`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `compra`
+-- Estructura de tabla para la tabla `compra`
 --
 
 CREATE TABLE `compra` (
@@ -82,7 +108,7 @@ CREATE TABLE `compra` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `compra`
+-- Volcado de datos para la tabla `compra`
 --
 
 INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
@@ -96,33 +122,45 @@ INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `habitacion`
+-- Estructura de tabla para la tabla `concesionaria`
+--
+
+CREATE TABLE `concesionaria` (
+  `id` int(11) NOT NULL,
+  `Nombre` varchar(255) NOT NULL,
+  `Ciudad` varchar(255) NOT NULL,
+  `Pais` varchar(255) NOT NULL,
+  `reputacion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `habitacion`
 --
 
 CREATE TABLE `habitacion` (
   `id` int(11) NOT NULL,
   `capacidad` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
-  `estrellas` int(11) NOT NULL,
-  `ciudad` varchar(50) NOT NULL,
-  `pais` varchar(50) NOT NULL
+  `hotel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `habitacion`
+-- Volcado de datos para la tabla `habitacion`
 --
 
-INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `estrellas`, `ciudad`, `pais`) VALUES
-(1, 10, 500, 4, 'La Plata', 'Argentina'),
-(2, 4, 500, 4, 'La Plata', 'Argentina'),
-(3, 5, 777, 5, 'Mar del Plata', 'Argentina'),
-(4, 4, 1234, 5, 'La Plata', 'Argentina'),
-(5, 40, 4444, 3, 'La Plata', 'Argentina');
+INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `hotel_id`) VALUES
+(1, 10, 500, 4),
+(2, 4, 500, 4),
+(3, 5, 777, 5),
+(4, 4, 1234, 5),
+(5, 40, 4444, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `habitacion_alquiler`
+-- Estructura de tabla para la tabla `habitacion_alquiler`
 --
 
 CREATE TABLE `habitacion_alquiler` (
@@ -134,7 +172,7 @@ CREATE TABLE `habitacion_alquiler` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `habitacion_alquiler`
+-- Volcado de datos para la tabla `habitacion_alquiler`
 --
 
 INSERT INTO `habitacion_alquiler` (`id`, `desde`, `hasta`, `id_habitacion`, `compra_id`) VALUES
@@ -145,7 +183,41 @@ INSERT INTO `habitacion_alquiler` (`id`, `desde`, `hasta`, `id_habitacion`, `com
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `hotel`
+--
+
+CREATE TABLE `hotel` (
+  `id` int(11) NOT NULL,
+  `Nombre` varchar(255) NOT NULL,
+  `Ciudad` varchar(255) NOT NULL,
+  `Pais` varchar(255) NOT NULL,
+  `reputacion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rol`
+--
+
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id`, `descripcion`) VALUES
+(1, 'admin'),
+(2, 'comerciante'),
+(3, 'cliente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -154,22 +226,24 @@ CREATE TABLE `usuario` (
   `clave` varchar(50) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `rol_id` int(11) NOT NULL,
+  `nro_tarjeta` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`) VALUES
-(0, 'admin', 'admin', 'Administrador', '', ''),
-(1, 'agus', 'agus', 'Agustin', 'Jobs', 'agus@jobs.com'),
-(2, 'rami', 'rami', 'Ramiro', 'Chilenux', 'rami@gmail.com');
+INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, `rol_id`, `nro_tarjeta`) VALUES
+(0, 'admin', 'negro', 'Administrador', '', 'admin@admin.com', 1, ''),
+(1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 2, ''),
+(2, 'alex', 'putito', 'Alex', 'El Leon', 'alex@elleon.com', 3, '5547-5236-5894-7895');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vuelo`
+-- Estructura de tabla para la tabla `vuelo`
 --
 
 CREATE TABLE `vuelo` (
@@ -181,22 +255,23 @@ CREATE TABLE `vuelo` (
   `ciudad_destino` varchar(50) NOT NULL,
   `pais_origen` varchar(50) NOT NULL,
   `pais_destino` varchar(50) NOT NULL,
-  `precio` int(11) NOT NULL
+  `precio` int(11) NOT NULL,
+  `aerolinea_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `vuelo`
+-- Volcado de datos para la tabla `vuelo`
 --
 
-INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`) VALUES
-(1, '2017-12-02', '2017-12-09', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000),
-(2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990),
-(3, '2017-12-02', '2017-12-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770);
+INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`, `aerolinea_id`) VALUES
+(1, '2019-01-02', '2019-01-03', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000, 0),
+(2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990, 0),
+(3, '2017-12-02', '2017-12-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vuelo_compra`
+-- Estructura de tabla para la tabla `vuelo_compra`
 --
 
 CREATE TABLE `vuelo_compra` (
@@ -206,7 +281,7 @@ CREATE TABLE `vuelo_compra` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `vuelo_compra`
+-- Volcado de datos para la tabla `vuelo_compra`
 --
 
 INSERT INTO `vuelo_compra` (`id`, `vuelo_id`, `compra_id`) VALUES
@@ -216,17 +291,29 @@ INSERT INTO `vuelo_compra` (`id`, `vuelo_id`, `compra_id`) VALUES
 (11, 1, 40);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `auto`
+-- Indices de la tabla `aerolinia`
+--
+ALTER TABLE `aerolinia`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `aeropuerto`
+--
+ALTER TABLE `aeropuerto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `auto`
 --
 ALTER TABLE `auto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `auto_alquiler`
+-- Indices de la tabla `auto_alquiler`
 --
 ALTER TABLE `auto_alquiler`
   ADD PRIMARY KEY (`id`),
@@ -234,20 +321,26 @@ ALTER TABLE `auto_alquiler`
   ADD KEY `compra` (`compra_id`);
 
 --
--- Indexes for table `compra`
+-- Indices de la tabla `compra`
 --
 ALTER TABLE `compra`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario` (`usuario_id`);
 
 --
--- Indexes for table `habitacion`
+-- Indices de la tabla `concesionaria`
+--
+ALTER TABLE `concesionaria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `habitacion_alquiler`
+-- Indices de la tabla `habitacion_alquiler`
 --
 ALTER TABLE `habitacion_alquiler`
   ADD PRIMARY KEY (`id`),
@@ -255,19 +348,31 @@ ALTER TABLE `habitacion_alquiler`
   ADD KEY `compra` (`compra_id`);
 
 --
--- Indexes for table `usuario`
+-- Indices de la tabla `hotel`
+--
+ALTER TABLE `hotel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `vuelo`
+-- Indices de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `vuelo_compra`
+-- Indices de la tabla `vuelo_compra`
 --
 ALTER TABLE `vuelo_compra`
   ADD PRIMARY KEY (`id`),
@@ -275,49 +380,88 @@ ALTER TABLE `vuelo_compra`
   ADD KEY `compra` (`compra_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `auto`
+-- AUTO_INCREMENT de la tabla `aerolinia`
+--
+ALTER TABLE `aerolinia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `aeropuerto`
+--
+ALTER TABLE `aeropuerto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auto`
 --
 ALTER TABLE `auto`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
--- AUTO_INCREMENT for table `auto_alquiler`
+-- AUTO_INCREMENT de la tabla `auto_alquiler`
 --
 ALTER TABLE `auto_alquiler`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
--- AUTO_INCREMENT for table `compra`
+-- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
 --
--- AUTO_INCREMENT for table `habitacion`
+-- AUTO_INCREMENT de la tabla `concesionaria`
+--
+ALTER TABLE `concesionaria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
--- AUTO_INCREMENT for table `habitacion_alquiler`
+-- AUTO_INCREMENT de la tabla `habitacion_alquiler`
 --
 ALTER TABLE `habitacion_alquiler`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
--- AUTO_INCREMENT for table `usuario`
+-- AUTO_INCREMENT de la tabla `hotel`
+--
+ALTER TABLE `hotel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `vuelo`
+-- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `vuelo_compra`
+-- AUTO_INCREMENT de la tabla `vuelo_compra`
 --
 ALTER TABLE `vuelo_compra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
