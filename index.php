@@ -10,7 +10,7 @@ error_reporting(-1);
 
 require_once('controller/DefaultController.php');
 require_once('controller/FlightController.php');
-require_once('controller/RoomtController.php');
+require_once('controller/RoomController.php');
 require_once('controller/CarController.php');
 require_once('controller/UserController.php');
 require_once('controller/CartController.php');
