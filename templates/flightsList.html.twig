@@ -3,14 +3,25 @@
     <div class="container">
         <h1 class="well">Listado de Vuelos</h1>
         {% if flights %}
-        <div class="panel panel-default">
+        <div class="panel panel-default" align="center">
             <h4>Filtros</h4>
+            <hr class="divider" style="margin:0%"></hr>
             <div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox1">1</label>
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                    <label class="form-check-label" for="inlineCheckbox1">123</label>
+                <div class="radio" style="margin:0px">
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1 escala
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2 escalas
+                    </label>
+                </div>
+                <div class="checkbox" style="margin:0px">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+                    </label>
                 </div>
             </div>
         </div>
@@ -32,7 +43,7 @@
                     <td align="center">{{ flight.getFechaLlegada }}</td>
                     <td align="center">${{ flight.getPrecio }}</td>
                     {% if rol == 1 %}
-                    <td align="center"><a style="text-decoration: none;" href="./?action=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
+                        <td align="center"><a style="text-decoration: none;" href="./?action=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
                     {% endif %}
                 </tr>
                 {% endfor %}

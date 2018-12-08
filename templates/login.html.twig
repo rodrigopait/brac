@@ -8,7 +8,7 @@
                 </div>
                 
                 <div class="panel-body">
-                    <form role="form" method="post" action="index.php?action=login_user_check" onsubmit="return login_validation()">
+                    <form role="form" method="post" action="index.php?controller=Login&method=login_user_check" onsubmit="return login_validation()">
                         <div style="margin-bottom: 12px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input type="text" class="form-control" name="username" placeholder="Usuario" required="true">
@@ -27,7 +27,7 @@
                         <hr style="margin-top:10px;margin-bottom:10px;" >
                         <div class="form-group">
                             <div style="font-size:85%"> Aun no tienes cuenta?
-                                <a style="text-decoration: none;" href="index.php?action=userRegistration"> Registrate ya!</a>
+                                <a style="text-decoration: none;" href="index.php?controller=Login&method=userRegistration"> Registrate ya!</a>
                             </div>
                         </div> 
                     </form>
