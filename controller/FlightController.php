@@ -12,9 +12,9 @@ class FlightController {
 
         return self::$instance;
     }
-    
+
     private function __construct() {
-        
+
     }
 
     public function flightsListAll(){
@@ -54,7 +54,7 @@ class FlightController {
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
             $flights = FlightRepository::getInstance()->listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino);
-            $view = new FlightsList(); 
+            $view = new FlightsList();
             $view->show($rol, $flights);
         }
         catch (PDOException $e){

@@ -6,30 +6,30 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>Iniciar Sesion</strong></h3>
                 </div>
-                
+
                 <div class="panel-body">
-                    <form role="form" method="post" action="index.php?action=login_user_check" onsubmit="return login_validation()">
+                    <form role="form" method="post" action="index.php?controller=User&method=login_user_check" onsubmit="return login_validation()">
                         <div style="margin-bottom: 12px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Usuario" required="true">
-                        </div> 
+                            <input type="text" class="form-control" name="usuario" placeholder="Usuario" id="usuario" required="true">
+                        </div>
                         <div style="margin-bottom: 12px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" class="form-control" name="password" placeholder="Contraseña" required="true">
+                            <input type="password" class="form-control" name="clave" placeholder="Contraseña" id="clave" required="true">
                         </div>
                         <div style="float:left; font-size: 90%; position: relative; top:-10px">
                             <a style="text-decoration: none;" href="???aca iria la direccion para recuperar contraseña">Olvidaste tu contraseña?</a>
                         </div>
                         <br>
-                        <div align="center"> 
-                            <button type="submit" class="btn btn-brac">Iniciar Sesion</button> 
+                        <div align="center">
+                            <button type="submit" class="btn btn-brac">Iniciar Sesion</button>
                         </div>
                         <hr style="margin-top:10px;margin-bottom:10px;" >
                         <div class="form-group">
                             <div style="font-size:85%"> Aun no tienes cuenta?
                                 <a style="text-decoration: none;" href="index.php?action=userRegistration"> Registrate ya!</a>
                             </div>
-                        </div> 
+                        </div>
                     </form>
                 </div>
             </div>

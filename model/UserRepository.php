@@ -14,7 +14,7 @@ class UserRepository extends PDORepository {
     }
 
     private function __construct() {
-        
+
     }
 
     public function login_user() {
@@ -36,7 +36,7 @@ class UserRepository extends PDORepository {
                 $_SESSION['usuario'] = $user['usuario'];
             }
             else {
-                if(($user['usuario'] == $username) && ($user['clave'] == $password)){     
+                if(($user['usuario'] == $username) && ($user['clave'] == $password)){
                         $_SESSION['rol'] = 1;
                         $_SESSION['usuario'] = $user['usuario'];
                         $_SESSION['user_id'] = $user['id'];
@@ -54,7 +54,7 @@ class UserRepository extends PDORepository {
                     echo "alert('$mensaje');";
                     echo "</script>";
                 }
-            }    
+            }
         }else{
                 $mensaje = "No se han ingresado todos los campos. Por favor vuelve a intentar.";
                 echo "<script>";
@@ -77,7 +77,7 @@ class UserRepository extends PDORepository {
     public function user_remove($userId) {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
-
+/*REPETIDO*/
     public function user_delete($userId) {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
@@ -100,8 +100,19 @@ class UserRepository extends PDORepository {
         $this->queryList("UPDATE usuario SET usuario=?, clave=?, nombre=?, apellido=?, email=? WHERE id = ?", array($usuario, $clave, $nombre, $apellido, $email, $userId));
     }
 
+    public function user_login($usuario,$clave)
+    {
+      $user = null;
+      $query = $this->queryList("SELECT * FROM usuario WHERE usuario = ? AND clave =  ?", array($usuario,$clave));
+      foreach ($query[0] as $row) {
+          $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+      }
+      $query = null;
+      return $user;
+    }
 
-    
+
+
 
     public function logout_user(){
         session_destroy();

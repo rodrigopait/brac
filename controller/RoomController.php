@@ -12,9 +12,9 @@ class RoomController {
 
         return self::$instance;
     }
-    
+
     private function __construct() {
-        
+
     }
 
     public function roomSearch(){
@@ -46,6 +46,7 @@ class RoomController {
 
     public function roomsList(){
         try{
+            
             $rol = $_SESSION['rol'];
             $minimoEstrellas = $_POST['minimoEstrellas'];
             $maximoEstrellas = $_POST['maximoEstrellas'];
@@ -57,7 +58,7 @@ class RoomController {
             $fechaDesde = $desde->format('Y-m-d');
             $fechaHasta = $hasta->format('Y-m-d');
             $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad);
-            $view = new RoomsList(); 
+            $view = new RoomsList();
             $view->show($rol, $rooms, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
         }
         catch (PDOException $e){

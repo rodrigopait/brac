@@ -14,7 +14,7 @@ class RoomRepository extends PDORepository {
     }
 
     private function __construct() {
-        
+
     }
 
     // public function listAll() {
@@ -32,7 +32,6 @@ class RoomRepository extends PDORepository {
 
         $rooms=null;
         $query = RoomRepository::getInstance()->queryList("SELECT * FROM habitacion WHERE (estrellas BETWEEN ? AND ?) AND ciudad = ? AND pais = ? AND capacidad = ? AND id NOT IN (SELECT id_habitacion FROM habitacion_alquiler WHERE (desde BETWEEN ? AND ?) OR (hasta BETWEEN ? AND ?) OR (desde < ? AND hasta > ?))", array($minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
-
         foreach ($query[0] as $row) {
             $room = new Room ( $row['id'], $row['capacidad'], $row['precio'], $row['estrellas'], $row['ciudad'], $row['pais']);
             $rooms[]=$room;

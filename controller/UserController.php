@@ -1,7 +1,7 @@
 <?php
 
 class UserController {
-    
+
     private static $instance;
 
     public static function getInstance() {
@@ -12,9 +12,9 @@ class UserController {
 
         return self::$instance;
     }
-    
+
     private function __construct() {
-        
+
     }
 
     public function userPurchases(){
@@ -87,7 +87,7 @@ class UserController {
            if (isset($_GET['userId'])) {
                UserRepository::getInstance()->user_remove($userId);
            }
-           $this->usersList();  
+           $this->usersList();
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -110,7 +110,7 @@ class UserController {
                $_SESSION['roomsFechaDesde'] = null;
                $_SESSION['roomsFechaHasta'] = null;
            }
-           $this->home();  
+           $this->home();
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -204,5 +204,27 @@ class UserController {
            $view = new Error_display();
            $view->show($error);        }
    }
+
+   public function login_user_check()
+   {
+     $rol = $_SESSION['rol'];
+     $usuario = $_POST['usuario'];
+     $clave = $_POST['clave'];
+
+     if(isset($usuario) && isset($clave))
+     {
+       $user = UserRepository::getInstance()->user_login($usuario, $clave);
+        if($user != null)
+        {
+            $view = new IndexUser();
+            $view->show($rol, $user);
+
+
+        }else {
+          echo "Usuario NO existe";die;
+        }
+     }
+   }
+
 
 }

@@ -10,7 +10,7 @@ error_reporting(-1);
 
 require_once('controller/DefaultController.php');
 require_once('controller/FlightController.php');
-require_once('controller/RoomtController.php');
+require_once('controller/RoomController.php');
 require_once('controller/CarController.php');
 require_once('controller/UserController.php');
 require_once('controller/CartController.php');
@@ -45,6 +45,7 @@ require_once('view/UsersList.php');
 require_once('view/UserRegistration.php');
 require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
+require_once('view/IndexUser.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
@@ -54,4 +55,3 @@ if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
 }else{
     DefaultController::getInstance()->home();
 }
-
