@@ -60,7 +60,7 @@ class UserRepository extends PDORepository {
 
     public function listAllByRol($rol) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE rol.id == ".$id, array());
+        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE rol.id = ? ", array($rol));
         foreach ($query[0] as $row) {
             $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['descripcion_rol']);
             $users[]=$user;
