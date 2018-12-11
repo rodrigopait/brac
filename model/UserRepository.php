@@ -17,50 +17,41 @@ class UserRepository extends PDORepository {
 
     }
 
-    public function login_user() {
+    public function login_user($username, $password) {
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+          $res = self::getInstance()->queryList("SELECT * FROM usuario WHERE usuario = ? AND clave = ?", array($username, $password));
+          #var_dump($res);die;
+          $user = $res[0]->fetch(PDO::FETCH_ASSOC);
+          #var_dump($user);die;
+          if ($user['usuario'] == 'admin'){
+              $_SESSION['rol'] = 2;
+              $_SESSION['usuario'] = $user['usuario'];
+          }
+          else {/* por que la doble verificacion?*/
+              if(($user['usuario'] == $username) && ($user['clave'] == $password)){
+                      $_SESSION['rol'] = 1;
+                      $_SESSION['usuario'] = $user['usuario'];
+                      $_SESSION['user_id'] = $user['id'];
+                      $_SESSION['flights'][] = null;
+                      $_SESSION['rooms'][] = null;
+                      $_SESSION['roomsFechaDesde'][] = null;
+                      $_SESSION['roomsFechaHasta'][] = null;
+                      $_SESSION['cars'][] = null;
+                      $_SESSION['carsFechaDesde'][] = null;
+                      $_SESSION['carsFechaHasta'][] = null;
+                      $res[0] = null;
 
-        if(!is_null($username) AND !is_null($password)){
-            $array = array(
-                ':username' => $username,
-                ':password' => $password
-            );
+                      return $user;
+              }else{
+                  return null;
 
-            $res = self::getInstance()->queryList("SELECT * FROM usuario WHERE usuario = ? AND clave = ?", array($username, $password));
-            $user = $res[0]->fetch(PDO::FETCH_ASSOC);
+                  /*$mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
+                  echo "<script>";
+                  echo "alert('$mensaje');";
+                  echo "</script>";*/
+              }
 
-            if ($user['usuario'] == 'admin'){
-                $_SESSION['rol'] = 2;
-                $_SESSION['usuario'] = $user['usuario'];
-            }
-            else {
-                if(($user['usuario'] == $username) && ($user['clave'] == $password)){
-                        $_SESSION['rol'] = 1;
-                        $_SESSION['usuario'] = $user['usuario'];
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['flights'][] = null;
-                        $_SESSION['rooms'][] = null;
-                        $_SESSION['roomsFechaDesde'][] = null;
-                        $_SESSION['roomsFechaHasta'][] = null;
-                        $_SESSION['cars'][] = null;
-                        $_SESSION['carsFechaDesde'][] = null;
-                        $_SESSION['carsFechaHasta'][] = null;
-                        $res[0] = null;
-                }else{
-                    $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
-                    echo "<script>";
-                    echo "alert('$mensaje');";
-                    echo "</script>";
-                }
-            }
-        }else{
-                $mensaje = "No se han ingresado todos los campos. Por favor vuelve a intentar.";
-                echo "<script>";
-                echo "alert('$mensaje');";
-                echo "</script>";
-        }
+      }
     }
 
     public function listAll() {
