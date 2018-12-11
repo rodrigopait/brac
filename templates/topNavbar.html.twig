@@ -40,10 +40,10 @@
                 {% if rol == 2 %}
                     <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="index.php?controller=Default&method=usersList">Listado Usuarios</a></li>
+                        <li><a href="index.php?controller=User&method=usersList">Listado Usuarios</a></li>
                         <!--                         <li><a href="index.php?controller=Default&method=userInformation">Ver Perfil</a></li>-->
                         <li role="separator" class="divider"></li>
-                        <li><a href="index.php?controller=Default&method=logout">Cerrar Sesion</a></li>
+                        <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>
                 {% endif %}
             </ul>
