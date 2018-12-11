@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['rol'])){
-	$_SESSION['rol']=0;
+	$_SESSION['rol']='';
 }
 
 ini_set('display_startup_errors',1);
