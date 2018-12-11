@@ -40,7 +40,7 @@ class FlightRepository extends PDORepository {
         return $flights;
     }
 
-        //agrego un auto 
+        //agrego un vuelo
     public function flight_add($fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino,$pais_origen,$pais_destino,$precio,$aerolinea_id) {
         $query = $this->queryList("INSERT INTO vuelo (fecha_salida, fecha_llegada, capacidad, ciudad_origen,ciudad_destino,pais_origen,pais_destino,precio,aerolinea_id) VALUES (?,?,?,?,?,?,?,?,?)", array($fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino,$pais_origen,$pais_destino,$precio,$aerolinea_id));
     }
