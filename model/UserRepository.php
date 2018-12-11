@@ -63,9 +63,9 @@ class UserRepository extends PDORepository {
         }
     }
 
-    public function listAll() {
+    public function listAll($id) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario WHERE id != 0", array());
+        $query = self::getInstance()->queryList("SELECT * FROM usuario WHERE rol_id = ?", array($id));
         foreach ($query[0] as $row) {
             $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
             $users[]=$user;
