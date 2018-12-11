@@ -19,8 +19,13 @@
                     <li><a href="index.php?controller=Room&method=roomSearch">Buscar Hotel</a></li>
                     <li><a href="index.php?controller=Car&method=carSearch">Buscar Auto</a></li>
                 {% elseif rol == 'administrador' %}
-                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Vuelo</a></li>
+                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Aerolinia</a></li>
                     <li><a href="index.php?controller=Room&method=roomSearch">Alta de Hotel</a></li>
+                    <li><a href="index.php?controller=Car&method=carSearch">Alta de Concesionaria</a></li>
+                    <li><a href="#">Alta de Usuario</a></li>
+                {% elseif rol == 'comerciante' %}
+                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Vuelo</a></li>
+                    <li><a href="index.php?controller=Room&method=roomSearch">Alta de Habitacion</a></li>
                     <li><a href="index.php?controller=Car&method=carSearch">Alta de Auto</a></li>
                     <li><a href="#">Alta de Usuario</a></li>
                 {% endif %}
@@ -51,8 +56,8 @@
                     <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador {{app.user.nombre}}<span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Listado de usuarios:</li>
-                        <li><a href="index.php?controller=User&method=usersList?rol=1">Clientes</a></li>
-                        <li><a href="index.php?controller=User&method=usersList?rol=2">Comerciales</a></li>
+                        <li><a href="index.php?controller=User&method=usersList&rol=3">Clientes</a></li>
+                        <li><a href="index.php?controller=User&method=usersList&rol=2">Comerciales</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>

@@ -67,9 +67,9 @@ class UserController {
    }
 
 
-   public function usersList($rol){
+   public function usersList(){
        try{
-           $rol = $_SESSION['rol'];
+           $rol = $_GET['rol'];
            $users = UserRepository::getInstance()->listAllByRol($rol);
            $view = new UsersList();
            $view->show($rol, $users);
