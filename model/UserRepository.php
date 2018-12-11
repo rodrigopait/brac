@@ -54,11 +54,11 @@ class UserRepository extends PDORepository {
       }
     }
 
-    public function listAll() {
+    public function listAllByRol($rol) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario WHERE id != 0", array());
+        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE rol.id == ".$id, array());
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['descripcion_rol']);
             $users[]=$user;
         }
         $query = null;
@@ -79,9 +79,9 @@ class UserRepository extends PDORepository {
 
     public function user_information($userId) {
         $user=null;
-        $query = $this->queryList("SELECT * FROM usuario WHERE id = ?", array($userId));
+        $query = $this->queryList("SELECT * FROM usuario NATURAL JOIN rol WHERE usuario.id = ?", array($userId));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['rol']);
         }
         $query = null;
         return $user;
