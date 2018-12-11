@@ -41,5 +41,10 @@ class RoomRepository extends PDORepository {
         $query = null;
         return $rooms;
     }
+
+        //agrego un auto 
+    public function room_add($capacidad, $precio, $hotel_id) {
+        $query = $this->queryList("INSERT INTO auto (capacidad, precio, hotel_id) VALUES (?,?,?)", array($capacidad, $precio, $hotel_id));
+    }
 }
 ?>
