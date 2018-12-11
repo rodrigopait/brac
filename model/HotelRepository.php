@@ -18,7 +18,7 @@ class HotelRepository extends PDORepository {
     }
 
     public function hotel_add($nombre,$ciudad,$pais,$reputacion_id){
-        $query = $this->queryList("INSERT INTO hotel (nombre,ciudad,pais,reputacion_id) VALUES (?,?,?,?)", array($nombre,$ciudad,$pais,$reputacion_id);
+        $query = $this->queryList("INSERT INTO hotel (nombre,ciudad,pais,reputacion_id) VALUES (?,?,?,?)", array($nombre,$ciudad,$pais,$reputacion_id));
     }
 
 }
