@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block main %}
     <div class="container" style="margin: auto">
-        <h1 class="col-lg-12 well">Buscar Hotel</h1>
+        <h1 class="col-lg-12 well">Buscar Habitacion</h1>
         <div class="col-lg-12 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?action=roomsList" enctype="multipart/form-data">
+                <form name="form" method="post" action="index.php?controller=Room$method=roomsList" enctype="multipart/form-data">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6 form-group">
@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <dl class="form-group">
-                                    <dt><label>Destino</label></dt>
+                                    <dt><label>Localidad</label></dt>
                                     <dd>
                                         <input name="ciudadDestino" id="ciudadDestino" type="text" placeholder="Ciudad" class="form-control" required="true">    
                                     </dd>
@@ -32,16 +32,19 @@
                                 <dl class="form-group">
                                     <dt><label>Estrellas</label></dt>
                                     <dd>
-                                        <input name="minimoEstrellas" id="minimoEstrellas" type="number" min="0" max="5" placeholder="Minimo" value="0" class="form-control" onkeypress="return justNumbers(event);" required="true">    
-                                    </dd>
-                                    <dd style="margin-top: 3%">
-                                        <input name="maximoEstrellas" id="maximoEstrellas" type="number" min="0" max="5" placeholder="Maximo" value="5" class="form-control" onkeypress="return justNumbers(event);" required="true">    
-                                    </dd>
+                                        <select class="form-control" name="escalas">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>                                    
+                                    </dd>                    
                                 </dl>
                             </div>  
                             <div class="col-sm-4 form-group">
-                                <label>Capacidad</label>
-                                <input type="number" class="form-control" name="capacidad" id="capacidad" min="0" value="0" onkeypress="return justNumbers(event);" required="true">
+                                <label>Personas</label>
+                                <input type="number" class="form-control" name="personas" id="personas" min="1" value="1" onkeypress="return justNumbers(event);" required="true">
                             </div>
                         </div>                  
                         <div align="center">
