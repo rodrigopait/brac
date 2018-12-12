@@ -101,7 +101,7 @@ class UserRepository extends PDORepository {
     public function logout_user(){
         session_destroy();
         session_start();
-        $_SESSION['rol']='';
+        $_SESSION['rol']=0;
         $_SESSION['flights'] = null;
         $_SESSION['rooms'] = null;
         $_SESSION['cars'] = null;
