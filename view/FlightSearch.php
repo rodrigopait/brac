@@ -9,7 +9,6 @@ class FlightSearch extends TwigView {
 		$loader = new Twig_Loader_Filesystem($templateDir);
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("flightSearch.html.twig");
-
     	$template->display(array('rol' => $rol)); 
         
         

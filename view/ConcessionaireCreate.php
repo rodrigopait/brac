@@ -1,16 +1,16 @@
 <?php
 
-class createConcessionary extends TwigView {
+class ConcessionaireCreate extends TwigView {
     
-    public function show() {
+    public function show($rol) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
 		$loader = new Twig_Loader_Filesystem($templateDir);
 		$twig = new Twig_Environment($loader);
-    	$template = $twig->loadTemplate("createConcessionary.html.twig");
-
-    	$template->display(array('' => )); 
+		$template = $twig->loadTemplate("concessionaireCreate.html.twig");
+		
+    	$template->display(array('rol' => $rol)); 
         
         
     }

@@ -28,6 +28,12 @@ require_once('model/CarRepository.php');
 require_once('model/PurchaseRepository.php');
 require_once('model/Purchase.php');
 require_once('model/Car.php');
+require_once('model/Concessionaire.php');
+require_once('model/concessionaireRepository.php');
+require_once('model/airlineRepository.php');
+require_once('model/hotelRepository.php');
+require_once('model/Hotel.php');
+require_once('model/Airline.php');
 require_once('view/TwigView.php');
 require_once('view/Login.php');
 require_once('view/Home.php');
@@ -45,9 +51,10 @@ require_once('view/UsersList.php');
 require_once('view/UserRegistration.php');
 require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
-require_once('view/createHotel.php');
-require_once('view/createConcessionary.php');
-require_once('view/createAirline.php');
+require_once('view/HotelCreate.php');
+require_once('view/ConcessionaireCreate.php');
+require_once('view/ConcessionairesList.php');
+require_once('view/AirlineCreate.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
