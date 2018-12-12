@@ -19,10 +19,10 @@
                     <li><a href="index.php?controller=Room&method=roomSearch">Buscar Habitacion</a></li>
                     <li><a href="index.php?controller=Car&method=carSearch">Buscar Auto</a></li>
                 {% elseif rol == 'administrador' %}
-                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Aerolinia</a></li>
-                    <li><a href="index.php?controller=Room&method=roomSearch">Alta de Hotel</a></li>
-                    <li><a href="index.php?controller=Car&method=carSearch">Alta de Concesionaria</a></li>
-                    <li><a href="#">Alta de Usuario</a></li>
+                    <li><a href="index.php?controller=Airline&method=airlineCreate">Alta de Aerolinia</a></li>
+                    <li><a href="index.php?controller=Hotel&method=hotelCreate">Alta de Hotel</a></li>
+                    <li><a href="index.php?controller=Concessionaire&method=concessionaireCreate">Alta de Concesionaria</a></li>
+                    <li><a href="index.php?controller=User&method=userComercialCreate">Alta de Usuario</a></li>
                 {% elseif rol == 'comerciante' %}
                     <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Vuelo</a></li>
                     <li><a href="index.php?controller=Room&method=roomSearch">Alta de Habitacion</a></li>

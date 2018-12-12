@@ -15,6 +15,9 @@ require_once('controller/CarController.php');
 require_once('controller/UserController.php');
 require_once('controller/CartController.php');
 require_once('controller/LoginController.php');
+require_once('controller/HotelController.php');
+require_once('controller/AirlineController.php');
+require_once('controller/ConcessionaireController.php');
 require_once('model/PDORepository.php');
 require_once('model/UserRepository.php');
 require_once('model/User.php');
@@ -55,6 +58,7 @@ require_once('view/HotelCreate.php');
 require_once('view/ConcessionaireCreate.php');
 require_once('view/ConcessionairesList.php');
 require_once('view/AirlineCreate.php');
+require_once('view/UserComercialCreate.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {

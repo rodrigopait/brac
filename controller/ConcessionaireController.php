@@ -17,10 +17,23 @@ class ConcessionaireController {
         
     }
 
-    public function concessionaireCreate($nombre,$ciudad,$pais,$reputacion_id){
+    public function concessionaireCreate(){
         try{
-            ConcessionaryRepository::getInstance()->concessionaireAdd($nombre,$ciudad,$pais,$reputacion_id);
-            $concessionaires = ConcessionaryRepository::getInstance()->listAll();
+            $rol = $_SESSION['rol'];
+            $view = new ConcessionaireCreate();
+            $view->show($rol);
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }
+
+    public function concessionaireAdd($nombre,$ciudad,$pais){
+        try{
+            ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,$pais);
+            $concessionaires = ConcessionaireRepository::getInstance()->listAll();
             $view = new ConcessionairesList();
             $rol = $_SESSION['rol'];
             $view->show($rol, $concessionaires);

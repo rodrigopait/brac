@@ -205,4 +205,17 @@ class UserController {
            $view->show($error);        }
    }
 
+   public function userComercialCreate(){
+    try{
+        $rol = $_SESSION['rol'];
+        $view = new UserComercialCreate();
+        $view->show($rol);
+    }
+    catch (PDOException $e){
+        $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+        $view = new Error_display();
+        $view->show($error);
+    }
+}
+
 }
