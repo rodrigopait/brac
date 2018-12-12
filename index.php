@@ -45,6 +45,9 @@ require_once('view/UsersList.php');
 require_once('view/UserRegistration.php');
 require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
+require_once('view/createHotel.php');
+require_once('view/createConcessionary.php');
+require_once('view/createAirline.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
