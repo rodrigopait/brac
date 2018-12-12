@@ -20,7 +20,7 @@ class FlightController {
     public function flightsListAll(){
         try{
             $rol = $_SESSION['rol'];
-            $flights = FlightRepository::getInstance()->listAll($flights);
+            $flights = FlightRepository::getInstance()->listAll();
             $view = new FlightsList();
             $view->show($rol, $flights);
         }
@@ -46,6 +46,7 @@ class FlightController {
 
     public function flightsList(){
         try{
+            #var_dump($_POST);die;
             $rol = $_SESSION['rol'];
             $ciudadOrigen = $_POST['ciudadOrigen'];
             $paisOrigen = $_POST['paisOrigen'];
@@ -53,7 +54,9 @@ class FlightController {
             $paisDestino = $_POST['paisDestino'];
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
-            $flights = FlightRepository::getInstance()->listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino);
+            $escalas = $_POST['escalas'];
+
+            $flights = FlightRepository::getInstance()->listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino, $escalas);
             $view = new FlightsList(); 
             $view->show($rol, $flights);
         }

@@ -17,13 +17,14 @@ abstract class PDORepository {
         return $connection;
     }
     
-    public function queryList($sql, $args){
+    public function queryList($sql, $args = array()){
         $connection = $this->getConnection();
         $stmt = $connection->prepare($sql);
         $stmt->execute($args);
         $lastId = $connection->lastInsertId();
         $resultado[]=$stmt;
         $resultado[]=$lastId;
+        #var_dump($resultado);die;
         return $resultado;
     }
 
