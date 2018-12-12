@@ -41,5 +41,11 @@ class CarRepository extends PDORepository {
         $query = null;
         return $cars;
     }
+
+    //agrego un auto 
+    public function car_add($precio, $modelo, $capacidad, $concesionaria_id) {
+        $query = $this->queryList("INSERT INTO auto (precio, modelo, capacidad, concesionaria_id) VALUES (?,?,?,?)", array($precio, $modelo, $capacidad,$concesionaria_id));
+    }
+
 }
 ?>

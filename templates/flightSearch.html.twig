@@ -11,10 +11,10 @@
                             <label>Fecha de partida</label>
                             <input type="date" class="form-control" name="fechaPartida" required="true">
                         </div>
-                        {# <div class="col-sm-6 form-group">
+                        <div class="col-sm-6 form-group">
                             <label>Fecha de llegada</label>
                             <input type="date" class="form-control" name="fechaLlegada" required="false">
-                        </div> #}
+                        </div>
                         <div class="col-sm-6 form-group" style="margin-top: 1%">
                             <dl class="form-group">
                                 <dt><label>Origen</label></dt>
@@ -35,6 +35,25 @@
                                 </dd>
                                 <dd style="margin-top: 3%">
                                     <input name="paisDestino" id="paisDestino" type="text" placeholder="Pais" class="form-control">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                            <dl class="form-group">
+                                <dt><label>Escalas</label></dt>
+                                <dd>
+                                    <select class="form-control" name="escalas">
+                                        <option value="1">1 escala</option>
+                                        <option value="2">2 escalas</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                            <dl class="form-group">
+                                <dt><label>Pasajeros </label></dt>
+                                <dd>
+                                    <input name="pasajeros" id="pasajeros" type="number" placeholder="Ingrese una cantidad" class="form-control">
                                 </dd>
                             </dl>
                         </div>

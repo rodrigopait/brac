@@ -41,5 +41,10 @@ class RoomRepository extends PDORepository {
         $query = null;
         return $rooms;
     }
+
+        //agrego un habitacion
+    public function room_add($capacidad, $precio, $hotel_id) {
+        $query = $this->queryList("INSERT INTO habitacion (capacidad, precio, hotel_id) VALUES (?,?,?)", array($capacidad, $precio, $hotel_id));
+    }
 }
 ?>

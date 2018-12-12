@@ -28,46 +28,41 @@ class UserRepository extends PDORepository {
                 ':password' => $password
             );
 
-            $res = self::getInstance()->queryList("SELECT * FROM usuario WHERE usuario = ? AND clave = ?", array($username, $password));
+            $res = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE usuario = ? AND clave = ?", array($username, $password));
             $user = $res[0]->fetch(PDO::FETCH_ASSOC);
-
-            if ($user['usuario'] == 'admin'){
-                $_SESSION['rol'] = 2;
+            if(($user['usuario'] == $username) && ($user['clave'] == $password)){
+                $_SESSION['rol'] = $user['descripcion_rol'];
                 $_SESSION['usuario'] = $user['usuario'];
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['flights'][] = null;
+                $_SESSION['rooms'][] = null;
+                $_SESSION['roomsFechaDesde'][] = null;
+                $_SESSION['roomsFechaHasta'][] = null;
+                $_SESSION['cars'][] = null;
+                $_SESSION['carsFechaDesde'][] = null;
+                $_SESSION['carsFechaHasta'][] = null;
+                $res[0] = null;
             }
-            else {
-                if(($user['usuario'] == $username) && ($user['clave'] == $password)){     
-                        $_SESSION['rol'] = 1;
-                        $_SESSION['usuario'] = $user['usuario'];
-                        $_SESSION['user_id'] = $user['id'];
-                        $_SESSION['flights'][] = null;
-                        $_SESSION['rooms'][] = null;
-                        $_SESSION['roomsFechaDesde'][] = null;
-                        $_SESSION['roomsFechaHasta'][] = null;
-                        $_SESSION['cars'][] = null;
-                        $_SESSION['carsFechaDesde'][] = null;
-                        $_SESSION['carsFechaHasta'][] = null;
-                        $res[0] = null;
-                }else{
-                    $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
-                    echo "<script>";
-                    echo "alert('$mensaje');";
-                    echo "</script>";
-                }
-            }    
-        }else{
-                $mensaje = "No se han ingresado todos los campos. Por favor vuelve a intentar.";
+            else{
+                $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
                 echo "<script>";
                 echo "alert('$mensaje');";
                 echo "</script>";
+            }    
+        }
+        else{
+            $mensaje = "No se han ingresado todos los campos. Por favor vuelve a intentar.";
+            echo "<script>";
+            echo "alert('$mensaje');";
+            echo "</script>";
         }
     }
 
-    public function listAll() {
+    public function listAllByRol($rol) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario WHERE id != 0", array());
+        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE rol.id = ? ", array($rol));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['descripcion_rol']);
             $users[]=$user;
         }
         $query = null;
@@ -88,9 +83,9 @@ class UserRepository extends PDORepository {
 
     public function user_information($userId) {
         $user=null;
-        $query = $this->queryList("SELECT * FROM usuario WHERE id = ?", array($userId));
+        $query = $this->queryList("SELECT * FROM usuario NATURAL JOIN rol WHERE usuario.id = ?", array($userId));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['rol']);
         }
         $query = null;
         return $user;
@@ -106,7 +101,7 @@ class UserRepository extends PDORepository {
     public function logout_user(){
         session_destroy();
         session_start();
-        $_SESSION['rol']=0;
+        $_SESSION['rol']='';
         $_SESSION['flights'] = null;
         $_SESSION['rooms'] = null;
         $_SESSION['cars'] = null;

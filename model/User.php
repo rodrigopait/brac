@@ -8,8 +8,9 @@ class User {
     private $nombre;
     private $apellido;
     private $email;
+    private $rol;
     
-    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email) {
+    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email, $rol) {
 
         $this->id = $id;
         $this->usuario = $usuario;
@@ -17,6 +18,7 @@ class User {
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->email = $email;
+        $this->rol = $rol;
     }
 
     public function getId() {
@@ -41,6 +43,10 @@ class User {
 
     public function getEmail() {
         return $this->email;
+    }
+
+    public function getRol() {
+        return $this->rol;
     }
 
 }
