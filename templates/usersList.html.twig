@@ -10,8 +10,8 @@
                     <td align="center"><strong>Nombre</strong></td>
                     <td align="center"><strong>Apellido</strong></td>
                     <td align="center"><strong>Email</strong></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
+                    <td align="center"><strong>Numero tarjeta</strong></td>
+                    <td align="center"><strong>Rol</strong></td>
                 </tr>
                 {% for user in usuarios %}
                 <tr>
@@ -19,8 +19,12 @@
                     <td align="center">{{ user.getNombre }}</td>
                     <td align="center">{{ user.getApellido }}</td>
                     <td align="center">{{ user.getEmail }}</td>
-                    <td align="center"><a style="text-decoration: none;" href="./?action=userPurchasesById&userId={{user.getId}}&username={{user.getUsuario}}">Ver compras <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
-                    <td align="center"><a style="text-decoration: none;" href="./?action=userRemove&userId={{user.getId}}">Eliminar <i class="glyphicon glyphicon-trash"></i></a></td>
+                    <td align="center">{{ user.getNumeroTarjeta }}</td>
+                    <td align="center">{{ user.getRol }}</td>
+                    {% if user.getRol == 'cliente' %}
+                        <td align="center"><a style="text-decoration: none;" href="./?controller=User&method=userPurchasesById&userId={{user.getId}}&username={{user.getUsuario}}">Ver compras <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                    {% endif %}
+                    {# <td align="center"><a style="text-decoration: none;" href="./?controller=User&method=userRemove&userId={{user.getId}}">Eliminar<i class="glyphicon glyphicon-trash"></i></a></td> #}
                 </tr>
                 {% endfor %}
             </table>

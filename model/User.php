@@ -8,9 +8,10 @@ class User {
     private $nombre;
     private $apellido;
     private $email;
+    private $numeroTarjeta;
     private $rol;
     
-    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email, $rol) {
+    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email, $numeroTarjeta, $rol) {
 
         $this->id = $id;
         $this->usuario = $usuario;
@@ -18,6 +19,7 @@ class User {
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->email = $email;
+        $this->numeroTarjeta = $numeroTarjeta;
         $this->rol = $rol;
     }
 
@@ -42,6 +44,11 @@ class User {
     }
 
     public function getEmail() {
+        return $this->email;
+    }
+
+    public function getNumeroTarjeta()
+    {
         return $this->email;
     }
 
