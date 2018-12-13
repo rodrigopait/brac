@@ -24,15 +24,14 @@
                     <li><a href="index.php?controller=Concessionaire&method=concessionaireCreate">Alta de Concesionaria</a></li>
                     <li><a href="index.php?controller=User&method=userComercialCreate">Alta de Usuario</a></li>
                 {% elseif rol == 'comerciante' %}
-                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Vuelo</a></li>
-                    <li><a href="index.php?controller=Room&method=roomSearch">Alta de Habitacion</a></li>
-                    <li><a href="index.php?controller=Car&method=carSearch">Alta de Auto</a></li>
-                    <li><a href="#">Alta de Usuario</a></li>
+                    <li><a href="index.php?controller=Flight&method=flightCreate">Alta de Vuelo</a></li>
+                    <li><a href="index.php?controller=Room&method=roomCreate">Alta de Habitacion</a></li>
+                    <li><a href="index.php?controller=Car&method=carCreate">Alta de Auto</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if rol == '' %}
-                    <button type="button" class="btn btn-info navbar-btn" onclick="window.location.href='index.php?controller=Login&method=userRegistration'">Registrarme</button>
+                    <button type="button" class="btn btn-info navbar-btn" onclick="window.location.href='index.php?controller=User&method=userRegistration'">Registrarme</button>
                     <button type="button" class="btn btn-brac navbar-btn" onclick="window.location.href='index.php?controller=Login&method=login'">Iniciar Sesion</button>
                 {% elseif rol == 'cliente' %}
                     <button type="button" class="btn btn-warning navbar-btn" onclick="window.location.href='index.php?controller=Default&controller=Default&method=cartList'">Ver Carrito
@@ -57,10 +56,8 @@
                         <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>
                 {% elseif rol == 'comerciante' %}
-                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></button>
+                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comerciante <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="index.php?controller=User&method=usersList">Listado Usuarios</a></li>
-                        <li role="separator" class="divider"></li>
                         <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>
                 {% endif %}

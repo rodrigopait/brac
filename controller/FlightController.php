@@ -63,4 +63,17 @@ class FlightController {
             $view->show($error);
         }
     }
+
+    public function flightCreate(){
+        try{
+            $rol = $_SESSION['rol'];
+            $view = new FlightCreate();
+            $view->show($rol);
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }
 }
