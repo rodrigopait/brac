@@ -25,10 +25,13 @@ class AirlineRepository extends PDORepository {
     public function listAll() {
 
         $query = $this->queryList("SELECT * FROM aerolinea", array());
+        $airlines=array();
         foreach ($query[0] as $row) {
             $airline = new Airline( $row['id'], $row['nombre'], $row['reputacion_id']);
             $airlines[]=$airline;
         }
+
+
         return $airlines;
     }
 }

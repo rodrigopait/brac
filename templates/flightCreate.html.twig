@@ -34,8 +34,10 @@
                                 <dt><label>Aerolinia</label></dt>
                                 <dd>
                                     <select class="form-control" name="escalas">
-                                        <option value="">Aerolinia 1</option>
-                                        <option value="">Aerolinia 2</option>
+                                        <option value="" disabled="disabled" selected="">Elija una aerolinea</option>
+                                        {% for airline in airlines %}
+                                            <option value={{airline.id}}>{{airline.nombre}}</option>
+                                        {% endfor %}
                                     </select>
                                 </dd>
                             </dl>

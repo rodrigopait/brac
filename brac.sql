@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 13-12-2018 a las 02:40:08
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.1.24
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 13-12-2018 a las 17:35:24
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,14 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `aerolinia`
+-- Estructura de tabla para la tabla `aerolinea`
 --
 
-CREATE TABLE `aerolinia` (
+CREATE TABLE `aerolinea` (
   `id` int(11) NOT NULL,
-  `Nombre` varchar(255) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
   `reputacion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `aerolinea`
+--
+
+INSERT INTO `aerolinea` (`id`, `nombre`, `reputacion_id`) VALUES
+(1, 'KLM ', 0),
+(2, 'Transavia Airlines ', 0),
+(3, 'Denim Air ', 0);
 
 -- --------------------------------------------------------
 
@@ -133,6 +142,13 @@ CREATE TABLE `concesionaria` (
   `reputacion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `concesionaria`
+--
+
+INSERT INTO `concesionaria` (`id`, `Nombre`, `Ciudad`, `Pais`, `reputacion_id`) VALUES
+(1, 'Renault', 'Buenos Aires', 'Argentina', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -194,6 +210,13 @@ CREATE TABLE `hotel` (
   `reputacion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `hotel`
+--
+
+INSERT INTO `hotel` (`id`, `Nombre`, `Ciudad`, `Pais`, `reputacion_id`) VALUES
+(1, 'Ibis', 'Buenos Aires', 'Argentina', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -238,7 +261,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, `rol_id`, `nro_tarjeta`) VALUES
 (0, 'administrador', 'negro', 'Administrador', '', 'admin@admin.com', 2, ''),
 (1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 3, ''),
-(2, 'alex', 'putito', 'Alex', 'El Leon', 'alex@elleon.com', 1, '5547-5236-5894-7895');
+(2, 'alex', 'negro', 'Alex', 'El Leon', 'alex@elleon.com', 1, '5547-5236-5894-7895');
 
 -- --------------------------------------------------------
 
@@ -295,9 +318,9 @@ INSERT INTO `vuelo_compra` (`id`, `vuelo_id`, `compra_id`) VALUES
 --
 
 --
--- Indices de la tabla `aerolinia`
+-- Indices de la tabla `aerolinea`
 --
-ALTER TABLE `aerolinia`
+ALTER TABLE `aerolinea`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -384,10 +407,10 @@ ALTER TABLE `vuelo_compra`
 --
 
 --
--- AUTO_INCREMENT de la tabla `aerolinia`
+-- AUTO_INCREMENT de la tabla `aerolinea`
 --
-ALTER TABLE `aerolinia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `aerolinea`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `aeropuerto`
@@ -417,7 +440,7 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `concesionaria`
 --
 ALTER TABLE `concesionaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
@@ -435,7 +458,7 @@ ALTER TABLE `habitacion_alquiler`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

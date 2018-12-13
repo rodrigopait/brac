@@ -67,8 +67,9 @@ class FlightController {
     public function flightCreate(){
         try{
             $rol = $_SESSION['rol'];
+            $airlines = AirlineRepository::getInstance()->listAll();
             $view = new FlightCreate();
-            $view->show($rol);
+            $view->show($rol,$airlines);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
