@@ -29,4 +29,19 @@ class HotelController {
             $view->show($error);
         }
     }
+
+    public function hotelAdd(){
+        $nombre = $_POST['nombre'];
+        $ciudad= $_POST['ciudad'];
+        $pais = $_POST['pais'];
+
+        if (isset($nombre) && !empty($nombre)){
+            HotelRepository::getInstance()->hotelAdd($nombre,$ciudad,$pais,0);
+            $view = new Home();
+            $view->show();
+        }else{
+            $view = new Home ();
+            $view->show();
+        }
+    }
 }

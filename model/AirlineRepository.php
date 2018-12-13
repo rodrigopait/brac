@@ -17,8 +17,9 @@ class AirlineRepository extends PDORepository {
         
     }
 
-    public function airlinAdd($nombre,$reputacion_id){
-        $query = $this->queryList("INSERT INTO aerolinea (nombre, reputacion_id) VALUES (?,?)", array($nombre, $reputacion_id));
+    public function airlineAdd($nombre,$reputacion_id){
+        $query = $this->queryList("INSERT INTO aerolinea(nombre,reputacion_id) VALUES (?,?)", array($nombre, $reputacion_id));
+
     }
 
     public function listAll() {

@@ -17,7 +17,7 @@ class ConcessionaireRepository extends PDORepository {
         
     }
 
-    public function concessionaryAdd($nombre,$ciudad,$pais){
+    public function concessionaireAdd($nombre,$ciudad,$pais){
         $query = $this->queryList("INSERT INTO concesionaria (nombre,ciudad,pais,reputacion_id) VALUES (?,?,?,?)", array($nombre,$ciudad,$pais,0));
     }
 

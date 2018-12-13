@@ -29,4 +29,16 @@ class AirlineController {
             $view->show($error);
         }
     }
+
+    public function airlineAdd(){
+        $nombre = $_POST['nombre'];
+        if (isset($nombre) && !empty($nombre)){
+            AirlineRepository::getInstance()->airlineAdd($nombre,0);
+            $view = new Home();
+            $view->show();
+        }else{
+            $view = new Home ();
+            $view->show();
+        }
+    }
 }

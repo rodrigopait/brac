@@ -30,18 +30,18 @@ class ConcessionaireController {
         }
     }
 
-    public function concessionaireAdd($nombre,$ciudad,$pais){
-        try{
-            ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,$pais);
-            $concessionaires = ConcessionaireRepository::getInstance()->listAll();
-            $view = new ConcessionairesList();
-            $rol = $_SESSION['rol'];
-            $view->show($rol, $concessionaires);
+        public function concessionaireAdd(){
+            $nombre = $_POST['nombre'];
+            $ciudad= $_POST['ciudad'];
+            $pais = $_POST['pais'];
+
+            if (isset($nombre) && !empty($nombre) && !empty($ciudad) && !empty($pais)){
+                ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,$pais,0);
+                $view = new Home();
+                $view->show();
+            }else{
+                $view = new Home ();
+                $view->show();
+            }
         }
-        catch (PDOException $e){
-            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
-            $view = new Error_display();
-            $view->show($error);
-        }
-    }
 }
