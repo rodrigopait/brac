@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2018 a las 15:43:06
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.1.22
+-- Servidor: localhost
+-- Tiempo de generación: 13-12-2018 a las 02:40:08
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.1.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -202,17 +202,17 @@ CREATE TABLE `hotel` (
 
 CREATE TABLE `rol` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(255) NOT NULL
+  `descripcion_rol` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`id`, `descripcion`) VALUES
-(1, 'admin'),
-(2, 'comerciante'),
-(3, 'cliente');
+INSERT INTO `rol` (`id`, `descripcion_rol`) VALUES
+(1, 'cliente'),
+(2, 'administrador'),
+(3, 'comerciante');
 
 -- --------------------------------------------------------
 
@@ -236,9 +236,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, `rol_id`, `nro_tarjeta`) VALUES
-(0, 'admin', 'negro', 'Administrador', '', 'admin@admin.com', 1, ''),
-(1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 2, ''),
-(2, 'alex', 'putito', 'Alex', 'El Leon', 'alex@elleon.com', 3, '5547-5236-5894-7895');
+(0, 'administrador', 'negro', 'Administrador', '', 'admin@admin.com', 2, ''),
+(1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 3, ''),
+(2, 'alex', 'putito', 'Alex', 'El Leon', 'alex@elleon.com', 1, '5547-5236-5894-7895');
 
 -- --------------------------------------------------------
 
@@ -266,7 +266,7 @@ CREATE TABLE `vuelo` (
 INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`, `aerolinea_id`) VALUES
 (1, '2019-01-02', '2019-01-03', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000, 0),
 (2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990, 0),
-(3, '2017-12-02', '2017-12-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0);
+(3, '2019-01-02', '2019-01-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0);
 
 -- --------------------------------------------------------
 
