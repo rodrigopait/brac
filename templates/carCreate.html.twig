@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+<div class="container" style="margin: auto">
+    <h1 class="col-lg-12 well">Alta de Auto</h1>
+    <div class="col-lg-12 well">
+        <div class="row">
+            <form name="form" method="post" action="index.php?controller=Flight&method=flightsList" enctype="multipart/form-data">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Nombre</label></dt>
+                                <dd>
+                                    <input name="nombre" id="nombre" type="text" placeholder="Nombre" class="form-control">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Marca</label></dt>
+                                <dd>
+                                    <input name="marca" id="marca" type="text" placeholder="Marca" class="form-control">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Modelo</label></dt>
+                                <dd>
+                                    <input name="modelo" id="modelo" type="text" placeholder="Modelo" class="form-control">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <dl class="form-group">
+                                <dt><label>Origen</label></dt>
+                                <dd>
+                                    <input name="ciudadOrigen" id="ciudadOrigen" type="text" placeholder="Ciudad" class="form-control">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <dl class="form-group" style="margin-top: 0.5vh;">
+                                <dt><label></label></dt>
+                                <dd>
+                                    <input name="paisOrigen" id="paisOrigen" type="text" placeholder="Pais" class="form-control">
+                                </dd>            
+                            </dl>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                        </div>
+                        {# <div class="col-sm-6 form-group">
+                            <dl class="form-group">
+                                <dt><label>Aerolinia</label></dt>
+                                <dd>
+                                    <select class="form-control" name="escalas">
+                                        <option value="">Aerolinia 1</option>
+                                        <option value="">Aerolinia 2</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div> #}
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Precio por dia</label></dt>
+                                <dd>
+                                    <input name="precio" id="precio" type="price" placeholder="Precio" class="form-control"  min="0.00"  step="0.01"  onkeypress="return justNumbers(event);" required="true">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Autonomía</label>
+                            <input type="number" min="0.0"  step="0.1" placeholder="Autonomía" class="form-control" name="autonomia" required="true">
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Capacidad</label>
+                            <input type="number" class="form-control" min="0.0" step="0.1" name="capacidad" placeholder="Capacidad" required="true">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Capacidad</label>
+                            <input type="number" class="form-control" min="0.0" step="0.1" name="capacidad" placeholder="Capacidad" required="true">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Capacidad</label>
+                            <input type="number" class="form-control" min="0.0" step="0.1" name="capacidad" placeholder="Capacidad" required="true">
+                        </div>                          
+                    </div>
+                    <div align="center">
+                        <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                        <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

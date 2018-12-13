@@ -60,6 +60,7 @@ require_once('view/ConcessionairesList.php');
 require_once('view/AirlineCreate.php');
 require_once('view/UserComercialCreate.php');
 require_once('view/FlightCreate.php');
+require_once('view/CarCreate.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
