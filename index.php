@@ -61,6 +61,7 @@ require_once('view/AirlineCreate.php');
 require_once('view/UserComercialCreate.php');
 require_once('view/FlightCreate.php');
 require_once('view/CarCreate.php');
+require_once('view/RoomCreate.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
