@@ -15,10 +15,16 @@
                                <dl class="form-group">
                                     <dt><label>Localidad</label></dt>
                                     <dd>
-                                        <input name="ciudad" id="ciudad" type="text" placeholder="Ciudad" class="form-control" required="true">    
+                                        <select name="pais" id="pais" type="text" class="form-control" required="true" onchange="ciudades(this.id,'ciudad')">
+                                            <option disabled selected>Elije un Pais</option>
+                                            {% for country in countries %}
+                                                <option value={{country.id}}>{{country.nombre}}</option>
+                                            {% endfor %}
+                                        </select>    
                                     </dd>
                                     <dd style="margin-top: 3%">
-                                        <input name="pais" id="pais" type="text" placeholder="Pais" class="form-control" required="true">    
+                                        <select name="ciudad" id="ciudad" type="text" class="form-control" required="true">
+                                        </select>    
                                     </dd>
                                 </dl>
                             </div>

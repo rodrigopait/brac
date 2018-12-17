@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2018 a las 17:35:24
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.1.16
+-- Tiempo de generación: 17-12-2018 a las 02:29:45
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.1.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,7 +41,9 @@ CREATE TABLE `aerolinea` (
 INSERT INTO `aerolinea` (`id`, `nombre`, `reputacion_id`) VALUES
 (1, 'KLM ', 0),
 (2, 'Transavia Airlines ', 0),
-(3, 'Denim Air ', 0);
+(3, 'Denim Air ', 0),
+(4, 'Qatar Airways', 0),
+(5, 'Singapore Airlines', 0);
 
 -- --------------------------------------------------------
 
@@ -64,21 +66,15 @@ CREATE TABLE `aeropuerto` (
 
 CREATE TABLE `auto` (
   `id` int(11) NOT NULL,
+  `ciudad_id` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
-  `modelo` varchar(50) NOT NULL,
+  `gama` varchar(255) NOT NULL,
+  `modelo_id` int(11) NOT NULL,
   `capacidad` int(11) NOT NULL,
+  `patente` varchar(255) NOT NULL,
+  `autonomia` int(11) NOT NULL,
   `concesionaria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `auto`
---
-
-INSERT INTO `auto` (`id`, `precio`, `modelo`, `capacidad`, `concesionaria_id`) VALUES
-(1, 50000, 'Volkswagen Vento', 5, 0),
-(2, 1234, 'Peugeot', 4, 0),
-(3, 5555, 'Mini', 4, 0),
-(4, 9999, 'Cobra', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -102,6 +98,136 @@ INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `compra_id`) VAL
 (6, '2017-12-30', '2017-12-31', 4, 35),
 (7, '2017-12-30', '2017-12-31', 3, 36),
 (8, '2017-12-08', '2017-12-09', 4, 39);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ciudad`
+--
+
+CREATE TABLE `ciudad` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `pais_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `ciudad`
+--
+
+INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
+(1, 'Buenos Aires', 2),
+(2, 'Córdoba', 2),
+(3, 'Mendoza', 2),
+(4, 'Rio Negro', 2),
+(5, 'Santa Fe', 2),
+(7, 'La Paz', 3),
+(8, 'Cochabamba', 3),
+(11, 'Oruro', 3),
+(12, 'Potosí', 3),
+(17, 'Rio de Jainero', 4),
+(18, 'Bahia', 4),
+(19, 'São Paulo', 4),
+(20, 'Goias', 4),
+(21, 'Santiago', 5),
+(22, 'Iquique', 5),
+(23, 'Tacna', 5),
+(24, 'Valparaiso', 5),
+(25, 'Medellín', 6),
+(26, 'Barranquilla', 6),
+(27, 'Cartagena', 6),
+(28, 'Bogota', 6),
+(29, 'Quito', 7),
+(30, 'Guayaquil', 7),
+(31, 'Zamora', 7),
+(32, 'Itapua', 8),
+(33, 'Asunción', 8),
+(34, 'Concepción', 8),
+(35, 'San Pedro', 8),
+(36, 'Lima', 9),
+(37, 'Cuzco', 9),
+(38, 'Piura', 9),
+(39, 'Cajamarca', 9),
+(40, 'Montevideo', 10),
+(41, 'Paysandu', 10),
+(42, 'Tacuarembó', 10),
+(43, 'Colonia', 10),
+(44, 'san José', 11),
+(45, 'Cartago', 11),
+(46, 'Guanascate', 11),
+(47, 'Puntarenas', 11),
+(48, 'Veraguas', 12),
+(49, 'Los Santos', 12),
+(50, 'Panamá Oeste', 12),
+(51, 'Colón', 12),
+(52, 'San Juan', 13),
+(53, 'Ponce', 13),
+(54, 'Cabo Rojo', 13),
+(55, 'Mayagüez', 13),
+(56, 'La Habana', 14),
+(57, 'Varadero', 14),
+(58, 'Santiago de Cuba', 14),
+(59, 'Kingston', 15),
+(60, 'Bahia Montego', 15),
+(61, 'Portmore', 15),
+(62, 'Hayes', 15),
+(63, 'Sinaloa', 16),
+(64, 'Jalisco', 16),
+(65, 'Chiapas', 16),
+(66, 'Chihuahua', 16),
+(77, 'New York', 17),
+(78, 'California', 17),
+(79, 'Florida', 17),
+(80, 'Colorado', 17),
+(81, 'Mississippi', 17),
+(82, 'Berlín', 18),
+(83, 'Múnich', 18),
+(84, 'Hamburgo', 18),
+(85, 'Bruselas', 19),
+(86, 'Gante', 19),
+(87, 'Charleroi', 19),
+(88, 'Zagreb', 20),
+(89, 'Zadar', 20),
+(90, 'Split', 20),
+(91, 'Madrid', 21),
+(92, 'Barcelona', 21),
+(93, 'Valencia', 21),
+(94, 'Sevilla', 21),
+(95, 'Málaga', 21),
+(96, 'París', 22),
+(97, 'Mónaco', 22),
+(98, 'Atenas', 23),
+(99, 'Roma', 24),
+(100, 'Milán', 24),
+(101, 'Venecia', 24),
+(102, 'Toscana', 24),
+(103, 'Ámsterdam', 25),
+(104, 'La Haya', 25),
+(105, 'Lisboa', 26),
+(106, 'Oporto', 26),
+(107, 'Braga', 26),
+(108, 'Moscú', 27),
+(109, 'Tokio', 28),
+(110, 'Yokohama', 28),
+(111, 'Osaka', 28),
+(112, 'Pekín', 29),
+(113, 'Shanghaí', 29),
+(114, 'Sydney', 30),
+(115, 'Melbourne', 30),
+(116, 'Londres', 31),
+(117, 'Liverpool', 31),
+(118, 'Manchester', 31);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clase`
+--
+
+CREATE TABLE `clase` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -136,9 +262,8 @@ INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
 
 CREATE TABLE `concesionaria` (
   `id` int(11) NOT NULL,
-  `Nombre` varchar(255) NOT NULL,
-  `Ciudad` varchar(255) NOT NULL,
-  `Pais` varchar(255) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `ciudad_id` int(11) NOT NULL,
   `reputacion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -146,8 +271,15 @@ CREATE TABLE `concesionaria` (
 -- Volcado de datos para la tabla `concesionaria`
 --
 
-INSERT INTO `concesionaria` (`id`, `Nombre`, `Ciudad`, `Pais`, `reputacion_id`) VALUES
-(1, 'Renault', 'Buenos Aires', 'Argentina', 0);
+INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUES
+(1, 'Espasa   VOLKSWAGEN', 1, 0),
+(2, ' Automotores Mataderos S.A.', 1, 0),
+(3, 'CORDOBA - Auto Haus S.A', 2, 0),
+(4, ' SANTA FE - Escobar Santa Fe S.A', 5, 0),
+(5, 'PLM EXPORT GMBH', 82, 0),
+(6, 'AUTOCENTER SCHMOLKE GMBH & CO. KG', 84, 0),
+(7, ' Autostar', 17, 0),
+(8, 'Audi Lounge', 17, 0);
 
 -- --------------------------------------------------------
 
@@ -220,6 +352,119 @@ INSERT INTO `hotel` (`id`, `Nombre`, `Ciudad`, `Pais`, `reputacion_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `marca`
+--
+
+CREATE TABLE `marca` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id`, `descripcion`) VALUES
+(1, 'Volkswagen'),
+(2, 'Peugeot'),
+(3, 'Citroen'),
+(4, 'Fiat'),
+(5, 'Audi'),
+(6, 'Chevrolet');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `modelo`
+--
+
+CREATE TABLE `modelo` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `marca_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `modelo`
+--
+
+INSERT INTO `modelo` (`id`, `descripcion`, `marca_id`) VALUES
+(1, 'Fox', 1),
+(2, 'Vento', 1),
+(3, 'Scirocco', 1),
+(4, 'Voyage', 1),
+(5, 'Gol', 1),
+(6, '208', 2),
+(7, '308', 2),
+(8, '508', 2),
+(9, 'Partner', 2),
+(10, 'C3', 3),
+(11, 'C4', 3),
+(12, 'Berlingo', 3),
+(13, 'Duna', 4),
+(14, 'Punto', 4),
+(15, 'Argo', 4),
+(16, 'Cronos', 4),
+(17, 'A3', 5),
+(18, 'A4', 5),
+(19, 'A5', 5),
+(20, 'TT', 5),
+(26, 'Onix', 6),
+(27, 'Prisma', 6),
+(28, 'Corsa', 6),
+(29, 'Aveo', 6),
+(30, 'Prisma', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pais`
+--
+
+CREATE TABLE `pais` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `pais`
+--
+
+INSERT INTO `pais` (`id`, `nombre`) VALUES
+(2, 'Argentina'),
+(3, 'Bolivia'),
+(4, 'Brasil'),
+(5, 'Chile'),
+(6, 'Colombia'),
+(7, 'Ecuador'),
+(8, 'Paraguay'),
+(9, 'Peru'),
+(10, 'Uruguay'),
+(11, 'Costa Rica'),
+(12, 'Panama'),
+(13, 'Puerto Rico'),
+(14, 'Cuba'),
+(15, 'Jamaica'),
+(16, 'México'),
+(17, 'Estados Unidos'),
+(18, 'Alemania'),
+(19, 'Belgica'),
+(20, 'Croacia'),
+(21, 'España'),
+(22, 'Francia'),
+(23, 'Grecia'),
+(24, 'Italia'),
+(25, 'Paises Bajos'),
+(26, 'Portugal'),
+(27, 'Rusia'),
+(28, 'Japon'),
+(29, 'China'),
+(30, 'Australia'),
+(31, 'Inglaterra');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rol`
 --
 
@@ -279,6 +524,8 @@ CREATE TABLE `vuelo` (
   `pais_origen` varchar(50) NOT NULL,
   `pais_destino` varchar(50) NOT NULL,
   `precio` int(11) NOT NULL,
+  `escalas` int(11) NOT NULL,
+  `clase_id` int(11) NOT NULL,
   `aerolinea_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -286,10 +533,10 @@ CREATE TABLE `vuelo` (
 -- Volcado de datos para la tabla `vuelo`
 --
 
-INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`, `aerolinea_id`) VALUES
-(1, '2019-01-02', '2019-01-03', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000, 0),
-(2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990, 0),
-(3, '2019-01-02', '2019-01-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0);
+INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`, `escalas`, `clase_id`, `aerolinea_id`) VALUES
+(1, '2019-01-02', '2019-01-03', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000, 0, 0, 0),
+(2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990, 0, 0, 0),
+(3, '2019-01-02', '2019-01-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -333,7 +580,9 @@ ALTER TABLE `aeropuerto`
 -- Indices de la tabla `auto`
 --
 ALTER TABLE `auto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ciudad_id` (`ciudad_id`),
+  ADD KEY `modelo_id` (`modelo_id`);
 
 --
 -- Indices de la tabla `auto_alquiler`
@@ -342,6 +591,13 @@ ALTER TABLE `auto_alquiler`
   ADD PRIMARY KEY (`id`),
   ADD KEY `auto` (`id_auto`),
   ADD KEY `compra` (`compra_id`);
+
+--
+-- Indices de la tabla `ciudad`
+--
+ALTER TABLE `ciudad`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pais_id` (`pais_id`);
 
 --
 -- Indices de la tabla `compra`
@@ -354,7 +610,8 @@ ALTER TABLE `compra`
 -- Indices de la tabla `concesionaria`
 --
 ALTER TABLE `concesionaria`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ciudad_id` (`ciudad_id`);
 
 --
 -- Indices de la tabla `habitacion`
@@ -374,6 +631,25 @@ ALTER TABLE `habitacion_alquiler`
 -- Indices de la tabla `hotel`
 --
 ALTER TABLE `hotel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `marca`
+--
+ALTER TABLE `marca`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `modelo`
+--
+ALTER TABLE `modelo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `marca_id` (`marca_id`) USING BTREE;
+
+--
+-- Indices de la tabla `pais`
+--
+ALTER TABLE `pais`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -410,7 +686,7 @@ ALTER TABLE `vuelo_compra`
 -- AUTO_INCREMENT de la tabla `aerolinea`
 --
 ALTER TABLE `aerolinea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `aeropuerto`
@@ -422,13 +698,19 @@ ALTER TABLE `aeropuerto`
 -- AUTO_INCREMENT de la tabla `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `auto_alquiler`
 --
 ALTER TABLE `auto_alquiler`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `ciudad`
+--
+ALTER TABLE `ciudad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -440,7 +722,7 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `concesionaria`
 --
 ALTER TABLE `concesionaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
@@ -458,13 +740,31 @@ ALTER TABLE `habitacion_alquiler`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `marca`
+--
+ALTER TABLE `marca`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `modelo`
+--
+ALTER TABLE `modelo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de la tabla `pais`
+--
+ALTER TABLE `pais`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -483,6 +783,35 @@ ALTER TABLE `vuelo`
 --
 ALTER TABLE `vuelo_compra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `auto`
+--
+ALTER TABLE `auto`
+  ADD CONSTRAINT `auto_ibfk_1` FOREIGN KEY (`ciudad_id`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auto_ibfk_2` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`);
+
+--
+-- Filtros para la tabla `ciudad`
+--
+ALTER TABLE `ciudad`
+  ADD CONSTRAINT `ciudad_ibfk_1` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `concesionaria`
+--
+ALTER TABLE `concesionaria`
+  ADD CONSTRAINT `concesionaria_ibfk_1` FOREIGN KEY (`ciudad_id`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `modelo`
+--
+ALTER TABLE `modelo`
+  ADD CONSTRAINT `modelo_ibfk_1` FOREIGN KEY (`marca_id`) REFERENCES `marca` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

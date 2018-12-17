@@ -3,7 +3,7 @@
 class CarCreate extends TwigView
 {
 
-    public function show($rol)
+    public function show($rol,$countries,$brands,$concessionaries)
     {
 
         $templateDir = "./templates";
@@ -11,7 +11,7 @@ class CarCreate extends TwigView
         $loader = new Twig_Loader_Filesystem($templateDir);
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate("carCreate.html.twig");
-        $template->display(array('rol' => $rol));
+        $template->display(array('rol' => $rol, 'countries' => $countries, 'brands' =>$brands, 'concessionaires' => $concessionaries));
 
 
     }

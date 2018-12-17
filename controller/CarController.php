@@ -54,13 +54,25 @@ class CarController {
     public function carCreate(){
         try {
             $rol = $_SESSION['rol'];
+            $paises = CountryRepository::getInstance()->listWithConcessionaries();
+            $concesionarias = ConcessionaireRepository::getInstance()->listAll();
+            $marcas = CarRepository::getInstance()->brandsAll();
             $view = new CarCreate();
-            $view->show($rol);
+            $view->show($rol,$paises,$marcas,$concesionarias);
         } catch (PDOException $e) {
             $error = "Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
             $view = new Error_display();
             $view->show($error);
         }
     }
+
+    public function modelsBrand()
+    {
+        $idAuto=(int)$_POST['id'];
+        $models = CarRepository::getInstance()->modelsFrom($idAuto);
+        
+        echo ($models);
+    }
+
 
 }

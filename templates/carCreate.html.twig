@@ -4,38 +4,20 @@
     <h1 class="col-lg-12 well">Alta de Auto</h1>
     <div class="col-lg-12 well">
         <div class="row">
-            <form name="form" method="post" action="index.php?controller=Flight&method=flightsList" enctype="multipart/form-data">
+            <form name="form" method="post" action="index.php?controller=Car&method=carList" enctype="multipart/form-data">
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-4 form-group">
-                            <dl class="form-group">
-                                <dt><label>Nombre</label></dt>
-                                <dd>
-                                    <input name="nombre" id="nombre" type="text" placeholder="Nombre" class="form-control">
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <dl class="form-group">
-                                <dt><label>Marca</label></dt>
-                                <dd>
-                                    <input name="marca" id="marca" type="text" placeholder="Marca" class="form-control">
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <dl class="form-group">
-                                <dt><label>Modelo</label></dt>
-                                <dd>
-                                    <input name="modelo" id="modelo" type="text" placeholder="Modelo" class="form-control">
-                                </dd>
-                            </dl>
-                        </div>
                         <div class="col-sm-6 form-group">
                             <dl class="form-group">
                                 <dt><label>Origen</label></dt>
                                 <dd>
-                                    <input name="ciudadOrigen" id="ciudadOrigen" type="text" placeholder="Ciudad" class="form-control">
+                                    <select name="paisOrigen" id="paisOrigen" type="text" class="form-control" onchange="ciudadesConConcessionarias(this.id,'ciudadOrigen');">
+                                        <option selected disabled>Elije un Pais</option>
+                                        {% for country in countries %}
+                                            <option value={{country.id}}>{{country.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+
                                 </dd>
                             </dl>
                         </div>
@@ -43,11 +25,43 @@
                             <dl class="form-group" style="margin-top: 0.5vh;">
                                 <dt><label></label></dt>
                                 <dd>
-                                    <input name="paisOrigen" id="paisOrigen" type="text" placeholder="Pais" class="form-control">
-                                </dd>            
+                                    <select name="ciudadOrigen" id="ciudadOrigen" type="text" class="form-control" disabled onchange="concesionarias(this.id,'concesionaria')">
+                                    </select>
+                                </dd>           
                             </dl>
                         </div>
                         <div class="col-sm-6 form-group"></div>
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Concesionaria</label></dt>
+                                <dd>
+                                    <select name="concesionaria" id="concesionaria" type="text"  class="form-control" disabled>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Marca</label></dt>
+                                <dd>
+                                    <select name="marca" id="marca" type="text" class="form-control" onchange="modelos(this.id,'modelo')">
+                                        <option disabled selected>Elija un marca</option>
+                                        {% for brand in brands %}
+                                            <option value={{brand.id}}>{{brand.descripcion}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <dl class="form-group">
+                                <dt><label>Modelo</label></dt>
+                                <dd>
+                                    <select name="modelo" id="modelo" type="text" class="form-control" disabled>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
                         <div class="col-sm-4 form-group">
                             <dl class="form-group">
                                 <dt><label>Precio por dia</label></dt>
@@ -66,15 +80,15 @@
                         </div>
                         <div class="col-sm-6 form-group"></div>
                         <div class="col-sm-6 form-group">
-                            <label>Patante</label>
-                            <input type="number" class="form-control" min="0.0" step="0.1" name="patente" placeholder="Patante" required="true">
+                            <label>Patente</label>
+                            <input type="number" class="form-control" min="0.0" step="0.1" name="patente" placeholder="Patente" required="true">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Gama</label>
                             <select class="form-control" name="gama">
-                                        <option value="1">Alta</option>
-                                        <option value="2">Media</option>
-                                        <option value="2">Baja</option>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Media">Media</option>
+                                        <option value="Baja">Baja</option>
                             </select>
                         </div>                          
                     </div>

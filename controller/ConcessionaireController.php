@@ -20,8 +20,9 @@ class ConcessionaireController {
     public function concessionaireCreate(){
         try{
             $rol = $_SESSION['rol'];
+            $paises = CountryRepository::getInstance()->listAll();
             $view = new ConcessionaireCreate();
-            $view->show($rol);
+            $view->show($rol,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -30,18 +31,25 @@ class ConcessionaireController {
         }
     }
 
-        public function concessionaireAdd(){
-            $nombre = $_POST['nombre'];
-            $ciudad= $_POST['ciudad'];
-            $pais = $_POST['pais'];
+    public function concessionaireAdd(){
+        $nombre = $_POST['nombre'];
+        $ciudad= $_POST['ciudad'];
 
-            if (isset($nombre) && !empty($nombre) && !empty($ciudad) && !empty($pais)){
-                ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,$pais,0);
-                $view = new Home();
-                $view->show();
-            }else{
-                $view = new Home ();
-                $view->show();
-            }
+        if (isset($nombre) && !empty($nombre) && !empty($ciudad)){
+            ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,0);
+            $view = new Home();
+            $view->show();
+        }else{
+            $view = new Home ();
+            $view->show();
         }
+    }
+
+    public function concessionaireFrom()
+    {
+        $idCiudad=(int)$_POST['id'];
+        $concessionaires=ConcessionaireRepository::getInstance()->listFrom($idCiudad);
+        echo ($concessionaires);
+
+    }
 }

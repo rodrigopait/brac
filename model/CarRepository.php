@@ -47,5 +47,37 @@ class CarRepository extends PDORepository {
         $query = $this->queryList("INSERT INTO auto (precio, modelo, capacidad, concesionaria_id) VALUES (?,?,?,?)", array($precio, $modelo, $capacidad,$concesionaria_id));
     }
 
+    public function brandsAll()
+    {
+        $query = $this->queryList("SELECT * FROM marca", array());
+        $brands=array();
+        foreach ($query[0] as $row) {
+            $brand =  new stdClass();
+            $brand->id = $row['id'];
+            $brand->descripcion = utf8_encode($row['descripcion']);
+            $brands[]=$brand;
+        }
+
+
+        return $brands;
+    }
+
+    public function modelsFrom($idBrand)
+    {
+        
+
+        $query = $this->queryList("SELECT * FROM modelo WHERE marca_id = ? ORDER BY descripcion", array($idBrand));
+        $models=array();
+        foreach ($query[0] as $row) {
+            $model =  new stdClass();
+            $model->id = $row['id'];
+            $model->descripcion = utf8_encode($row['descripcion']);
+            $models[]=$model;
+        }
+
+
+        return json_encode($models);
+    }
+
 }
 ?>
