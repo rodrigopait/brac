@@ -66,6 +66,28 @@ class CarController {
         }
     }
 
+    public function carAdd()
+    {
+        $ciudad = $_POST['ciudadOrigen'];
+        $concesionaria = $_POST['concesionaria'];
+        $modelo = $_POST['modelo'];
+        $precio = $_POST['precio'];
+        $capacidad = $_POST['capacidad'];
+        $patente = $_POST['patente'];
+        $gama = $_POST['gama'];
+        $autonomia = $_POST['autonomia'];
+
+        if(!empty($ciudad) && !empty($concesionaria) && !empty($modelo) && !empty($precio) && !empty($capacidad) && !empty($patente) && !empty($gama) && !empty($autonomia)) {
+                $data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
+                CarRepository::getInstance()->carAdd($data);
+                $view = new Home();
+                $view->show();
+        }
+        else{
+            $view = new Home();
+            $view->show();
+        }
+    }
     public function modelsBrand()
     {
         $idAuto=(int)$_POST['id'];

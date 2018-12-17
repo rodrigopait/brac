@@ -78,7 +78,7 @@ function ciudades(idPais,idCiudad){
 
   	    	var concesionarias = JSON.parse(response);
 
-  	    	var options = "<option disabled selected>Elija un modelo</option>";
+  	    	var options = "<option disabled selected>Elija una concesionaria</option>";
   	    	$.each(concesionarias, function (index, value) {
   	    	options += "<option value="+value.id+">"+value.nombre+"</option>";
   	    	});
