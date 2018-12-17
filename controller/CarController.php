@@ -20,8 +20,9 @@ class CarController {
     public function carSearch(){
         try{
             $rol = $_SESSION['rol'];
+            $paises = CountryRepository::getInstance()->listAll();
             $view = new CarSearch();
-            $view->show($rol);
+            $view->show($rol,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

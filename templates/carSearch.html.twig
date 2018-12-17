@@ -20,17 +20,22 @@
                             <div class="col-sm-6 form-group">
                                 <dl class="form-group">
                                     <dt><label>Localidad</label></dt>
-                                    <dd>
-                                        <input name="ciudadDestino" id="ciudadDestino" type="text" placeholder="Ciudad" class="form-control" required="true">    
+                                    <dd >
+                                        <select name="paisDestino" id="paisDestino" class="form-control" onchange="ciudades(this.id,'ciudadDestino');">
+                                            <option disabled="disabled" selected="selected">Elegí un Pais</option>
+                                            {% for country in countries %}
+                                                <option value={{country.id}} ="}">{{country.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </dd>
                                     <dd style="margin-top: 3%">
-                                        <input name="paisDestino" id="paisDestino" type="text" placeholder="Pais" class="form-control" required="true">    
+                                        <select name="ciudadDestino" id="ciudadDestino" class="form-control" disabled="disabled"></select>
                                     </dd>
                                 </dl>
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Capacidad</label>
-                                <input type="number" class="form-control" name="capacidad" id="capacidad" min="1" value="1" onkeypress="return justNumbers(event);" required="true">
+                                <input type="number" class="form-control" name="capacidad" id="capacidad" min="0" onkeypress="return justNumbers(event);" required="true">
                             </div>
                         </div>                 
                         <div align="center">
