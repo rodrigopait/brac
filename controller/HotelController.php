@@ -21,7 +21,7 @@ class HotelController {
         try{
             $rol = $_SESSION['rol'];
             $view = new HotelCreate();
-            $view->show($rol);
+            $view->show($rol,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -33,10 +33,10 @@ class HotelController {
     public function hotelAdd(){
         $nombre = $_POST['nombre'];
         $ciudad= $_POST['ciudad'];
-        $pais = $_POST['pais'];
+        $estrellas = $_POST['estrellas'];
 
-        if (isset($nombre) && !empty($nombre)){
-            HotelRepository::getInstance()->hotelAdd($nombre,$ciudad,$pais,0);
+        if (!empty($nombre)  && !empty($ciudad)   && !empty($estrellas) ){
+            HotelRepository::getInstance()->hotelAdd($nombre,$ciudad,$estrellas);
             $view = new Home();
             $view->show();
         }else{

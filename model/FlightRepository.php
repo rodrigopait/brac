@@ -41,8 +41,8 @@ class FlightRepository extends PDORepository {
     }
 
         //agrego un vuelo
-    public function flightAdd($fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino,$pais_origen,$pais_destino,$precio,$aerolinea_id) {
-        $query = $this->queryList("INSERT INTO vuelo (fecha_salida, fecha_llegada, capacidad, ciudad_origen,ciudad_destino,pais_origen,pais_destino,precio,aerolinea_id) VALUES (?,?,?,?,?,?,?,?,?)", array($fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino,$pais_origen,$pais_destino,$precio,$aerolinea_id));
+    public function flightAdd($data) {
+        $query = $this->queryList("INSERT INTO vuelo (fecha_salida, fecha_llegada, ciudad_origen,ciudad_destino,precio,capacidad_economica,capacidad_ejecutiva,capacidad_primera,aerolinea_id) VALUES (?,?,?,?,?,?,?,?,?)",$data);
     }
 }
 ?>

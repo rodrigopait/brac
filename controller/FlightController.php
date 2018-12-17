@@ -78,4 +78,35 @@ class FlightController {
             $view->show($error);
         }
     }
+
+    public function flightAdd()
+    {
+        $ciudadOrigen = $_POST['ciudadOrigen'];
+        $ciudadDestino = $_POST['ciudadDestino'];
+        $aerolinea = $_POST['aerolinea'];
+        $fechaPartida = $_POST['fechaPartida'];
+        $precio = $_POST['precio'];
+        $economica = $_POST['economica'];
+        $ejecutiva = $_POST['ejecutiva'];
+        $primera = $_POST['primera'];
+        $hora = $_POST['hora'];
+        $duracion = $_POST['duracion'];
+
+        if(!empty($ciudadOrigen) && !empty($ciudadDestino) && !empty($aerolinea) && !empty($fechaPartida) && !empty($precio) && !empty($economica) && !empty($ejecutiva) && !empty($primera) && !empty($hora) && !empty($duracion)) {
+                /*$data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
+                CarRepository::getInstance()->carAdd($data);
+                $view = new Home();
+                $view->show();*/
+                $fechaSalida= $fechaPartida.' '.$hora;
+                $fechaLLegada =date('Y-m-d H:i:s', strtotime($fechaSalida.' + '.$duracion.' hours'));
+                $data=array($fechaSalida,$fechaLLegada,$ciudadOrigen,$ciudadDestino,$precio,$economica,$ejecutiva,$primera,$aerolinea);
+                FlightRepository::getInstance()->flightAdd($data);
+                $view = new Home();
+                $view->show();
+        }
+        else{
+            $view = new Home();
+            $view->show();
+        }
+    }
 }

@@ -17,15 +17,15 @@ class HotelRepository extends PDORepository {
         
     }
 
-    public function hotelAdd($nombre,$ciudad,$pais,$reputacion_id){
-        $query = $this->queryList("INSERT INTO hotel (nombre,ciudad,pais,reputacion_id) VALUES (?,?,?,?)", array($nombre,$ciudad,$pais,$reputacion_id));
+    public function hotelAdd($nombre,$ciudad,$estrellas){
+        $query = $this->queryList("INSERT INTO hotel (id, nombre,ciudad_id,estrellas) VALUES (?,?,?)", array($nombre,$ciudad,$estrellas));
     }
 
     public function listAll() {
 
-        $query = $this->queryList("SELECT * FROM hotel", array());
+        $query = $this->queryList("SELECT * FROM hotel ORDER BY nombre", array());
         foreach ($query[0] as $row) {
-            $hotel = new Hotel( $row['id'], $row['nombre'],$row['ciudad'],$row['pais'],$row['reputacion_id']);
+            $hotel = new Hotel( $row['id'], $row['nombre'],$row['ciudad_id'],$row['estrellas']);
             $hotels[]=$hotel;
         }
         return $hotels;

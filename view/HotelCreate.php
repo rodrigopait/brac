@@ -2,14 +2,14 @@
 
 class Hotelcreate extends TwigView {
     
-    public function show($rol) {
+    public function show($rol,$countries) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
 		$loader = new Twig_Loader_Filesystem($templateDir);
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("hotelCreate.html.twig");
-        $template->display(array('rol' => $rol)); 
+        $template->display(array('rol' => $rol, 'countries'=> $countries)); 
         
         
     }

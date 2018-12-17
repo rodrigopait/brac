@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2018 a las 15:48:38
+-- Tiempo de generación: 17-12-2018 a las 21:28:39
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.1.16
 
@@ -349,18 +349,24 @@ INSERT INTO `habitacion_alquiler` (`id`, `desde`, `hasta`, `id_habitacion`, `com
 
 CREATE TABLE `hotel` (
   `id` int(11) NOT NULL,
-  `Nombre` varchar(255) NOT NULL,
-  `Ciudad` varchar(255) NOT NULL,
-  `Pais` varchar(255) NOT NULL,
-  `reputacion_id` int(11) NOT NULL
+  `nombre` varchar(255) NOT NULL,
+  `ciudad_id` int(11) NOT NULL,
+  `estrellas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `hotel`
 --
 
-INSERT INTO `hotel` (`id`, `Nombre`, `Ciudad`, `Pais`, `reputacion_id`) VALUES
-(1, 'Ibis', 'Buenos Aires', 'Argentina', 0);
+INSERT INTO `hotel` (`id`, `nombre`, `ciudad_id`, `estrellas`) VALUES
+(2, 'Hotel Madero', 1, 4),
+(3, ' Hilton', 1, 5),
+(4, ' Savoy Hotel', 1, 3),
+(5, ' Sileo Hotel', 1, 4),
+(6, 'Novotel Munich City', 83, 4),
+(7, ' Radisson Blu Hotel, Berlin', 82, 2),
+(8, ' Holiday Inn Munich - Westpark', 83, 5),
+(9, 'Centro Hotel City Gate', 84, 2);
 
 -- --------------------------------------------------------
 
@@ -528,18 +534,24 @@ INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, 
 
 CREATE TABLE `vuelo` (
   `id` int(11) NOT NULL,
-  `fecha_salida` date NOT NULL,
-  `fecha_llegada` date NOT NULL,
-  `capacidad` int(11) NOT NULL,
+  `fecha_salida` datetime NOT NULL,
+  `fecha_llegada` datetime NOT NULL,
   `ciudad_origen` varchar(50) NOT NULL,
   `ciudad_destino` varchar(50) NOT NULL,
   `precio` int(11) NOT NULL,
-  `duracion` int(11) NOT NULL,
   `capacidad_economica` int(11) NOT NULL,
   `capacidad_ejecutiva` int(11) NOT NULL,
   `capacidad_primera` int(11) NOT NULL,
   `aerolinea_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `vuelo`
+--
+
+INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
+(6, '2018-12-18 23:30:00', '2018-12-19 02:30:00', '1', '17', 2500, 250, 100, 50, 1),
+(7, '2018-12-19 21:50:00', '2018-12-21 22:50:00', '1', '113', 40000, 600, 300, 100, 3);
 
 -- --------------------------------------------------------
 
@@ -634,7 +646,8 @@ ALTER TABLE `habitacion_alquiler`
 -- Indices de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ciudad_id` (`ciudad_id`);
 
 --
 -- Indices de la tabla `marca`
@@ -743,7 +756,7 @@ ALTER TABLE `habitacion_alquiler`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -779,7 +792,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
@@ -809,6 +822,12 @@ ALTER TABLE `ciudad`
 --
 ALTER TABLE `concesionaria`
   ADD CONSTRAINT `concesionaria_ibfk_1` FOREIGN KEY (`ciudad_id`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `hotel`
+--
+ALTER TABLE `hotel`
+  ADD CONSTRAINT `hotel_ibfk_1` FOREIGN KEY (`ciudad_id`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `modelo`

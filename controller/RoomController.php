@@ -34,8 +34,9 @@ class RoomController {
     {
         try {
             $rol = $_SESSION['rol'];
+            $hotels = HotelRepository::getInstance()->listAll();
             $view = new RoomCreate();
-            $view->show($rol);
+            $view->show($rol,$hotels);
         } catch (PDOException $e) {
             $error = "Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
             $view = new Error_display();
