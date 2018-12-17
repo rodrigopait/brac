@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2018 a las 02:29:45
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.1.24
+-- Tiempo de generación: 17-12-2018 a las 15:48:38
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -75,6 +75,19 @@ CREATE TABLE `auto` (
   `autonomia` int(11) NOT NULL,
   `concesionaria_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `auto`
+--
+
+INSERT INTO `auto` (`id`, `ciudad_id`, `precio`, `gama`, `modelo_id`, `capacidad`, `patente`, `autonomia`, `concesionaria_id`) VALUES
+(1, 1, 500, 'Media', 1, 4, 'BG8-S98', 15, 2),
+(2, 84, 800, 'Media', 10, 4, 'BKE-98S', 12, 6),
+(3, 82, 1500, 'Alta', 20, 4, 'PA1-RG9', 20, 5),
+(4, 17, 1600, 'Alta', 3, 5, 'B9B-WA8', 20, 7),
+(5, 2, 800, 'Media', 26, 5, 'LKJ-6D2', 16, 3),
+(6, 5, 400, 'Baja', 13, 5, 'AG8-SS6', 10, 4),
+(7, 5, 950, 'Media', 14, 5, 'POA-65A', 14, 4);
 
 -- --------------------------------------------------------
 
@@ -412,8 +425,7 @@ INSERT INTO `modelo` (`id`, `descripcion`, `marca_id`) VALUES
 (26, 'Onix', 6),
 (27, 'Prisma', 6),
 (28, 'Corsa', 6),
-(29, 'Aveo', 6),
-(30, 'Prisma', 6);
+(29, 'Aveo', 6);
 
 -- --------------------------------------------------------
 
@@ -521,22 +533,13 @@ CREATE TABLE `vuelo` (
   `capacidad` int(11) NOT NULL,
   `ciudad_origen` varchar(50) NOT NULL,
   `ciudad_destino` varchar(50) NOT NULL,
-  `pais_origen` varchar(50) NOT NULL,
-  `pais_destino` varchar(50) NOT NULL,
   `precio` int(11) NOT NULL,
-  `escalas` int(11) NOT NULL,
-  `clase_id` int(11) NOT NULL,
+  `duracion` int(11) NOT NULL,
+  `capacidad_economica` int(11) NOT NULL,
+  `capacidad_ejecutiva` int(11) NOT NULL,
+  `capacidad_primera` int(11) NOT NULL,
   `aerolinea_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `vuelo`
---
-
-INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `capacidad`, `ciudad_origen`, `ciudad_destino`, `pais_origen`, `pais_destino`, `precio`, `escalas`, `clase_id`, `aerolinea_id`) VALUES
-(1, '2019-01-02', '2019-01-03', 49, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 1000, 0, 0, 0),
-(2, '2017-12-03', '2017-12-05', 350, 'Lanus', 'La Plata', 'Argentina', 'Argentina', 990, 0, 0, 0),
-(3, '2019-01-02', '2019-01-11', 300, 'La Plata', 'Mar del Plata', 'Argentina', 'Argentina', 770, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -698,7 +701,7 @@ ALTER TABLE `aeropuerto`
 -- AUTO_INCREMENT de la tabla `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `auto_alquiler`
