@@ -27,6 +27,7 @@ class CountryRepository extends PDORepository {
     	return $countries;
     }
 
+    //PAISES Y CIUDADES CON CONCESIONARIAS
     public function listWithConcessionaries()
     {
         $query = $this->queryList("SELECT ci.pais_id as id, p.nombre as nombre FROM ciudad ci INNER JOIN concesionaria co INNER JOIN pais p WHERE ci.id = co.ciudad_id and ci.pais_id = p.id GROUP BY ci.pais_id, p.nombre ORDER by p.nombre", array());
@@ -38,20 +39,21 @@ class CountryRepository extends PDORepository {
         return $countries;
     }
 
-    public function citiesWithConcessionaire($idPais)
+
+    //PAISES Y CIUDADES CON HOTELES Y HABITACIONES
+    public function listWithRoom()
     {
-        $query = $this->queryList("SELECT ci.id as id, ci.nombre as nombre  FROM ciudad ci INNER JOIN concesionaria co WHERE ci.id = co.ciudad_id and ci.pais_id = ? GROUP BY ci.id, ci.nombre ORDER by ci.nombre", array($idPais));
-        $cities=array();
+        $query = $this->queryList("SELECT ci.pais_id as id, p.nombre as nombre FROM ciudad ci INNER JOIN hotel h INNER JOIN pais p WHERE ci.id = h.ciudad_id and ci.pais_id = p.id GROUP BY ci.pais_id, p.nombre ORDER by p.nombre", array());
+        $countries = array();
         foreach ($query[0] as $row) {
-            $city =  new stdClass();
-            $city->id = $row['id'];
-            $city->nombre = utf8_encode($row['nombre']);
-            $cities[]=$city;
+            $country = new Country( $row['id'], $row['nombre']);
+            $countries[]=$country;
         }
-
-
-        return json_encode($cities);
+        return $countries;
     }
+
+
+
 
     
 

@@ -3,7 +3,7 @@
 class RoomCreate extends TwigView
 {
 
-    public function show ($rol,$hotels)
+    public function show ($rol,$countries)
     {
 
         $templateDir = "./templates";
@@ -12,7 +12,7 @@ class RoomCreate extends TwigView
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate("roomCreate.html.twig");
 
-        $template->display(array('rol' => $rol, 'hotels' => $hotels));
+        $template->display(array('rol' => $rol, 'countries' => $countries));
 
 
     }

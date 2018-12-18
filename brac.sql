@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2018 a las 21:28:39
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.1.16
+-- Tiempo de generación: 18-12-2018 a las 03:01:17
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.1.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -302,6 +302,7 @@ INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUE
 
 CREATE TABLE `habitacion` (
   `id` int(11) NOT NULL,
+  `numero` varchar(255) NOT NULL,
   `capacidad` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `hotel_id` int(11) NOT NULL
@@ -311,12 +312,8 @@ CREATE TABLE `habitacion` (
 -- Volcado de datos para la tabla `habitacion`
 --
 
-INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `hotel_id`) VALUES
-(1, 10, 500, 4),
-(2, 4, 500, 4),
-(3, 5, 777, 5),
-(4, 4, 1234, 5),
-(5, 40, 4444, 3);
+INSERT INTO `habitacion` (`id`, `numero`, `capacidad`, `precio`, `hotel_id`) VALUES
+(1, '100', 5, 300, 4);
 
 -- --------------------------------------------------------
 
@@ -744,7 +741,7 @@ ALTER TABLE `concesionaria`
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
@@ -768,7 +765,7 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT de la tabla `modelo`
 --
 ALTER TABLE `modelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`

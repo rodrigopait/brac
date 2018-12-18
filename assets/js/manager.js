@@ -65,6 +65,8 @@ function ciudades(idPais,idCiudad){
     	    }
     	});
    }
+
+
   function concesionarias(idCiudad,idConcesionaria){
   	var ciudad = $("#"+idCiudad).val();
   	var params= {'id' : ciudad}
@@ -87,3 +89,51 @@ function ciudades(idPais,idCiudad){
   	    }
   	});
   }
+
+  function ciudadesConHabitaciones(idPais,idCiudad){
+      var pais = $("#"+idPais).val();
+      var params= {'id' : pais}
+
+      //llamada al fichero PHP con AJAX
+      $.ajax({
+          data:  params,
+          url:  'index.php?controller=City&method=citiesRooms',
+          type:  'post',
+          success:  function (response) {
+
+            var cities = JSON.parse(response);
+            var options = "<option disabled selected>Elija una ciudad</option>";
+            $.each(cities, function (index, value) {
+            options += "<option value ="+value.id+">"+value.nombre+"</option>";
+            });
+            $('#'+idCiudad).prop('disabled', false);
+            $('#'+idCiudad).html(options);
+          }
+      });
+   }
+
+   function hoteles(idCiudad,idHotel){
+    var ciudad = $("#"+idCiudad).val();
+    var params= {'id' : ciudad}
+
+    //llamada al fichero PHP con AJAX
+    $.ajax({
+        data:  params,
+        url:  'index.php?controller=Hotel&method=hotelsFrom',
+        type:  'post',
+        success:  function (response) {
+
+          var concesionarias = JSON.parse(response);
+
+          var options = "<option disabled selected>Elija una hotel</option>";
+          $.each(concesionarias, function (index, value) {
+          options += "<option value="+value.id+">"+value.nombre+"</option>";
+          });
+          $('#'+idHotel).prop('disabled', false);
+          $('#'+idHotel).html(options);
+        }
+    });
+   }
+
+
+

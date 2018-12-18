@@ -34,9 +34,9 @@ class RoomController {
     {
         try {
             $rol = $_SESSION['rol'];
-            $hotels = HotelRepository::getInstance()->listAll();
+            $paises = CountryRepository::getInstance()->listWithRoom();
             $view = new RoomCreate();
-            $view->show($rol,$hotels);
+            $view->show($rol,$paises);
         } catch (PDOException $e) {
             $error = "Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
             $view = new Error_display();
@@ -78,6 +78,24 @@ class RoomController {
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
             $view = new Error_display();
             $view->show($error);
+        }
+    }
+
+    public function roomAdd(){
+        $numero = $_POST['numero'];
+        $precio= $_POST['precio'];
+        $capacidad = $_POST['capacidad'];
+        $hotel = $_POST['hotel'];
+
+
+        if (!empty($numero) && !empty($precio) && !empty($capacidad) && !empty($hotel)){
+            $data=array($numero,$capacidad,$precio,$hotel);
+            RoomRepository::getInstance()->roomAdd($data);
+            $view = new Home();
+            $view->show();
+        }else{
+            $view = new Home ();
+            $view->show();
         }
     }
 

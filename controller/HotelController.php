@@ -44,4 +44,14 @@ class HotelController {
             $view->show();
         }
     }
+
+    public function hotelsFrom()
+    {
+        $idCiudad=(int)$_POST['id'];
+        $hotels=HotelRepository::getInstance()->listFrom($idCiudad);
+        echo ($hotels);
+
+    }
+
+
 }

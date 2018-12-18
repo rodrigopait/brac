@@ -31,4 +31,21 @@ class HotelRepository extends PDORepository {
         return $hotels;
     }
 
+        public function listFrom($idCiudad)
+    {
+        $query = $this->queryList("SELECT * FROM hotel WHERE ciudad_id = ? ORDER BY nombre", array($idCiudad));
+        $hotels=array();
+        foreach ($query[0] as $row) {
+            $hotel =  new stdClass();
+            $hotel->id = $row['id'];
+            $hotel->nombre = utf8_encode($row['nombre']);
+            $hotels[]=$hotel;
+        }
+
+
+        return json_encode($hotels);
+    }
+
+
+
 }

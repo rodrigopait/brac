@@ -53,6 +53,21 @@ class CityRepository extends PDORepository {
 
 
         return json_encode($cities);
+    }
+
+    public function citiesWithRoom($idPais)
+    {
+        $query = $this->queryList("SELECT ci.id as id, ci.nombre as nombre  FROM ciudad ci INNER JOIN hotel h WHERE ci.id = h.ciudad_id and ci.pais_id = ? GROUP BY ci.id, ci.nombre ORDER by ci.nombre", array($idPais));
+        $cities=array();
+        foreach ($query[0] as $row) {
+            $city =  new stdClass();
+            $city->id = $row['id'];
+            $city->nombre = utf8_encode($row['nombre']);
+            $cities[]=$city;
+        }
+
+
+        return json_encode($cities);
     } 
 
 }

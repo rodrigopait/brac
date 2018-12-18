@@ -34,4 +34,12 @@ class CityController {
         echo ($cities);
     }
 
+    public function citiesRooms()
+    {
+        $idPais=(int)$_POST['id'];
+        $cities = CityRepository::getInstance()->citiesWithRoom($idPais);
+        echo ($cities);
+    }
+
+
 }
