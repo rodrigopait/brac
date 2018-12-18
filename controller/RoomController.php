@@ -65,12 +65,13 @@ class RoomController {
             $estrellas = $_POST['estrellas'];
             $ciudadDestino = $_POST['ciudadDestino'];
             $paisDestino = $_POST['paisDestino'];
-            $personas = $_POST['personas'];
+            $capacidad = $_POST['personas'];
             $desde = new DateTime($_POST['fechaDesde']);
             $hasta = new DateTime($_POST['fechaHasta']);
             $fechaDesde = $desde->format('Y-m-d');
             $fechaHasta = $hasta->format('Y-m-d');
-            $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $personas);
+            // var_dump($estrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta);die;
+            $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $capacidad);
             $view = new RoomsList(); 
             $view->show($rol, $rooms, $fechaDesde, $fechaHasta);
         }

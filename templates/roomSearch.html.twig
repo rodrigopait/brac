@@ -24,7 +24,7 @@
                                         <select name="paisDestino" id="paisDestino" class="form-control" onchange="ciudades(this.id,'ciudadDestino');">
                                             <option disabled="disabled" selected="selected">Elegí un Pais</option>
                                             {% for country in countries %}
-                                                <option value={{country.id}}="}">{{country.nombre}}</option>
+                                                <option value={{country.id}}>{{country.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </dd>
