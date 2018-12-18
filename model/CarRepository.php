@@ -31,10 +31,43 @@ class CarRepository extends PDORepository {
     public function listFromSearch($fechaDesde, $fechaHasta, $capacidad, $ciudadDestino, $paisDestino) {
 
         $cars = null;
-        $query = RoomRepository::getInstance()->queryList("SELECT * FROM auto WHERE capacidad = ? AND ciudad = ? AND pais = ? AND id NOT IN (SELECT id_auto FROM auto_alquiler WHERE (desde BETWEEN ? AND ?) OR (hasta BETWEEN ? AND ?) OR (desde < ? AND hasta > ?))", array($capacidad, $ciudadDestino, $paisDestino, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
-
+        $sql = "SELECT auto.id as id, 
+                    ciudad.nombre as ciudad, 
+                    precio, 
+                    gama, 
+                    modelo.descripcion as modelo,
+                    marca.descripcion as marca,
+                    capacidad,
+                    patente,
+                    autonomia,
+                    pais.nombre as pais
+                FROM auto
+                    INNER JOIN ciudad ON auto.ciudad_id = ciudad.id
+                    INNER JOIN pais ON ciudad.pais_id = pais.id
+                    INNER JOIN modelo ON auto.modelo_id = modelo.id
+                    INNER JOIN marca ON modelo.marca_id = marca.id
+                WHERE 
+                    auto.capacidad >= ? 
+                    AND ciudad.id = ? 
+                    AND pais.id = ? 
+                    AND auto.id NOT IN (SELECT id_auto 
+                                    FROM auto_alquiler 
+                                    WHERE (desde BETWEEN ? AND ?) 
+                                        OR (hasta BETWEEN ? AND ?) 
+                                        OR (desde < ? AND hasta > ?))
+                ORDER BY auto.precio";
+        $query = RoomRepository::getInstance()->queryList($sql, array($capacidad, $ciudadDestino, $paisDestino, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
         foreach ($query[0] as $row) {
-            $car = new Car ( $row['id'], $row['precio'], $row['capacidad'], $row['modelo'], $row['ciudad'], $row['pais']);
+            $car = new Car ( $row['id'], 
+                            $row['ciudad'], 
+                            $row['precio'], 
+                            $row['gama'], 
+                            $row['modelo'], 
+                            $row['marca'], 
+                            $row['capacidad'], 
+                            $row['patente'], 
+                            $row['autonomia'], 
+                            $row['pais']);
             $cars[]=$car;
         }
 

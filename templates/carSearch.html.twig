@@ -4,7 +4,7 @@
         <h1 class="col-lg-12 well">Buscar Auto</h1>
         <div class="col-lg-12 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?action=carsList" enctype="multipart/form-data">
+                <form name="form" method="post" action="index.php?controller=Car&method=carsList" enctype="multipart/form-data">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6 form-group">
@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Capacidad</label>
-                                <input type="number" class="form-control" name="capacidad" id="capacidad" min="0" onkeypress="return justNumbers(event);" required="true">
+                                <input type="number" placeholder="Capacidad" class="form-control" name="capacidad" id="capacidad" min="1" onkeypress="return justNumbers(event);" required="true">
                             </div>
                         </div>                 
                         <div align="center">
