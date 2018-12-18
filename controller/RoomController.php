@@ -20,8 +20,9 @@ class RoomController {
     public function roomSearch(){
         try{
             $rol = $_SESSION['rol'];
+            $paises = CountryRepository::getInstance()->listAll();
             $view = new RoomSearch();
-            $view->show($rol);
+            $view->show($rol,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -61,18 +62,17 @@ class RoomController {
     public function roomsList(){
         try{
             $rol = $_SESSION['rol'];
-            $minimoEstrellas = $_POST['minimoEstrellas'];
-            $maximoEstrellas = $_POST['maximoEstrellas'];
+            $estrellas = $_POST['estrellas'];
             $ciudadDestino = $_POST['ciudadDestino'];
             $paisDestino = $_POST['paisDestino'];
-            $capacidad = $_POST['capacidad'];
+            $personas = $_POST['personas'];
             $desde = new DateTime($_POST['fechaDesde']);
             $hasta = new DateTime($_POST['fechaHasta']);
             $fechaDesde = $desde->format('Y-m-d');
             $fechaHasta = $hasta->format('Y-m-d');
-            $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad);
+            $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $personas);
             $view = new RoomsList(); 
-            $view->show($rol, $rooms, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
+            $view->show($rol, $rooms, $fechaDesde, $fechaHasta);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -82,14 +82,13 @@ class RoomController {
     }
 
     public function roomAdd(){
-        $numero = $_POST['numero'];
         $precio= $_POST['precio'];
         $capacidad = $_POST['capacidad'];
         $hotel = $_POST['hotel'];
 
 
-        if (!empty($numero) && !empty($precio) && !empty($capacidad) && !empty($hotel)){
-            $data=array($numero,$capacidad,$precio,$hotel);
+        if (!empty($precio) && !empty($capacidad) && !empty($hotel)){
+            $data=array($capacidad,$precio,$hotel);
             RoomRepository::getInstance()->roomAdd($data);
             $view = new Home();
             $view->show();
