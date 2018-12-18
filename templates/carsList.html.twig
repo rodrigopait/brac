@@ -9,17 +9,22 @@
                     <td align="center"><strong>Ubicacion</strong></td>
                     <td align="center"><strong>Fecha Inicio</strong></td>
                     <td align="center"><strong>Fecha Fin</strong></td>
+                    <td align="center"><strong>Marca</strong></td>
                     <td align="center"><strong>Modelo</strong></td>
+                    <td align="center"><strong>Gama</strong></td>
+                    <td align="center"><strong>Autonomia</strong></td>
                     <td align="center"><strong>Capacidad</strong></td>
                     <td align="center"><strong>Precio</strong></td>
-                    <td align="center"></td>
                 </tr>
                 {% for car in cars %}
                 <tr>
                     <td align="center">{{ car.getCiudadDestino }}, {{ car.getPaisDestino }}</td>
                     <td align="center">{{ fechaDesde }}</td>
                     <td align="center">{{ fechaHasta }}</td>
+                    <td align="center">{{ car.getMarca }}</td>
                     <td align="center">{{ car.getModelo }}</td>
+                    <td align="center">{{ car.getGama }}</td>
+                    <td align="center">{{ car.getAutonomia }}</td>
                     <td align="center">{{ car.getCapacidad }}</td>
                     <td align="center">${{ car.getPrecio }}</td>
                     {% if rol == 1 %}
