@@ -46,7 +46,7 @@ class FlightController {
 
     public function flightsList(){
         try{
-            #var_dump($_POST);die;
+            
             $rol = $_SESSION['rol'];
             $ciudadOrigen = $_POST['ciudadOrigen'];
             $paisOrigen = $_POST['paisOrigen'];

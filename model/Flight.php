@@ -12,8 +12,9 @@ class Flight {
     private $pais_destino;
     private $precio;
     private $escala;
+    private $categoria;
     
-    public function __construct($id, $fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino, $pais_origen, $pais_destino, $precio,$escala) {
+    public function __construct($id, $fecha_salida, $fecha_llegada, $capacidad, $ciudad_origen, $ciudad_destino, $pais_origen, $pais_destino, $precio,$escala,$categoria) {
 
         $this->id = $id;
         $this->fecha_salida = $fecha_salida;
@@ -25,6 +26,7 @@ class Flight {
         $this->pais_destino = $pais_destino;
         $this->precio = $precio;
         $this->escala = $escala;
+        $this->categoria = $categoria;
     }
 
     public function getId() {
@@ -65,6 +67,10 @@ class Flight {
 
     public function getEscala() {
         return $this->escala;
+    }
+
+    public function getCategoria() {
+        return $this->categoria;
     }
 }
 

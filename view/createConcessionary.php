@@ -2,7 +2,7 @@
 
 class createConcessionary extends TwigView {
     
-    public function show() {
+    public function show($rol) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -10,7 +10,7 @@ class createConcessionary extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("createConcessionary.html.twig");
 
-    	$template->display(array('' => )); 
+    	$template->display(array('rol' => $rol)); 
         
         
     }
