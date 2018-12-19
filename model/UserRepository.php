@@ -45,6 +45,7 @@ class UserRepository extends PDORepository {
                 $_SESSION['carsFechaDesde'][] = null;
                 $_SESSION['carsFechaHasta'][] = null;
                 $res[0] = null;
+                return $user;
             }
             else{
                 $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";

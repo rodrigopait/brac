@@ -250,11 +250,11 @@ class UserController {
 
      if(isset($usuario) && isset($clave))
      {
-       $user = UserRepository::getInstance()->user_login($usuario, $clave);
+       $user = UserRepository::getInstance()->login_user($usuario, $clave);
         if($user != null)
         {
-            $view = new IndexUser();
-            $view->show($rol, $user);
+            $view = new Home();
+            $view->show();
 
 
         }else {
