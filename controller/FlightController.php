@@ -48,46 +48,41 @@ class FlightController {
 
     public function flightsList(){
         try{
-            
+
             $rol = $_SESSION['rol'];
             $ciudadOrigen = $_POST['ciudadOrigen'];
             $ciudadDestino = $_POST['ciudadDestino'];
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
-<<<<<<< HEAD
-            $flights = FlightRepository::getInstance()->listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino);
-            $view = new FlightsList();
-            $view->show($rol, $flights);
-=======
             $escalas = $_POST['escalas'];
-            
+
             $idclase = $_POST['clase'];
             $clase = ClaseRepository::getInstance()->getClase($idclase);
 
             #var_dump($idclase);die;
             if($idClase = 1)
             {
-                $flights = FlightRepository::getInstance()->listFromSearchByClase1($fecha, $ciudadOrigen, $ciudadDestino, $escalas);  
+                $flights = FlightRepository::getInstance()->listFromSearchByClase1($fecha, $ciudadOrigen, $ciudadDestino, $escalas);
                 #var_dump($flights);die;
 
             }else
             {
                 if($idClase = 2)
                 {
-                $flights = FlightRepository::getInstance()->listFromSearchByClase2($fecha, $ciudadOrigen, $ciudadDestino, $escalas);    
-                }else 
+                $flights = FlightRepository::getInstance()->listFromSearchByClase2($fecha, $ciudadOrigen, $ciudadDestino, $escalas);
+                }else
                 {
                     if($idClase = 3)
                     {
-                    $flights = FlightRepository::getInstance()->listFromSearchByClase3($fecha, $ciudadOrigen, $ciudadDestino, $escalas);    
+                    $flights = FlightRepository::getInstance()->listFromSearchByClase3($fecha, $ciudadOrigen, $ciudadDestino, $escalas);
                     }
-                }    
+                }
             }
-            
 
-            
 
-            $view = new FlightsList(); 
+
+
+            $view = new FlightsList();
             $view->show($rol, $flights,$clase);
         }
         catch (PDOException $e){
@@ -104,7 +99,6 @@ class FlightController {
             $airlines = AirlineRepository::getInstance()->listAll();
             $view = new FlightCreate();
             $view->show($rol,$airlines,$paises);
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -112,9 +106,6 @@ class FlightController {
             $view->show($error);
         }
     }
-<<<<<<< HEAD
-}
-=======
 
     public function flightAdd()
     {
@@ -128,7 +119,8 @@ class FlightController {
         $primera = $_POST['primera'];
         $hora = $_POST['hora'];
         $duracion = $_POST['duracion'];
-
+        $escalas = $_POST['escalas'];
+      
         if(!empty($ciudadOrigen) && !empty($ciudadDestino) && !empty($aerolinea) && !empty($fechaPartida) && !empty($precio) && !empty($economica) && !empty($ejecutiva) && !empty($primera) && !empty($hora) && !empty($duracion)) {
                 /*$data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
                 CarRepository::getInstance()->carAdd($data);
@@ -147,4 +139,3 @@ class FlightController {
         }
     }
 }
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
