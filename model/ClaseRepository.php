@@ -19,6 +19,7 @@ class ClaseRepository extends PDORepository {
     {
     	$query = ClaseRepository::getInstance()->queryList("SELECT * FROM clase", array());
         
+        $clases = [];
         #var_dump($query[0]);die;
         foreach ($query[0] as $row) {
             #var_dump($row['descripcion']);die;
