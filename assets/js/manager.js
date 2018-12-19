@@ -135,5 +135,14 @@ function ciudades(idPais,idCiudad){
     });
    }
 
+// A $( document ).ready() block.
+$( document ).ready(function() {
+  $('#eliminar').click(function() {
+      alertify.confirm("¿Estas seguro?.",
+        function(){
+          window.location.href = "index.php?controller=User&method=userDelete";
+        });
+  });
 
 
+});

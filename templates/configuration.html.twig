@@ -4,50 +4,50 @@
         <h1 class="col-lg-9 well">Configuraciones</h1>
         <div class="col-lg-9 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?controller=User&method=userComercialAdd" enctype="multipart/form-data">
+                <form name="form" method="post" action="index.php?controller=Configuration&method=configurationAdd" enctype="multipart/form-data">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group" style="margin-left: 10vh;">
                                 <label>Gap maximo en horas</label>
-                                <input type="number" min="0.0" step="0.1" class="form-control" placeholder="Gap Maximo en horas" name="gap" id="gap" required />
+                                <input value="{{config.getGapMax}}" type="number" min="0.0" step="0.1" class="form-control"  name="gap" id="gap" required />
                             </div>
                             <div class="col-sm-2 form-group"></div>
                             <div class="col-sm-4 form-group">
-                                <label>Porcentaje de devolución</label>
-                                <input type="number" class="form-control" min="0" placeholder="Devolución Diaria" name="devolucion" id="devolucion" required />
+                                <label>Porcentaje de devolución {{config.porcentaje_devolucion}}</label>
+                                <input value="{{config.getPorcentajeDevolucion}}" type="number" class="form-control" min="0"  name="devolucion" id="devolucion" required />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 form-group" style="margin-left: 10vh;">
                                 <label>Descuento por escala</label>
-                                <input type="number" min="0" name="descuento" placeholder="Descuento por escala" id="descuento"  class="form-control" required>
+                                <input value="{{config.getDescuentoEscalas}}" type="number" min="0" name="descuento" placeholder="Descuento por escala" id="descuento"  class="form-control" required>
                             </div>
                             <div class="col-sm-2 form-group"></div>
                             <div class="col-sm-4 form-group">
                                 <label>Intentos de sesion</label>
-                                <input type="number" min="0" placeholder="Intentos de sesion" id="intentos" name="intentos" class="form-control" required/>
+                                <input value="{{config.getIntentosSesion}}" type="number" min="0" placeholder="Intentos de sesion" id="intentos" name="intentos" class="form-control" required/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 form-group" style="margin-left: 10vh;">
                                 <label>Precio por puntos</label>
-                                <input type="number" min="0.0" step="0.1" name="precioPuntos" placeholder="Precio por puntos"  class="form-control" required>
+                                <input value="{{config.getPrecioPorPuntos}}" type="number" min="0.0" step="0.1" name="precioPuntos" placeholder="Precio por puntos"  class="form-control" name="precioPuntos" required>
                             </div>
                             <div class="col-sm-2 form-group"></div>
                             <div class="col-sm-4 form-group">
                                 <label>Precio clase ejecutiva</label>
-                                <input type="password" name="clave" placeholder="Precio clase ejecutiva" id="clave"  class="form-control" required>
+                                <input value="{{config.getPrecioEjecutiva}}" type="number" name="precioEjecutiva" placeholder="Precio clase ejecutiva" id="clave"  class="form-control" required>
                             </div>
                         </div>
                         <div class="row">    
                             <div class="col-sm-4 form-group" style="margin-left: 10vh;">
                                 <label>Precio por peso</label>
-                                <input type="number" min="0.0" step="0.1" placeholder="Precio por peso" id="precioPeso" name="precioPeso" class="form-control" required/>
+                                <input value="{{config.getPrecioPeso}}" type="number" min="0.0" step="0.1" placeholder="Precio por peso" id="precioPeso" name="precioPeso" class="form-control" required/>
                             </div>
                             <div class="col-sm-2 form-group"></div>
                             <div class="col-sm-4 form-group">
                                 <label>Precio clase primera</label>
-                                <input type="number" min="0" name="precioPrimera" placeholder="Precio primera clase"  class="form-control" required>
+                                <input value="{{config.getPrecioPrimera}}" type="number" min="0" name="precioPrimera" placeholder="Precio primera clase"  class="form-control" required>
                             </div>
                         </div>
                         <div align="center">

@@ -2,7 +2,7 @@
 
 class Home extends TwigView {
     
-    public function show() {
+    public function show($message=null) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -10,8 +10,7 @@ class Home extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("home.html.twig");
     	$rol = $_SESSION['rol'];
-    	
-    	$template->display(array('rol' => $rol)); 
+    	$template->display(array('rol' => $rol,'mensajeError' => $message)); 
         
         
     }

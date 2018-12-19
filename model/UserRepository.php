@@ -28,7 +28,7 @@ class UserRepository extends PDORepository {
                 ':password' => $password
             );
 
-            $res = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE usuario = ? AND clave = ?", array($username, $password));
+            $res = self::getInstance()->queryList("SELECT u.id, u.usuario,u.clave,u.nombre,u.apellido,u.dni,u.email,u.rol_id,u.nro_tarjeta,r.descripcion_rol FROM usuario u INNER JOIN rol r ON u.rol_id = r.id WHERE usuario =? AND clave = ?", array($username, $password));
             $user = $res[0]->fetch(PDO::FETCH_ASSOC);
             if(($user['usuario'] == $username) && ($user['clave'] == $password)){
                 $_SESSION['rol'] = $user['descripcion_rol'];
@@ -60,10 +60,20 @@ class UserRepository extends PDORepository {
 
     public function listAllByRol($rol) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE descripcion_rol = ? ", array($rol));
+        $query = self::getInstance()->queryList("SELECT * FROM usuario WHERE rol_id = ? ", array($rol));
+        $users['rol']=$rol;
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['descripcion_rol']);
-            $users[]=$user;
+            $user = new stdClass();
+            $user->id=$row['id'];
+            $user->usuario=$row['usuario'];
+            $user->nombre=$row['nombre'];
+            $user->clave=$row['clave'];
+            $user->apellido=$row['apellido'];
+            $user->email= $row['email'];
+            $user->rol=$row['rol_id'];
+            $user->dni=$row['dni'];
+            $user->tarjeta=$row['nro_tarjeta'];
+            $users['users'][]=$user;
         }
         $query = null;
         return $users;
@@ -77,22 +87,22 @@ class UserRepository extends PDORepository {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
 
-    public function user_add($usuario, $clave, $nombre, $apellido, $email) {
-        $query = $this->queryList("INSERT INTO usuario (usuario, clave, nombre, apellido, email) VALUES (?,?,?,?,?)", array($usuario, $clave, $nombre, $apellido, $email));
+    public function user_add($usuario, $clave, $nombre, $apellido, $email, $tarjeta) {
+        $query = $this->queryList("INSERT INTO usuario (usuario, clave, nombre, apellido, email,rol_id,nro_tarjeta) VALUES (?,?,?,?,?,?,?)", array($usuario, $clave, $nombre, $apellido, $email,1,$tarjeta));
     }
 
     public function user_information($userId) {
         $user=null;
-        $query = $this->queryList("SELECT * FROM usuario NATURAL JOIN rol WHERE usuario.id = ?", array($userId));
+        $query = $this->queryList("SELECT * FROM usuario  WHERE id = ?", array($userId));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['nro_tarjeta'], $row['rol']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['nro_tarjeta'],$row['dni'] ,$row['rol_id']);
         }
         $query = null;
         return $user;
     }
 
-    public function user_information_modify($userId, $usuario, $clave, $nombre, $apellido, $email) {
-        $this->queryList("UPDATE usuario SET usuario=?, clave=?, nombre=?, apellido=?, email=? WHERE id = ?", array($usuario, $clave, $nombre, $apellido, $email, $userId));
+    public function user_information_modify($userId, $usuario, $clave, $nombre, $apellido, $email,$tarjeta,$dni) {
+        $this->queryList("UPDATE usuario SET usuario=?, clave=?, nombre=?, apellido=?, email=? , nro_tarjeta=? , dni=? WHERE id = ?", array($usuario, $clave, $nombre, $apellido, $email, $tarjeta,$dni,$userId));
     }
 
 
@@ -109,6 +119,11 @@ class UserRepository extends PDORepository {
         $_SESSION['carsFechaHasta'][] = null;
         $_SESSION['roomsFechaDesde'][] = null;
         $_SESSION['roomsFechaHasta'][] = null;
+    }
+
+    public function userComercialAdd($data)
+    {
+        $query = $this->queryList("INSERT INTO usuario (usuario,clave,nombre, apellido, dni, email,rol_id) VALUES (?,?,?,?,?,?,?)",$data);
     }
 
 }

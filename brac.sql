@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2018 a las 03:01:17
+-- Tiempo de generación: 19-12-2018 a las 04:11:22
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.1.24
 
@@ -297,6 +297,31 @@ INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `configuracion`
+--
+
+CREATE TABLE `configuracion` (
+  `id` int(11) NOT NULL,
+  `gap_max` int(11) NOT NULL,
+  `descuento_escala` int(11) NOT NULL,
+  `precio_puntos` int(11) NOT NULL,
+  `precio_peso` int(11) NOT NULL,
+  `porcentaje_devolucion` int(11) NOT NULL,
+  `intentos_sesion` int(11) NOT NULL,
+  `precio_ejecutiva` int(11) NOT NULL,
+  `precio_primera` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `configuracion`
+--
+
+INSERT INTO `configuracion` (`id`, `gap_max`, `descuento_escala`, `precio_puntos`, `precio_peso`, `porcentaje_devolucion`, `intentos_sesion`, `precio_ejecutiva`, `precio_primera`) VALUES
+(1, 5, 20, 150, 200, 15, 6, 250, 500);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `habitacion`
 --
 
@@ -509,19 +534,23 @@ CREATE TABLE `usuario` (
   `clave` varchar(50) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
+  `dni` varchar(8) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `nro_tarjeta` varchar(255) NOT NULL
+  `nro_tarjeta` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, `rol_id`, `nro_tarjeta`) VALUES
-(0, 'administrador', 'negro', 'Administrador', '', 'admin@admin.com', 2, ''),
-(1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 3, ''),
-(2, 'alex', 'negro', 'Alex', 'El Leon', 'alex@elleon.com', 1, '5547-5236-5894-7895');
+INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`) VALUES
+(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, NULL),
+(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, 'null'),
+(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, 'null'),
+(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, 'null'),
+(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, 'null'),
+(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966');
 
 -- --------------------------------------------------------
 
@@ -783,7 +812,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo`
