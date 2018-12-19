@@ -22,13 +22,13 @@ class UserRepository extends PDORepository {
 
     public function login_user() {
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $_POST['usuario'];
+        $password = $_POST['clave'];
 
         if(!is_null($username) AND !is_null($password)){
             $array = array(
-                ':username' => $username,
-                ':password' => $password
+                ':usuario' => $username,
+                ':clave' => $password
             );
 
             $res = self::getInstance()->queryList("SELECT u.id, u.usuario,u.clave,u.nombre,u.apellido,u.dni,u.email,u.rol_id,u.nro_tarjeta,r.descripcion_rol FROM usuario u INNER JOIN rol r ON u.rol_id = r.id WHERE usuario =? AND clave = ?", array($username, $password));
