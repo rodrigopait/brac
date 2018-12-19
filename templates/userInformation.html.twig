@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-8 form-group">
+                        <div class="col-sm-4 form-group">
                             <label>Email</label>
                             <span id="email"  class="form-control">{{ usuario.getEmail }}</span>
                         </div>
@@ -28,10 +28,21 @@
                             <label>Contrase&ntilde;a</label>
                             <span id="clave" class="form-control">***********</span>
                         </div>
+                        {% if rol == 'administrador' %}
+                            <div class="col-sm-4 form-group">
+                              <label>Dni</label>
+                              <span id="dni"  class="form-control">{{ usuario.getDni }}</span>
+                            </div>
+                        {% elseif rol == 'cliente' %}
+                        <div class="col-sm-4 form-group">
+                            <label>Tarjeta de credito</label>
+                            <span id="tarjeta"  class="form-control">{{ usuario.getNumeroTarjeta }}</span>
+                        </div>
+                    {% endif %}
                     </div>
                     <div align="center">
-                        <button class="btn btn-warning navbar-btn" onClick="window.location.href='index.php?action=userInformationModify'">Modificar perfil</button>
-                        <button class="btn btn-danger navbar-btn" onClick="window.location.href='index.php?action=userDelete'">Eliminar cuenta</button>
+                        <a href="index.php?controller=User&method=userInformationModify"><button class="btn btn-warning navbar-btn">Modificar perfil</button></a>
+                        <button class="btn btn-danger navbar-btn" id="eliminar">Eliminar cuenta</button>
                     </div>
                 </div>
             </div>

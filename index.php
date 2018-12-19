@@ -45,6 +45,8 @@ require_once('model/CountryRepository.php');
 require_once('model/Country.php');
 require_once('model/CityRepository.php');
 require_once('model/City.php');
+require_once('model/ConfigurationRepository.php');
+require_once('model/Configuration.php');
 require_once('view/TwigView.php');
 require_once('view/Login.php');
 require_once('model/Clase.php');
@@ -71,7 +73,7 @@ require_once('view/UserComercialCreate.php');
 require_once('view/FlightCreate.php');
 require_once('view/CarCreate.php');
 require_once('view/RoomCreate.php');
-require_once('view/Configuration.php');
+require_once('view/ConfigurationList.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {

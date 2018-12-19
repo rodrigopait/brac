@@ -4,4 +4,7 @@
     <link rel="stylesheet" href="assets/css/home.css">
 {% endblock %}
 {% block main %}
+	{% if mensajeError != null %}
+	        <div class="alert alert-danger" role="alert">{{mensajeError}}</div>
+	{% endif %}
 {% endblock %}
