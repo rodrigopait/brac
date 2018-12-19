@@ -10,7 +10,7 @@ class Home extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("home.html.twig");
     	$rol = $_SESSION['rol'];
-    	$template->display(array('rol' => $rol,'mensajeError' => $message)); 
+    	$template->display(array('rol' => $rol, 'mensajeError' => $message)); 
         
         
     }
