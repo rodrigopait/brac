@@ -61,9 +61,9 @@
                                 <dt><label>Clase</label></dt>
                                 <dd>
                                     <select class="form-control" name="clase">
-                                        <option value="">Economica</option>
-                                        <option value="">Ejecutiva</option>
-                                        <option value="">Primera</option>
+                                        {% for cls in clases %}
+                                        <option value="{{cls.id}}">{{cls.descripcion}}</option>
+                                        {% endfor %}
                                     </select>
                                 </dd>
                             </dl>

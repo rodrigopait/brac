@@ -2,7 +2,7 @@
 
 class UserComercialCreate extends TwigView {
     
-    public function show() {
+    public function show($rol) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -12,7 +12,7 @@ class UserComercialCreate extends TwigView {
     	$rol = $_SESSION['rol'];
 
     	$template->display(array('rol' => $rol)); 
-                
+
     }
     
 }

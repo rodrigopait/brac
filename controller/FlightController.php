@@ -20,7 +20,7 @@ class FlightController {
     public function flightsListAll(){
         try{
             $rol = $_SESSION['rol'];
-            $flights = FlightRepository::getInstance()->listAll($flights);
+            $flights = FlightRepository::getInstance()->listAll();
             $view = new FlightsList();
             $view->show($rol, $flights);
         }
@@ -34,8 +34,9 @@ class FlightController {
     public function flightSearch(){
         try{
             $rol = $_SESSION['rol'];
-            $view = new FlightSearch();
-            $view->show($rol);
+            $clases = ClaseRepository::getInstance()->listAll();
+            $view = new FlightSearch($clases);
+            $view->show($clases);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -46,16 +47,41 @@ class FlightController {
 
     public function flightsList(){
         try{
+            
             $rol = $_SESSION['rol'];
             $ciudadOrigen = $_POST['ciudadOrigen'];
-            $paisOrigen = $_POST['paisOrigen'];
             $ciudadDestino = $_POST['ciudadDestino'];
-            $paisDestino = $_POST['paisDestino'];
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
-            $flights = FlightRepository::getInstance()->listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino);
+            $escalas = $_POST['escalas'];
+
+            $idclase = $_POST['clase'];
+            $clase = ClaseRepository::getInstance()->getClase($idclase);
+
+            #var_dump($idclase);die;
+            if($idClase = 1)
+            {
+                $flights = FlightRepository::getInstance()->listFromSearchByClase1($fecha, $ciudadOrigen, $ciudadDestino, $escalas);  
+
+            }else
+            {
+                if($idClase = 2)
+                {
+                $flights = FlightRepository::getInstance()->listFromSearchByClase2($fecha, $ciudadOrigen, $ciudadDestino, $escalas);    
+                }else 
+                {
+                    if($idClase = 3)
+                    {
+                    $flights = FlightRepository::getInstance()->listFromSearchByClase3($fecha, $ciudadOrigen, $ciudadDestino, $escalas);    
+                    }
+                }    
+            }
+            
+
+            
+
             $view = new FlightsList(); 
-            $view->show($rol, $flights);
+            $view->show($rol, $flights,$clase);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
