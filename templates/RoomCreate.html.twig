@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container" style="margin: auto">
+        <h1 class="col-lg-12 well">Alta de Habitación</h1>
+        <div class="col-lg-12 well">
+            <div class="row">
+                <form name="form" method="post" action="index.php?controller=Room&method=roomAdd" enctype="multipart/form-data">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Pais</label>
+                                <select  class="form-control" name="pais" required="true" id="pais"  onchange="ciudadesConHabitaciones(this.id,'ciudad')">
+                                    <option disabled selected>Elejí un Pais</option>
+                                    {% for country in countries %}
+                                        <option value={{country.id}}>{{country.nombre}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Ciudad</label>
+                                <select  class="form-control" name="ciudad" required="true" id="ciudad"  onchange="hoteles(this.id,'hotel')" disabled>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Hotel</label>
+                                <select  class="form-control" name="hotel" required="true" id="hotel" disabled>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Número</label>
+                                <input type="text" class="form-control" name="numero" placeholder="numero" required="true">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Precio por persona</label>
+                                <input type="price" class="form-control" min="0.00"  step="0.01"  name="precio" placeholder="Precio por persona" required="true">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Capacidad</label>
+                                <input type="number" class="form-control" min="0.0"  step="0.1" name="capacidad" placeholder="Capacidad" required="true">
+                            </div>
+
+                        </div>           
+                        <div align="center">
+                            <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                            <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -4,7 +4,7 @@
         <h1 class="col-lg-9 well">Modificar Perfil</h1>
         <div class="col-lg-9 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?action=userInformationModify_check" enctype="multipart/form-data">
+                <form name="form" method="post" action="index.php?controller=User&method=userInformationModify_check" enctype="multipart/form-data">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-8 form-group">
+                            <div class="col-sm-4 form-group">
                                 <label>Email</label>
                                 <input value="{{ usuario.getEmail }}" type="email" placeholder="example@flyaway.com" id="email" name="email" class="form-control" required/>
                             </div>
@@ -29,10 +29,23 @@
                                 <label>Contrase&ntilde;a</label>
                                 <input value="{{ usuario.getClave }}" type="password" name="clave" id="clave"  class="form-control" required>
                             </div>
+                            {% if usuario.getRol == 1 %}
+                                <div class="col-sm-4 form-group">
+                                    <label>Tarjeta de crédito</label>
+                                    <input value="{{ usuario.getNumeroTarjeta }}" pattern="^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$" max="19" type="text" id="tarjeta" name="tarjeta" class="form-control" required/>
+                                </div>
+                            {% elseif usuario.getRol == 3 %}
+                                <div class="col-sm-4 form-group">
+                                    <label>Dni</label>
+                                    <input value="{{ usuario.dni }}" pattern="^[0-9]{8}$"  type="text" id="dni" name="dni" class="form-control" required/>
+                                    <input name="userId" type="hidden" value="{{usuario.getId}}">
+                                </div>
+                            {% endif %}
+
                         </div>
                         <div align="center">
-                            <button type="submit" class="btn btn-success navbar-btn">Guardar cambios</button>
-                            <button type="button" class="btn btn-dancer navbar-btn" onClick="window.location.href='index.php?action=userInformation'">Cancelar</button>
+                            <button id="user_cambios" type="submit" class="btn btn-success navbar-btn">Guardar cambios</button>
+                            <button type="button" class="btn btn-dancer navbar-btn" onClick="window.location.href='index.php?controller=User&method=userInformation'">Cancelar</button>
                         </div>
                     </div>
                 </form>

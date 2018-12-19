@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container" style="margin: auto">
+        <h1 class="col-lg-12 well">Alta de Aerolinia</h1>
+        <div class="col-lg-12 well">
+            <div class="row">
+                <form name="form" method="post" action="index.php?controller=Airline&method=airlineAdd" enctype="multipart/form-data">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre" required="true">
+                            </div>
+                        </div>           
+                        <div align="center">
+                            <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                            <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

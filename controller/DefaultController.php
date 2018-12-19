@@ -19,9 +19,8 @@ class DefaultController {
 
     public function home(){
         try{
-            $rol = $_SESSION['rol'];
             $view = new Home();
-            $view->show($rol);
+            $view->show();
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

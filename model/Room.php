@@ -5,20 +5,20 @@ class Room {
     private $id;
     private $capacidad;
     private $precio;
-    private $estrellas;
+    private $hotel;
     private $ciudadDestino;
     private $paisDestino;
     private $fechaDesde;
     private $fechaHasta;
     
-    public function __construct($id, $capacidad, $precio, $estrellas, $paisDestino, $ciudadDestino) {
+    public function __construct($id, $capacidad, $precio, $hotel, $ciudadDestino, $paisDestino) {
 
         $this->id = $id;
         $this->capacidad = $capacidad;
+        $this->precio = $precio;
+        $this->hotel = $hotel;
         $this->ciudadDestino = $ciudadDestino;
         $this->paisDestino = $paisDestino;
-        $this->precio = $precio;
-        $this->estrellas = $estrellas;
     }
 
     public function setFechaDesde($fechaDesde) {
@@ -36,6 +36,14 @@ class Room {
     public function getCapacidad() {
         return $this->capacidad;
     }
+    
+    public function getPrecio() {
+        return $this->precio;
+    }
+
+    public function getHotel() {
+        return $this->hotel;
+    }
 
     public function getCiudadDestino() {
         return $this->ciudadDestino;
@@ -43,10 +51,6 @@ class Room {
 
     public function getPaisDestino() {
         return $this->paisDestino;
-    }
-
-    public function getPrecio() {
-        return $this->precio;
     }
 
     public function getEstrellas() {
