@@ -110,13 +110,10 @@ class UserController {
                $_SESSION['roomsFechaDesde'] = null;
                $_SESSION['roomsFechaHasta'] = null;
            }
-<<<<<<< HEAD
            $this->home();
-=======
            $message="La cuenta ha sido eliminada de manera permanente.";
            $view = new Home();
            $view->show($message);
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -245,7 +242,6 @@ class UserController {
            $view->show($error);        }
    }
 
-<<<<<<< HEAD
    public function login_user_check()
    {
      $rol = $_SESSION['rol'];
@@ -269,7 +265,6 @@ class UserController {
 
 
 }
-=======
    public function userComercialCreate(){
     try{
         $rol = $_SESSION['rol'];
@@ -304,4 +299,3 @@ class UserController {
   }
 
 }
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28

@@ -65,9 +65,7 @@ require_once('view/UsersList.php');
 require_once('view/UserRegistration.php');
 require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
-<<<<<<< HEAD
 require_once('view/IndexUser.php');
-=======
 require_once('view/HotelCreate.php');
 require_once('view/ConcessionaireCreate.php');
 require_once('view/ConcessionairesList.php');
@@ -77,7 +75,6 @@ require_once('view/FlightCreate.php');
 require_once('view/CarCreate.php');
 require_once('view/RoomCreate.php');
 require_once('view/ConfigurationList.php');
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
