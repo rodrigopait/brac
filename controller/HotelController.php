@@ -20,6 +20,7 @@ class HotelController {
     public function hotelCreate(){
         try{
             $rol = $_SESSION['rol'];
+            $paises = CountryRepository::getInstance()->listAll();
             $view = new HotelCreate();
             $view->show($rol,$paises);
         }
