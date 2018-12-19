@@ -14,8 +14,11 @@ class UserRepository extends PDORepository {
     }
 
     private function __construct() {
-        
+
     }
+
+
+
 
     public function login_user() {
 
@@ -48,7 +51,7 @@ class UserRepository extends PDORepository {
                 echo "<script>";
                 echo "alert('$mensaje');";
                 echo "</script>";
-            }    
+            }
         }
         else{
             $mensaje = "No se han ingresado todos los campos. Por favor vuelve a intentar.";
@@ -56,6 +59,7 @@ class UserRepository extends PDORepository {
             echo "alert('$mensaje');";
             echo "</script>";
         }
+
     }
 
     public function listAllByRol($rol) {
@@ -82,7 +86,7 @@ class UserRepository extends PDORepository {
     public function user_remove($userId) {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
-
+/*REPETIDO*/
     public function user_delete($userId) {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
@@ -105,8 +109,19 @@ class UserRepository extends PDORepository {
         $this->queryList("UPDATE usuario SET usuario=?, clave=?, nombre=?, apellido=?, email=? , nro_tarjeta=? , dni=? WHERE id = ?", array($usuario, $clave, $nombre, $apellido, $email, $tarjeta,$dni,$userId));
     }
 
+    public function user_login($usuario,$clave)
+    {
+      $user = null;
+      $query = $this->queryList("SELECT * FROM usuario WHERE usuario = ? AND clave =  ?", array($usuario,$clave));
+      foreach ($query[0] as $row) {
+          $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email']);
+      }
+      $query = null;
+      return $user;
+    }
 
-    
+
+
 
     public function logout_user(){
         session_destroy();
@@ -121,9 +136,13 @@ class UserRepository extends PDORepository {
         $_SESSION['roomsFechaHasta'][] = null;
     }
 
+<<<<<<< HEAD
+}
+=======
     public function userComercialAdd($data)
     {
         $query = $this->queryList("INSERT INTO usuario (usuario,clave,nombre, apellido, dni, email,rol_id) VALUES (?,?,?,?,?,?,?)",$data);
     }
 
 }
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28

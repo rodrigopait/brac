@@ -12,9 +12,9 @@ class RoomController {
 
         return self::$instance;
     }
-    
+
     private function __construct() {
-        
+
     }
 
     public function roomSearch(){
@@ -61,6 +61,7 @@ class RoomController {
 
     public function roomsList(){
         try{
+            
             $rol = $_SESSION['rol'];
             $estrellas = $_POST['estrellas'];
             $ciudadDestino = $_POST['ciudadDestino'];
@@ -70,10 +71,16 @@ class RoomController {
             $hasta = new DateTime($_POST['fechaHasta']);
             $fechaDesde = $desde->format('Y-m-d');
             $fechaHasta = $hasta->format('Y-m-d');
+<<<<<<< HEAD
+            $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad);
+            $view = new RoomsList();
+            $view->show($rol, $rooms, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
+=======
             // var_dump($estrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta);die;
             $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $capacidad);
             $view = new RoomsList(); 
             $view->show($rol, $rooms, $fechaDesde, $fechaHasta);
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

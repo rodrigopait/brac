@@ -9,16 +9,24 @@
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Fecha desde</label>
-                                <input type="date" class="form-control" name="fechaDesde" required="true">
+                                <input type="date" class="form-control" name="fechaDesde" id="fechaDesde" required="true">
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Fecha hasta</label>
-                                <input type="date" class="form-control" name="fechaHasta" required="true">
-                            </div> 
-                        </div>                  
+                                <input type="date" class="form-control" name="fechaHasta" id="fechaHasta"required="true">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <dl class="form-group">
+<<<<<<< HEAD
+                                    <dt><label>Destino</label></dt>
+                                    <dd>
+                                        <input name="ciudadDestino" id="ciudadDestino" type="text" placeholder="Ciudad" class="form-control" required="true">
+                                    </dd>
+                                    <dd style="margin-top: 3%">
+                                        <input name="paisDestino" id="paisDestino" type="text" placeholder="Pais" class="form-control" required="true">
+=======
                                     <dt><label>Localidad</label></dt>
                                     <dd >
                                         <select name="paisDestino" id="paisDestino" class="form-control" onchange="ciudades(this.id,'ciudadDestino');">
@@ -30,6 +38,7 @@
                                     </dd>
                                     <dd style="margin-top: 3%">
                                         <select name="ciudadDestino" id="ciudadDestino" class="form-control" disabled="disabled"></select>
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
                                     </dd>
                                 </dl>
                             </div>
@@ -37,6 +46,13 @@
                                 <dl class="form-group">
                                     <dt><label>Estrellas del hotel</label></dt>
                                     <dd>
+<<<<<<< HEAD
+                                        <input name="minimoEstrellas" id="minimoEstrellas" type="number" min="0" max="5" placeholder="Minimo" value="0" class="form-control" onkeypress="return justNumbers(event);" required="true">
+                                    </dd>
+                                    <dd style="margin-top: 3%">
+                                        <input name="maximoEstrellas" id="maximoEstrellas" type="number" min="0" max="5" placeholder="Maximo" value="5" class="form-control" onkeypress="return justNumbers(event);" required="true">
+                                    </dd>
+=======
                                         <select class="form-control" name="estrellas">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -45,13 +61,14 @@
                                             <option value="5">5</option>
                                         </select>                                    
                                     </dd>                    
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
                                 </dl>
-                            </div>  
+                            </div>
                             <div class="col-sm-4 form-group">
                                 <label>Personas</label>
                                 <input type="number" class="form-control" name="personas" placeholder="Personas" id="personas" min="1" onkeypress="return justNumbers(event);" required="true">
                             </div>
-                        </div>                  
+                        </div>
                         <div align="center">
                             <button type="submit" class="btn btn-primary navbar-btn">Buscar</button>
                             <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>

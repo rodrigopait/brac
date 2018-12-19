@@ -1,7 +1,7 @@
 <?php
 
 class UserController {
-    
+
     private static $instance;
 
     public static function getInstance() {
@@ -12,9 +12,9 @@ class UserController {
 
         return self::$instance;
     }
-    
+
     private function __construct() {
-        
+
     }
 
     public function userPurchases(){
@@ -87,7 +87,7 @@ class UserController {
            if (isset($_GET['userId'])) {
                UserRepository::getInstance()->user_remove($userId);
            }
-           $this->usersList();  
+           $this->usersList();
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -110,9 +110,13 @@ class UserController {
                $_SESSION['roomsFechaDesde'] = null;
                $_SESSION['roomsFechaHasta'] = null;
            }
+<<<<<<< HEAD
+           $this->home();
+=======
            $message="La cuenta ha sido eliminada de manera permanente.";
            $view = new Home();
            $view->show($message);
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -241,6 +245,31 @@ class UserController {
            $view->show($error);        }
    }
 
+<<<<<<< HEAD
+   public function login_user_check()
+   {
+     $rol = $_SESSION['rol'];
+     $usuario = $_POST['usuario'];
+     $clave = $_POST['clave'];
+
+     if(isset($usuario) && isset($clave))
+     {
+       $user = UserRepository::getInstance()->user_login($usuario, $clave);
+        if($user != null)
+        {
+            $view = new IndexUser();
+            $view->show($rol, $user);
+
+
+        }else {
+          echo "Usuario NO existe";die;
+        }
+     }
+   }
+
+
+}
+=======
    public function userComercialCreate(){
     try{
         $rol = $_SESSION['rol'];
@@ -275,3 +304,4 @@ class UserController {
   }
 
 }
+>>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
