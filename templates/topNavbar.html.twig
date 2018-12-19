@@ -14,25 +14,24 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
             <ul class="nav navbar-nav">
                 <li class="navbar-left"><a href="index.php?controller=Default&method=home"><img src="assets/images/Logo.png" width="100" height="20"></a></li>
-                {% if rol == '' %}
+                {% if (rol == '') or (rol == 'cliente')  %}
                     <li><a href="index.php?controller=Flight&method=flightSearch">Buscar Vuelo</a></li>
                     <li><a href="index.php?controller=Room&method=roomSearch">Buscar Habitacion</a></li>
                     <li><a href="index.php?controller=Car&method=carSearch">Buscar Auto</a></li>
                 {% elseif rol == 'administrador' %}
-                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Aerolinia</a></li>
-                    <li><a href="index.php?controller=Room&method=roomSearch">Alta de Hotel</a></li>
-                    <li><a href="index.php?controller=Car&method=carSearch">Alta de Concesionaria</a></li>
-                    <li><a href="#">Alta de Usuario</a></li>
+                    <li><a href="index.php?controller=Airline&method=airlineCreate">Alta de Aerolinia</a></li>
+                    <li><a href="index.php?controller=Hotel&method=hotelCreate">Alta de Hotel</a></li>
+                    <li><a href="index.php?controller=Concessionaire&method=concessionaireCreate">Alta de Concesionaria</a></li>
+                    <li><a href="index.php?controller=User&method=userComercialCreate">Alta de Usuario</a></li>
                 {% elseif rol == 'comerciante' %}
-                    <li><a href="index.php?controller=Flight&method=flightSearch">Alta de Vuelo</a></li>
-                    <li><a href="index.php?controller=Room&method=roomSearch">Alta de Habitacion</a></li>
-                    <li><a href="index.php?controller=Car&method=carSearch">Alta de Auto</a></li>
-                    <li><a href="#">Alta de Usuario</a></li>
+                    <li><a href="index.php?controller=Flight&method=flightCreate">Alta de Vuelo</a></li>
+                    <li><a href="index.php?controller=Room&method=roomCreate">Alta de Habitación</a></li>
+                    <li><a href="index.php?controller=Car&method=carCreate">Alta de Auto</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if rol == '' %}
-                    <button type="button" class="btn btn-info navbar-btn" onclick="window.location.href='index.php?controller=Login&method=userRegistration'">Registrarme</button>
+                    <button type="button" class="btn btn-info navbar-btn" onclick="window.location.href='index.php?controller=User&method=userRegistration'">Registrarme</button>
                     <button type="button" class="btn btn-brac navbar-btn" onclick="window.location.href='index.php?controller=Login&method=login'">Iniciar Sesion</button>
                 {% elseif rol == 'cliente' %}
                     <button type="button" class="btn btn-warning navbar-btn" onclick="window.location.href='index.php?controller=Default&controller=Default&method=cartList'">Ver Carrito
@@ -48,19 +47,19 @@
                         </ul>
                     </div>     
                 {% elseif rol == 'administrador' %}
-                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador {{app.user.nombre}}<span class="caret"></span></button>
+                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador<span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Listado de usuarios:</li>
                         <li><a href="index.php?controller=User&method=usersList&rol=3">Clientes</a></li>
                         <li><a href="index.php?controller=User&method=usersList&rol=2">Comerciales</a></li>
+                        <li class="dropdown-header">Opciones:</li>
+                        <li><a href="index.php?controller=Configuration&method=index">Configuraciones</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>
                 {% elseif rol == 'comerciante' %}
-                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></button>
+                    <button type="button" class="btn btn-warning navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Comerciante<span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="index.php?controller=User&method=usersList">Listado Usuarios</a></li>
-                        <li role="separator" class="divider"></li>
                         <li><a href="index.php?controller=Login&method=logout">Cerrar Sesion</a></li>
                     </ul>
                 {% endif %}

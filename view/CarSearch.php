@@ -2,7 +2,7 @@
 
 class CarSearch extends TwigView {
     
-    public function show($rol) {
+    public function show($rol,$countries) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -10,7 +10,7 @@ class CarSearch extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("carSearch.html.twig");
 
-    	$template->display(array('rol' => $rol)); 
+    	$template->display(array('rol' => $rol, 'countries' => $countries)); 
         
         
     }

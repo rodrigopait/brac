@@ -6,9 +6,10 @@
         <div class="panel panel-default">
             <table class="table">
                 <tr>
-                    <td align="center"><strong>Ubicacion</strong></td>
                     <td align="center"><strong>Fecha Inicio</strong></td>
                     <td align="center"><strong>Fecha Fin</strong></td>
+                    <td align="center"><strong>Hotel</strong></td>
+                    <td align="center"><strong>Ubicacion</strong></td>
                     <td align="center"><strong>Estrellas</strong></td>
                     <td align="center"><strong>Capacidad</strong></td>
                     <td align="center"><strong>Precio</strong></td>
@@ -16,14 +17,15 @@
                 </tr>
                 {% for room in rooms %}
                 <tr>
-                    <td align="center">{{ room.getCiudadDestino }}, {{ room.getPaisDestino }}</td>
                     <td align="center">{{ fechaDesde }}</td>
                     <td align="center">{{ fechaHasta }}</td>
-                    <td align="center">{{ room.getEstrellas }}</td>
+                    <td align="center">{{ room.getHotel.getNombre }}</td>
+                    <td align="center">{{ room.getCiudadDestino }}, {{ room.getPaisDestino }}</td>
+                    <td align="center">{{ room.getHotel.getEstrellas }}</td>
                     <td align="center">{{ room.getCapacidad }}</td>
                     <td align="center">${{ room.getPrecio }}</td>
                     {% if rol == 1 %}
-                    <td align="center"><a style="text-decoration: none;" href="./?action=add_room_to_cart&id={{room.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
+                    <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_room_to_cart&id={{room.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
                     {% endif %}
                 </tr>
                 {% endfor %}

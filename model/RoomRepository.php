@@ -28,13 +28,44 @@ class RoomRepository extends PDORepository {
     //     return $flights;
     // }
 
-    public function listFromSearch($fechaDesde, $fechaHasta, $minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad) {
+    public function listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $capacidad) {
 
         $rooms=null;
-        $query = RoomRepository::getInstance()->queryList("SELECT * FROM habitacion WHERE (estrellas BETWEEN ? AND ?) AND ciudad = ? AND pais = ? AND capacidad = ? AND id NOT IN (SELECT id_habitacion FROM habitacion_alquiler WHERE (desde BETWEEN ? AND ?) OR (hasta BETWEEN ? AND ?) OR (desde < ? AND hasta > ?))", array($minimoEstrellas, $maximoEstrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
-
+        $sql = "SELECT habitacion.id as habitacion_id,
+                        habitacion.capacidad as capacidad, 
+                        habitacion.precio as precio, 
+                        habitacion.hotel_id as hotel_id, 
+                        hotel.nombre as hotel_nombre, 
+                        hotel.ciudad_id as hotel_ciudad_id,
+                        hotel.estrellas as hotel_estrellas,
+                        ciudad.nombre as ciudad,
+                        pais.nombre as pais
+                FROM habitacion
+                    INNER JOIN hotel ON habitacion.hotel_id = hotel.id
+                    INNER JOIN ciudad ON hotel.ciudad_id = ciudad.id
+                    INNER JOIN pais ON ciudad.pais_id = pais.id
+                WHERE hotel.estrellas >= ?
+                    AND hotel.ciudad_id = ? 
+                    AND ciudad.pais_id = ? 
+                    AND habitacion.capacidad >= ? 
+                    AND habitacion.id NOT IN (SELECT id_habitacion 
+                                    FROM habitacion_alquiler 
+                                    WHERE (desde BETWEEN ? AND ?) 
+                                        OR (hasta BETWEEN ? AND ?) 
+                                        OR (desde < ? AND hasta > ?))
+                ORDER BY habitacion.precio";
+        $query = RoomRepository::getInstance()->queryList($sql, array($estrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
         foreach ($query[0] as $row) {
-            $room = new Room ( $row['id'], $row['capacidad'], $row['precio'], $row['estrellas'], $row['ciudad'], $row['pais']);
+            $hotel = new Hotel ($row['hotel_id'],
+                                $row['hotel_nombre'],
+                                $row['hotel_ciudad_id'],
+                                $row['hotel_estrellas']);
+            $room = new Room ( $row['habitacion_id'], 
+                                $row['capacidad'], 
+                                $row['precio'],
+                                $hotel, 
+                                $row['ciudad'], 
+                                $row['pais']);
             $rooms[]=$room;
         }
 
@@ -43,8 +74,8 @@ class RoomRepository extends PDORepository {
     }
 
         //agrego un habitacion
-    public function room_add($capacidad, $precio, $hotel_id) {
-        $query = $this->queryList("INSERT INTO habitacion (capacidad, precio, hotel_id) VALUES (?,?,?)", array($capacidad, $precio, $hotel_id));
+    public function roomAdd($data) {
+        $query = $this->queryList("INSERT INTO habitacion (numero, capacidad, precio, hotel_id) VALUES (?,?,?,?)",$data);
     }
 }
 ?>

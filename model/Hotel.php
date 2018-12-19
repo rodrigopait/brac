@@ -4,18 +4,16 @@ class Hotel {
 
     private $id;
     private $nombre;
-    private $ciudad;
-    private $pais;
-    private $reputacion_id;
+    private $ciudad_id;
+    private $estrellas;
 
     
-    public function __construct($id, $nombre, $ciudad, $pais, $reputacion_id) {
+    public function __construct($id, $nombre, $ciudad_id, $estrellas) {
 
         $this->id = $id;
         $this->nombre = $nombre;
-        $this->ciudad = $ciudad;
-        $this->pais=$pais;
-        $this->reputacion_id= $reputacion_id;
+        $this->ciudad_id= $ciudad_id;
+        $this->estrellas= $estrellas;
 
 
     }
@@ -32,14 +30,9 @@ class Hotel {
         return $this->ciudad;
     }
 
-    public function getPais() {
-        return $this->pais;
+    public function getEstrellas() {
+        return $this->estrellas;
     }
-
-    public function getReputacion_id() {
-        return $this->reputacion_id;
-    }
-
 
 
 }

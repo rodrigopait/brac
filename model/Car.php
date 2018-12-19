@@ -3,21 +3,29 @@
 class Car {
 
     private $id;
-    private $precio;
-    private $capacidad;
-    private $modelo;
     private $ciudadDestino;
+    private $precio;
+    private $gama;
+    private $modelo;
+    private $marca;
+    private $capacidad;
+    private $patente;
+    private $autonomia;
     private $paisDestino;
     private $fechaDesde;
     private $fechaHasta;
     
-    public function __construct($id, $precio, $capacidad, $modelo, $paisDestino, $ciudadDestino) {
+    public function __construct($id, $ciudadDestino, $precio, $gama, $modelo, $marca, $capacidad, $patente, $autonomia, $paisDestino) {
 
         $this->id = $id;
-        $this->precio = $precio;
-        $this->capacidad = $capacidad;
-        $this->modelo = $modelo;
         $this->ciudadDestino = $ciudadDestino;
+        $this->precio = $precio;
+        $this->gama = $gama;
+        $this->modelo = $modelo;
+        $this->marca = $marca;
+        $this->capacidad = $capacidad;
+        $this->patente = $patente;
+        $this->autonomia = $autonomia;
         $this->paisDestino = $paisDestino;
     }
 
@@ -32,24 +40,40 @@ class Car {
     public function getId() {
         return $this->id;
     }
+    
+    public function getCiudadDestino() {
+        return $this->ciudadDestino;
+    }
 
     public function getPrecio() {
         return $this->precio;
     }
-
-    public function getCapacidad() {
-        return $this->capacidad;
+    
+    public function getGama() {
+        return $this->gama;
     }
 
     public function getModelo() {
         return $this->modelo;
     }
 
-    public function getCiudadDestino() {
-        return $this->ciudadDestino;
+    public function getMarca() {
+        return $this->marca;
     }
 
-    public function getPaisDestino() {
+    public function getCapacidad() {
+        return $this->capacidad;
+    }
+
+    public function getPatente() {
+        return $this->patente;
+    }
+
+    public function getAutonomia() {
+        return $this->autonomia;
+    }
+
+    public function getpaisDestino() {
         return $this->paisDestino;
     }
 

@@ -60,7 +60,7 @@ class UserRepository extends PDORepository {
 
     public function listAllByRol($rol) {
         $users=null;
-        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE rol.id = ? ", array($rol));
+        $query = self::getInstance()->queryList("SELECT * FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE descripcion_rol = ? ", array($rol));
         foreach ($query[0] as $row) {
             $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['descripcion_rol']);
             $users[]=$user;
@@ -85,7 +85,7 @@ class UserRepository extends PDORepository {
         $user=null;
         $query = $this->queryList("SELECT * FROM usuario NATURAL JOIN rol WHERE usuario.id = ?", array($userId));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['rol']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['nro_tarjeta'], $row['rol']);
         }
         $query = null;
         return $user;
@@ -101,7 +101,7 @@ class UserRepository extends PDORepository {
     public function logout_user(){
         session_destroy();
         session_start();
-        $_SESSION['rol']='';
+        $_SESSION['rol']=0;
         $_SESSION['flights'] = null;
         $_SESSION['rooms'] = null;
         $_SESSION['cars'] = null;

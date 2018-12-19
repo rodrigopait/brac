@@ -1,6 +1,6 @@
 <?php
 
-class createAirline extends TwigView {
+class Configuration extends TwigView {
     
     public function show($rol) {
         
@@ -8,7 +8,7 @@ class createAirline extends TwigView {
 		$templateDirCompi="./templates-c";
 		$loader = new Twig_Loader_Filesystem($templateDir);
 		$twig = new Twig_Environment($loader);
-    	$template = $twig->loadTemplate("createAirline.html.twig");
+    	$template = $twig->loadTemplate("configuration.html.twig");
 
     	$template->display(array('rol' => $rol)); 
         

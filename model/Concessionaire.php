@@ -4,17 +4,15 @@ class Concessionaire {
 
     private $id;
     private $nombre;
-    private $ciudad;
-    private $pais;
+    private $ciudad_id;
     private $reputacion_id;
 
     
-    public function __construct($id, $nombre, $ciudad, $pais, $reputacion_id) {
+    public function __construct($id, $nombre, $ciudad_id,$reputacion_id) {
 
         $this->id = $id;
         $this->nombre = $nombre;
-        $this->ciudad = $ciudad;
-        $this->pais=$pais;
+        $this->ciudad_id = $ciudad_id;
         $this->reputacion_id= $reputacion_id;
 
 
@@ -28,12 +26,8 @@ class Concessionaire {
         return $this->nombre;
     }
 
-    public function getCiudad() {
-        return $this->ciudad;
-    }
-
-    public function getPais() {
-        return $this->pais;
+    public function getCiudadId() {
+        return $this->ciudad_id;
     }
 
     public function getReputacion_id() {

@@ -12,10 +12,10 @@
                             <input type="date" class="form-control" name="fechaPartida" required="true">
                         </div>
                         <div class="col-sm-6 form-group">
-                            <label>Fecha de llegada</label>
+                            <label>Fecha de vuelta</label>
                             <input type="date" class="form-control" name="fechaLlegada" required="false">
                         </div>
-                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                        <div class="col-sm-6 form-group" >
                             <dl class="form-group">
                                 <dt><label>Origen</label></dt>
                                 <dd>
@@ -26,7 +26,7 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                        <div class="col-sm-6 form-group">
                             <dl class="form-group">
                                 <dt><label>Destino</label></dt>
                                 <dd>
@@ -37,7 +37,7 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                        <div class="col-sm-4 form-group">
                             <dl class="form-group">
                                 <dt><label>Escalas</label></dt>
                                 <dd>
@@ -48,11 +48,23 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="col-sm-6 form-group" style="margin-top: 1%">
+                        <div class="col-sm-4 form-group">
                             <dl class="form-group">
                                 <dt><label>Pasajeros </label></dt>
                                 <dd>
-                                    <input name="pasajeros" id="pasajeros" type="number" placeholder="Ingrese una cantidad" class="form-control"  min="1" value="1" onkeypress="return justNumbers(event);" required="true">
+                                    <input name="pasajeros" id="pasajeros" type="number" placeholder="Pasajeros" class="form-control"  min="1" onkeypress="return justNumbers(event);" required="true">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                           <dl class="form-group">
+                                <dt><label>Clase</label></dt>
+                                <dd>
+                                    <select class="form-control" name="clase">
+                                        {% for cls in clases %}
+                                        <option value="{{cls.id}}">{{cls.descripcion}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </dd>
                             </dl>
                         </div>
