@@ -45,7 +45,11 @@
                         </div>
                         <div align="center">
                             <button id="user_cambios" type="submit" class="btn btn-success navbar-btn">Guardar cambios</button>
-                            <button type="button" class="btn btn-dancer navbar-btn" onClick="window.location.href='index.php?controller=User&method=userInformation'">Cancelar</button>
+                            {% if rol == 'administrador' %}
+                                <button type="button" class="btn btn-dancer navbar-btn" onClick="window.location.href='index.php?controller=User&method=usersList&rol=3'">Cancelar</button>
+                            {% elseif usuario.getRol == 'cliente' %}
+                                <button type="button" class="btn btn-dancer navbar-btn" onClick="window.location.href='index.php?controller=User&method=userInformation'">Cancelar</button>
+                            {% endif %}
                         </div>
                     </div>
                 </form>

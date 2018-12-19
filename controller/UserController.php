@@ -54,10 +54,10 @@ class UserController {
         try{
            $compraId = $_GET['compraId'];
            $rol = $_SESSION['rol'];
-           $compras= PurchaseRepository::getInstance()->purchase_by_id($compraId);
-           $comprasDetalle = PurchaseRepository::getInstance()->user_purchases_detail($compraId);
+           $compra= PurchaseRepository::getInstance()->purchase_by_id($compraId);
+           $compraDetalle = PurchaseRepository::getInstance()->user_purchases_detail($compraId);
            $view = new UserPurchasesDetail();
-           $view->show($compras, $rol, $comprasDetalle);
+           $view->show($compra, $rol, $compraDetalle);
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -207,12 +207,12 @@ class UserController {
            if ($rol == 'administrador') {
              $userId = $_POST['userId'];
              $dni = $_POST['dni'];
-             $tarjeta = 'null';
+             $tarjeta = null;
            }
            else{
               $userId = $_SESSION['user_id'];
               $tarjeta = $_POST['tarjeta'];
-              $dni = 'null';
+              $dni = null;
 
            }
            $usuario = $_POST['usuario'];

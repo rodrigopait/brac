@@ -30,7 +30,7 @@
                     <td align="center">{{ user.apellido }}</td>
                     {% if user.rol == 1 %}
                             <td align="center">{{ user.tarjeta }}</td>
-                            <td align="center"><a style="text-decoration: none;" href="./?controller=User&method=userPurchasesById&userId={{user.getId}}&username={{user.getUsuario}}">Ver compras <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                            <td align="center"><a style="text-decoration: none;" href="./?controller=User&method=userPurchasesById&userId={{user.id}}&username={{user.usuario}}">Ver compras <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
                     {% elseif user.rol == 3 %}
                         <td>
                             <diV align=center>
@@ -48,7 +48,7 @@
         <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No hay usuarios registrados en el sistema.</div>
         {% endif %}
         <div align="center">
-            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='index.php?'">Volver</button>
         </div>  
     </div>
 {% endblock %}

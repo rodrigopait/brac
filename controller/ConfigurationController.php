@@ -20,7 +20,7 @@ class ConfigurationController {
     public function index(){
         try{
             $rol = $_SESSION['rol'];
-            $configuration=ConfigurationRepository::getInstance()->list();
+            $configuration=ConfigurationRepository::getInstance()->listConf();
             $view = new ConfigurationList();
             $view->show($rol,$configuration);
         }
