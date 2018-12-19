@@ -136,13 +136,9 @@ class UserRepository extends PDORepository {
         $_SESSION['roomsFechaHasta'][] = null;
     }
 
-<<<<<<< HEAD
-}
-=======
     public function userComercialAdd($data)
     {
         $query = $this->queryList("INSERT INTO usuario (usuario,clave,nombre, apellido, dni, email,rol_id) VALUES (?,?,?,?,?,?,?)",$data);
     }
 
 }
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28

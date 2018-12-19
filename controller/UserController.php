@@ -263,8 +263,6 @@ class UserController {
      }
    }
 
-
-}
    public function userComercialCreate(){
     try{
         $rol = $_SESSION['rol'];

@@ -32,11 +32,7 @@ class FlightRepository extends PDORepository {
         return $flights;
     }
 
-<<<<<<< HEAD
-    public function listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino) {
 
-        $query = FlightRepository::getInstance()->queryList("SELECT * FROM vuelo WHERE fecha_salida = ? AND capacidad > 0 AND ciudad_origen = ? AND ciudad_destino = ? AND pais_origen = ? AND pais_destino = ? ORDER BY precio", array($fecha, $ciudadOrigen, $ciudadDestino, $paisOrigen, $paisDestino));
-=======
     public function listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $escalas, $clase) {
         #var_dump($ciudadDestino);die;
             
@@ -44,7 +40,6 @@ class FlightRepository extends PDORepository {
         #var_dump($query);die;
         
 #var_dump($query[0]);die;
->>>>>>> d9fe05e83f97b2e899fb8181df563807f335ba28
         $flights = [];
         foreach ($query[0] as $row ) {
             #var_dump($row);die;

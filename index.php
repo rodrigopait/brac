@@ -65,7 +65,6 @@ require_once('view/UsersList.php');
 require_once('view/UserRegistration.php');
 require_once('view/UserInformation.php');
 require_once('view/UserInformationModify.php');
-require_once('view/IndexUser.php');
 require_once('view/HotelCreate.php');
 require_once('view/ConcessionaireCreate.php');
 require_once('view/ConcessionairesList.php');
