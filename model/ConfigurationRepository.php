@@ -17,13 +17,11 @@ class ConfigurationRepository extends PDORepository {
         
     }
 
-
-    public function list()
-    {
-    	$query = $this->queryList("SELECT * FROM configuracion WHERE id=?", array(1));
-    	$config = $query[0]->fetch(PDO::FETCH_ASSOC);
-    	$configuracion = new Configuration($config['id'],$config['gap_max'], $config['descuento_escala'],$config['precio_puntos'],$config['precio_peso'],$config['porcentaje_devolucion'],$config['intentos_sesion'],$config['precio_ejecutiva'],$config['precio_primera']);
-    	return $configuracion;
+    public function listConf(){
+        $query = $this->queryList("SELECT * FROM configuracion WHERE id=?", array(1));
+        $config = $query[0]->fetch(PDO::FETCH_ASSOC);
+        $configuracion = new Configuration($config['id'],$config['gap_max'], $config['descuento_escala'],$config['precio_puntos'],$config['precio_peso'],$config['porcentaje_devolucion'],$config['intentos_sesion'],$config['precio_ejecutiva'],$config['precio_primera']);
+        return $configuracion;
     }
 
     public function configurationAdd($data)

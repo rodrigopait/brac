@@ -15,7 +15,8 @@
                         <td align="center"><strong>Fecha Llegada</strong></td>
                         <td align="center"><strong>Precio</strong></td>
                         <td align="center"><strong>Categoria</strong></td>
-                        <td align="center"></td>
+                        <td align="center"><strong>Aerolinea</strong></td>
+                        
                     </tr>
                     {% for fly in flight %}
                     <tr>
@@ -34,6 +35,21 @@
                     {% if fly.getCategoria == 3 %}
                         <td align="center">Ejecutivo</td>
                     {% endif %}
+                    {%if fly.getAereolinea == 1 %}
+                       <td align="center">KLM</td>
+                {% endif %} 
+                {%if fly.getAereolinea == 2 %}
+                       <td align="center">Transilvania Airlines</td>
+                {% endif %} 
+                {%if fly.getAereolinea == 3 %}
+                       <td align="center">Denim Air</td>
+                {% endif %} 
+                {%if fly.getAereolinea == 4 %}
+                       <td align="center">Qatar Airways</td>
+                {% endif %} 
+                {%if fly.getAereolinea == 5 %}
+                       <td align="center">Singapur Airlines</td>
+                {% endif %} 
                         {% if rol == 'cliente' %}
                             <td align="center"><a style="text-decoration: none;" href="./?controller=Flight&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
                         {% endif %}

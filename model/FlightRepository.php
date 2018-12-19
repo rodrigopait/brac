@@ -66,11 +66,11 @@ class FlightRepository extends PDORepository {
         $flights = [];
 
         foreach ($query[0] as $row ) {
-            #var_dump($row['tipo_vuelo']);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad_economica'], $row['capacidad_primera'], $row['capacidad_ejecutiva'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'],$row['escala'],$row['tipo_vuelo']);
+            #var_dump($row['aerolinea_id']);die;
+            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
             $flights[]=$flight;
         }
-        #var_dump($flights);die;
+           #var_dump($flights);die;
              $query = null;
         return $flights;
     }
@@ -78,12 +78,12 @@ class FlightRepository extends PDORepository {
     public function listFromSearchByClase2($fecha, $ciudadOrigen, $ciudadDestino, $escalas)
     {
 
-        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala = ? AND capacidad_primera > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
+        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala >= ? AND capacidad_primera > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
 
         $flights = [];
         foreach ($query[0] as $row ) {
             #var_dump($row);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad_economica'], $row['capacidad_primera'], $row['capacidad_ejecutiva'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'],$row['escala'],$row['tipo_vuelo']);
+            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
             $flights[]=$flight;
         }
              $query = null;
@@ -93,12 +93,12 @@ class FlightRepository extends PDORepository {
     public function listFromSearchByClase3($fecha, $ciudadOrigen, $ciudadDestino, $escalas)
     {
 
-        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala = ? AND capacidad_ejecutiva > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
+        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala > ? AND capacidad_ejecutiva > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
 
         $flights = [];
         foreach ($query[0] as $row ) {
             #var_dump($row);die;
-           $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad_economica'], $row['capacidad_primera'], $row['capacidad_ejecutiva'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'],$row['escala'],$row['tipo_vuelo']);
+           $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
             $flights[]=$flight;
 
         }

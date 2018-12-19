@@ -35,6 +35,7 @@ class FlightController {
         try{
             $rol = $_SESSION['rol'];
             $clases = ClaseRepository::getInstance()->listAll();
+            #var_dump($clases);die;
             $view = new FlightSearch($clases);
             $view->show($clases);
         }
@@ -54,7 +55,7 @@ class FlightController {
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
             $escalas = $_POST['escalas'];
-
+            
             $idclase = $_POST['clase'];
             $clase = ClaseRepository::getInstance()->getClase($idclase);
 
@@ -62,6 +63,7 @@ class FlightController {
             if($idClase = 1)
             {
                 $flights = FlightRepository::getInstance()->listFromSearchByClase1($fecha, $ciudadOrigen, $ciudadDestino, $escalas);  
+                #var_dump($flights);die;
 
             }else
             {
