@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-12-2018 a las 04:11:22
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.1.24
+-- Tiempo de generación: 19-12-2018 a las 05:21:53
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -240,7 +240,15 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 CREATE TABLE `clase` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `clase`
+--
+
+INSERT INTO `clase` (`id`, `descripcion`) VALUES
+(1, 'economico'),
+(2, 'primera');
 
 -- --------------------------------------------------------
 
@@ -293,31 +301,6 @@ INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUE
 (6, 'AUTOCENTER SCHMOLKE GMBH & CO. KG', 84, 0),
 (7, ' Autostar', 17, 0),
 (8, 'Audi Lounge', 17, 0);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `configuracion`
---
-
-CREATE TABLE `configuracion` (
-  `id` int(11) NOT NULL,
-  `gap_max` int(11) NOT NULL,
-  `descuento_escala` int(11) NOT NULL,
-  `precio_puntos` int(11) NOT NULL,
-  `precio_peso` int(11) NOT NULL,
-  `porcentaje_devolucion` int(11) NOT NULL,
-  `intentos_sesion` int(11) NOT NULL,
-  `precio_ejecutiva` int(11) NOT NULL,
-  `precio_primera` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `configuracion`
---
-
-INSERT INTO `configuracion` (`id`, `gap_max`, `descuento_escala`, `precio_puntos`, `precio_peso`, `porcentaje_devolucion`, `intentos_sesion`, `precio_ejecutiva`, `precio_primera`) VALUES
-(1, 5, 20, 150, 200, 15, 6, 250, 500);
 
 -- --------------------------------------------------------
 
@@ -534,23 +517,19 @@ CREATE TABLE `usuario` (
   `clave` varchar(50) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
-  `dni` varchar(8) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `nro_tarjeta` varchar(255) DEFAULT NULL
+  `nro_tarjeta` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`) VALUES
-(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, NULL),
-(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, 'null'),
-(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, 'null'),
-(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, 'null'),
-(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, 'null'),
-(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966');
+INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `email`, `rol_id`, `nro_tarjeta`) VALUES
+(0, 'administrador', 'negro', 'Administrador', '', 'admin@admin.com', 2, ''),
+(1, 'comerciante', 'negro', 'Comerciante', '', 'comerciante@comerciante.com', 3, ''),
+(2, 'alex', 'negro', 'Alex', 'El Leon', 'alex@elleon.com', 1, '5547-5236-5894-7895');
 
 -- --------------------------------------------------------
 
@@ -568,16 +547,20 @@ CREATE TABLE `vuelo` (
   `capacidad_economica` int(11) NOT NULL,
   `capacidad_ejecutiva` int(11) NOT NULL,
   `capacidad_primera` int(11) NOT NULL,
-  `aerolinea_id` int(11) NOT NULL
+  `aerolinea_id` int(11) NOT NULL,
+  `escala` int(11) NOT NULL DEFAULT '1',
+  `tipo_vuelo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `vuelo`
 --
 
-INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
-(6, '2018-12-18 23:30:00', '2018-12-19 02:30:00', '1', '17', 2500, 250, 100, 50, 1),
-(7, '2018-12-19 21:50:00', '2018-12-21 22:50:00', '1', '113', 40000, 600, 300, 100, 3);
+INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`, `escala`, `tipo_vuelo`) VALUES
+(6, '2018-12-18 23:30:00', '2018-12-19 02:30:00', '1', '17', 2500, 250, 100, 50, 1, 1, 1),
+(7, '2018-12-19 21:50:00', '2018-12-21 22:50:00', '1', '113', 40000, 600, 300, 100, 3, 1, 1),
+(8, '2018-12-01 00:00:00', '2018-12-02 00:00:00', 'a', 'b', 5000, 50, 50, 50, 1, 1, 1),
+(9, '2018-12-01 00:00:00', '2018-12-02 00:00:00', 'a', 'b', 665665, 50, 50, 50, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -639,6 +622,12 @@ ALTER TABLE `auto_alquiler`
 ALTER TABLE `ciudad`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pais_id` (`pais_id`);
+
+--
+-- Indices de la tabla `clase`
+--
+ALTER TABLE `clase`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `compra`
@@ -755,6 +744,12 @@ ALTER TABLE `ciudad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
+-- AUTO_INCREMENT de la tabla `clase`
+--
+ALTER TABLE `clase`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -812,13 +807,13 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
