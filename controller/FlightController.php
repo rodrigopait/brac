@@ -35,9 +35,10 @@ class FlightController {
         try{
             $rol = $_SESSION['rol'];
             $clases = ClaseRepository::getInstance()->listAll();
+            $paises = CountryRepository::getInstance()->listAll();
             #var_dump($clases);die;
-            $view = new FlightSearch($clases);
-            $view->show($clases);
+            $view = new FlightSearch();
+            $view->show($clases,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
