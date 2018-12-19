@@ -48,14 +48,13 @@ class LoginController {
           $username = $_POST['usuario'];
           $password = $_POST['clave'];
 
-          if(!is_null($username) AND !is_null($password)){
-            if($model = UserRepository::getInstance()->login_user($username, $password) != null)
-            {
-              $view = new Home();
-              $view->show();
+            if(!is_null($username) AND !is_null($password)){
+                if($model = UserRepository::getInstance()->login_user($username, $password) != null){
+                    $view = new Home();
+                    $view->show();
             }else {
-              $view = new Login();
-              $view->show();
+                $view = new Login();
+                $view->show();
             }
 
             /*$model= UserRepository::getInstance()->logout_user();

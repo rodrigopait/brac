@@ -27,8 +27,8 @@
                     <td align="center">{{ car.getAutonomia }}</td>
                     <td align="center">{{ car.getCapacidad }}</td>
                     <td align="center">${{ car.getPrecio }}</td>
-                    {% if rol == 1 %}
-                        <td align="center"><a style="text-decoration: none;" href="./?action=add_car_to_cart&id={{car.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                    {% if rol == 'cliente' %}
+                        <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_car_to_cart&id={{car.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

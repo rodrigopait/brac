@@ -18,8 +18,10 @@ class RoomRepository extends PDORepository {
     }
 
     // public function listAll() {
-
-    //     $query = RoomRepository::getInstance()->queryList("SELECT * FROM habitacion", array());
+    //     $sql = "SELECT * 
+    //             FROM habitacion
+    //                 INNER JOIN hotel ON habitacion.hotel_id = hotel.id";
+    //     $query = RoomRepository::getInstance()->queryList($sql, array());
     //     foreach ($query[0] as $row) {
     //         $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad'], $row['ciudad_origen'], $row['ciudad_destino'], $row['pais_origen'], $row['pais_destino'], $row['precio']);
     //         $flights[]=$flight;
@@ -75,7 +77,7 @@ class RoomRepository extends PDORepository {
 
         //agrego un habitacion
     public function roomAdd($data) {
-        $query = $this->queryList("INSERT INTO habitacion (numero, capacidad, precio, hotel_id) VALUES (?,?,?,?)",$data);
+        $query = $this->queryList("INSERT INTO habitacion (capacidad, precio, hotel_id) VALUES (?,?,?)",$data);
     }
 }
 ?>

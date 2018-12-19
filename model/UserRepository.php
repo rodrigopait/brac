@@ -20,10 +20,7 @@ class UserRepository extends PDORepository {
 
 
 
-    public function login_user() {
-
-        $username = $_POST['usuario'];
-        $password = $_POST['clave'];
+    public function login_user($username,$password) {
 
         if(!is_null($username) AND !is_null($password)){
             $array = array(
@@ -45,6 +42,7 @@ class UserRepository extends PDORepository {
                 $_SESSION['carsFechaDesde'][] = null;
                 $_SESSION['carsFechaHasta'][] = null;
                 $res[0] = null;
+                return $user;
             }
             else{
                 $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";

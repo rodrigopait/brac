@@ -24,7 +24,7 @@
                     <td align="center">{{ room.getHotel.getEstrellas }}</td>
                     <td align="center">{{ room.getCapacidad }}</td>
                     <td align="center">${{ room.getPrecio }}</td>
-                    {% if rol == 1 %}
+                    {% if rol == 'cliente' %}
                     <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_room_to_cart&id={{room.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
                     {% endif %}
                 </tr>

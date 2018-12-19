@@ -51,7 +51,7 @@
                        <td align="center">Singapur Airlines</td>
                 {% endif %}
                         {% if rol == 'cliente' %}
-                            <td align="center"><a style="text-decoration: none;" href="./?controller=Flight&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
+                            <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
                         {% endif %}
                     </tr>
                     {% endfor %}

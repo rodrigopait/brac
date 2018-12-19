@@ -84,15 +84,15 @@ class RoomController {
     }
 
     public function roomAdd(){
+        $ciudad= $_POST['ciudad'];
+        $pais= $_POST['pais'];
         $precio= $_POST['precio'];
         $capacidad = $_POST['capacidad'];
         $hotel = $_POST['hotel'];
-
-
-        if (!empty($precio) && !empty($capacidad) && !empty($hotel)){
+        if (!empty($precio) && !empty($ciudad) && !empty($pais) && !empty($capacidad) && !empty($hotel)){
             $data=array($capacidad,$precio,$hotel);
             RoomRepository::getInstance()->roomAdd($data);
-            $view = new Home();
+            $view = new Home ();
             $view->show();
         }else{
             $view = new Home ();
