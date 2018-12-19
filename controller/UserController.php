@@ -110,7 +110,6 @@ class UserController {
                $_SESSION['roomsFechaDesde'] = null;
                $_SESSION['roomsFechaHasta'] = null;
            }
-           $this->home();
            $message="La cuenta ha sido eliminada de manera permanente.";
            $view = new Home();
            $view->show($message);
@@ -258,7 +257,8 @@ class UserController {
 
 
         }else {
-          echo "Usuario NO existe";die;
+          $view = new login();
+            $view->show();
         }
      }
    }
