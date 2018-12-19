@@ -15,22 +15,36 @@
                             <label>Fecha de vuelta</label>
                             <input type="date" class="form-control" name="fechaLlegada" required="false">
                         </div>
-                        <div class="col-sm-6 form-group" >
+                        <div class="col-sm-6 form-group">
                             <dl class="form-group">
                                 <dt><label>Origen</label></dt>
-                                <dd>
-                                    <input name="ciudadOrigen" id="ciudadOrigen" type="text" placeholder="Ciudad" class="form-control">
+                                <dd >
+                                    <select name="paisOrigen" id="paisOrigen" class="form-control" onchange="ciudades(this.id,'ciudadOrigen');">
+                                        <option disabled="disabled" selected="selected">Elegí un Pais</option>
+                                        {% for country in countries %}
+                                            <option value={{country.id}} ="}">{{country.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </dd>
-                                
+                                <dd style="margin-top: 3%">
+                                    <select name="ciudadOrigen" id="ciudadOrigen" class="form-control" disabled="disabled"></select>
+                                </dd>
                             </dl>
                         </div>
                         <div class="col-sm-6 form-group">
                             <dl class="form-group">
                                 <dt><label>Destino</label></dt>
-                                <dd>
-                                    <input name="ciudadDestino" id="ciudadDestino" type="text" placeholder="Ciudad" class="form-control">
+                                <dd >
+                                    <select name="paisDestino" id="paisDestino" class="form-control" onchange="ciudades(this.id,'ciudadDestino');">
+                                        <option disabled="disabled" selected="selected">Elegí un Pais</option>
+                                        {% for country in countries %}
+                                            <option value={{country.id}} ="}">{{country.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </dd>
-                                
+                                <dd style="margin-top: 3%">
+                                    <select name="ciudadDestino" id="ciudadDestino" class="form-control" disabled="disabled"></select>
+                                </dd>
                             </dl>
                         </div>
                         <div class="col-sm-4 form-group">

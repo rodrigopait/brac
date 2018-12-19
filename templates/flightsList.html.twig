@@ -2,9 +2,9 @@
 {% block main %}
     <div class="container">
         <h1 class="well">Listado de Vuelos</h1>
-        
+
         {% if flight %}
-            
+
             <div class="panel panel-default">
                 <table class="table">
                     <tr>
@@ -16,12 +16,12 @@
                         <td align="center"><strong>Precio</strong></td>
                         <td align="center"><strong>Categoria</strong></td>
                         <td align="center"><strong>Aerolinea</strong></td>
-                        
+
                     </tr>
                     {% for fly in flight %}
                     <tr>
-                        <td align="center">{{ fly.getCiudadOrigen }}, {{ fly.getPaisOrigen }}</td>
-                        <td align="center">{{ fly.getCiudadDestino }}, {{ fly.getPaisDestino }}</td>
+                        <td align="center">{{ fly.getCiudadOrigen }}</td>
+                        <td align="center">{{ fly.getCiudadDestino }}</td>
                         <td align="center">{{ fly.getEscala }}</td>
                         <td align="center">{{ fly.getFechaSalida }}</td>
                         <td align="center">{{ fly.getFechaLlegada }}</td>
@@ -37,21 +37,21 @@
                     {% endif %}
                     {%if fly.getAereolinea == 1 %}
                        <td align="center">KLM</td>
-                {% endif %} 
+                {% endif %}
                 {%if fly.getAereolinea == 2 %}
                        <td align="center">Transilvania Airlines</td>
-                {% endif %} 
+                {% endif %}
                 {%if fly.getAereolinea == 3 %}
                        <td align="center">Denim Air</td>
-                {% endif %} 
+                {% endif %}
                 {%if fly.getAereolinea == 4 %}
                        <td align="center">Qatar Airways</td>
-                {% endif %} 
+                {% endif %}
                 {%if fly.getAereolinea == 5 %}
                        <td align="center">Singapur Airlines</td>
-                {% endif %} 
+                {% endif %}
                         {% if rol == 'cliente' %}
-                            <td align="center"><a style="text-decoration: none;" href="./?controller=Flight&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
+                            <td align="center"><a style="text-decoration: none;" href="./?controller=Flight&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
                         {% endif %}
                     </tr>
                     {% endfor %}
@@ -59,6 +59,6 @@
             </div>
         {% else %}
             <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>
-        {% endif %} 
+        {% endif %}
     </div>
 {% endblock %}

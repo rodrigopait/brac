@@ -35,9 +35,10 @@ class FlightController {
         try{
             $rol = $_SESSION['rol'];
             $clases = ClaseRepository::getInstance()->listAll();
-            #var_dump($clases);die;
-            $view = new FlightSearch($clases);
-            $view->show($clases);
+            $paises = CountryRepository::getInstance()->listAll();
+            #var_dump($paises);die;
+            $view = new FlightSearch();
+            $view->show($clases,$paises);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -55,8 +56,11 @@ class FlightController {
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
             $escalas = $_POST['escalas'];
-
+            $pais_origen = $_POST['paisOrigen'];
+            $pais_destino = $_POST['paisDestino'];
             $idclase = $_POST['clase'];
+
+            #var_dump($_POST);die;
             $clase = ClaseRepository::getInstance()->getClase($idclase);
 
             #var_dump($idclase);die;
@@ -120,7 +124,7 @@ class FlightController {
         $hora = $_POST['hora'];
         $duracion = $_POST['duracion'];
         $escalas = $_POST['escalas'];
-      
+
         if(!empty($ciudadOrigen) && !empty($ciudadDestino) && !empty($aerolinea) && !empty($fechaPartida) && !empty($precio) && !empty($economica) && !empty($ejecutiva) && !empty($primera) && !empty($hora) && !empty($duracion)) {
                 /*$data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
                 CarRepository::getInstance()->carAdd($data);
