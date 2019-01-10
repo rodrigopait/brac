@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
+{% block javascript %}
+    <script src="assets/js/roomValidation.js"></script>
+{% endblock %}
 {% block main %}
     <div class="container" style="margin: auto">
         <h1 class="col-lg-12 well">Alta de Habitación</h1>
         <div class="col-lg-12 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?controller=Room&method=roomAdd" enctype="multipart/form-data">
+                <form name="form" method="post" action="index.php?controller=Room&method=roomAdd" enctype="multipart/form-data" onsubmit"return roomCreateValidation();">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">
@@ -28,16 +31,16 @@
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Precio por persona</label>
-                                <input type="price" class="form-control" min="0.00"  step="0.01"  name="precio" placeholder="Precio por persona" required="true">
+                                <input type="price" class="form-control" min="0.00"  step="0.01"  id="precio" name="precio" placeholder="Precio por persona" required="true">
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Capacidad</label>
-                                <input type="number" class="form-control" min="0.0"  step="0.1" name="capacidad" placeholder="Capacidad" required="true">
+                                <input type="number" class="form-control" min="0.0"  step="0.1" name="capacidad" id="capacidad" placeholder="Capacidad" required="true">
                             </div>
 
                         </div>           
                         <div align="center">
-                            <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                            <button type="submit" onsubmit="return roomCreateValidation();" class="btn btn-success navbar-btn">Agregar</button>
                             <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
                         </div>
                     </div>
