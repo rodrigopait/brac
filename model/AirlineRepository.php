@@ -34,4 +34,10 @@ class AirlineRepository extends PDORepository {
 
         return $airlines;
     }
+
+    public function duplicity($airline)
+    {
+        $query = $this->queryList("SELECT * FROM aerolinea WHERE nombre = ?",array($airline));
+        return count($query[0]);
+    }
 }

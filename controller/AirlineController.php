@@ -34,11 +34,19 @@ class AirlineController {
         $nombre = $_POST['nombre'];
         if (isset($nombre) && !empty($nombre)){
             AirlineRepository::getInstance()->airlineAdd($nombre,0);
-            $view = new Home();
+            sleep(2);
+            $view = new Home ();
             $view->show();
         }else{
             $view = new Home ();
             $view->show();
         }
+    }
+
+    public function verifyDuplicity()
+    {
+        $airline = $_POST['airline'];
+        $cant = AirlineRepository::getInstance()->duplicity($airline);
+        return $cant;
     }
 }

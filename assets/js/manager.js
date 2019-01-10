@@ -135,7 +135,7 @@ function ciudades(idPais,idCiudad){
     });
    }
 
-// A $( document ).ready() block.
+//Eliminar cuenta de usuario
 $( document ).ready(function() {
   $('#eliminar').click(function() {
       alertify.confirm("¿Estas seguro?.",
@@ -143,6 +143,72 @@ $( document ).ready(function() {
           window.location.href = "index.php?controller=User&method=userDelete";
         });
   });
+
+
+
+//----------------------------------------VALIDACIONES---------------------------------
+
+  //resetear campos
+  $('#reset').click(function(){
+    $('#airline-error').text('');
+  })
+
+  //validacion para agregar una aerolinea
+  $('#formAerolinea').submit(function(event){
+    let airline=$('#airline').val();
+    
+    if (airline.trim() == "") {
+      $('#airline-error').text('Debe ingresar una aerolinea');
+      event.preventDefault();
+
+    }
+    else{
+      $.ajax({
+        url: 'index.php?controller=Airline&method=verifyDuolicity',
+        type: 'post',
+        data: {airline: airline},
+        success:  function (response) {
+          console.log(response);
+        }
+      });
+
+      alertify.success('Agregado');
+
+    }
+  });
+
+  //validacion para agregar una hotel
+  $('#formHotel').submit(function(event){
+    let name=$('#nombre').val();
+    let country=$('#pais').val();
+    let city=$('#ciudad').val();
+    
+    let errores=new Array();
+    
+
+
+    if (airline.trim() == "") {
+      $('#airline-error').text('Debe ingresar una aerolinea');
+      event.preventDefault();
+
+    }
+    else{
+      $.ajax({
+        url: 'index.php?controller=Airline&method=verifyDuolicity',
+        type: 'post',
+        data: {airline: airline},
+        success:  function (response) {
+          console.log(response);
+        }
+      });
+
+      alertify.success('Agregado');
+
+    }
+  });
+
+
+
 
 
 });
