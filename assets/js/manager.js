@@ -153,29 +153,8 @@ $( document ).ready(function() {
     $('#airline-error').text('');
   })
 
-  //validacion para agregar una aerolinea
-  $('#formAerolinea').submit(function(event){
-    let airline=$('#airline').val();
-    
-    if (airline.trim() == "") {
-      $('#airline-error').text('Debe ingresar una aerolinea');
-      event.preventDefault();
-
-    }
-    else{
-      $.ajax({
-        url: 'index.php?controller=Airline&method=verifyDuolicity',
-        type: 'post',
-        data: {airline: airline},
-        success:  function (response) {
-          console.log(response);
-        }
-      });
-
-      alertify.success('Agregado');
-
-    }
-  });
+	//validacion para agregar una aerolinea
+	
 
   //validacion para agregar una hotel
   $('#formHotel').submit(function(event){
@@ -188,27 +167,62 @@ $( document ).ready(function() {
 
 
     if (airline.trim() == "") {
-      $('#airline-error').text('Debe ingresar una aerolinea');
+      $('#').text('Debe ingresar una ');
       event.preventDefault();
 
     }
     else{
       $.ajax({
-        url: 'index.php?controller=Airline&method=verifyDuolicity',
+        url: 'index.php?controller=&method=verifyDuplicity',
         type: 'post',
         data: {airline: airline},
         success:  function (response) {
           console.log(response);
+          
+        },
+        error: function (response) {
+            event.preventDefault();
+            alertify.danger('No se pudo agregar');
         }
       });
 
-      alertify.success('Agregado');
-
+      
+      
     }
   });
 
-
-
-
-
 });
+function newFunction(errores) {
+	errores = 1;
+	return errores;
+}
+
+function formAerolinea() {
+	let airline = $('#airline').val();
+	if (airline.trim() == "") {
+		$('#airline-error').text('Debe ingresar una aerolinea');
+		return false
+	} else {
+		$.ajax({
+			url: 'index.php?controller=Airline&method=verifyDuplicity',
+			type:'post',
+			data: {
+				airline: airline
+			},
+			success:function (response) {
+				if (response > 0) {
+					$('#airline-error').text('Ya existe culeao aerolinea');
+					return 
+				} else {
+					alertify.success('Agregado');
+					$('#airline-error').text('');
+					return true
+				}
+			}
+		}).then(response);
+	}
+	if ($('#airline-error').text() != '') {
+		event.preventDefault()
+	}
+	//event.preventDefault()
+}

@@ -29,16 +29,21 @@ $("#roomCreateValidation").submit(function(event){
 	}
 	
 	if (errors == 0){
-		var res = $.ajax({
-			url: 'index.php?controller=Room&method=verifyDuplicity',
-			type: 'post',
+		var response = '';
+		$.ajax({
+			type: "POST",
+			url: "index.php?controller=Room&method=verifyDuplicity",
+			async: false,
 			data: {
 				hotel: hotel,
 				precio: precio,
 				capacidad: capacidad
+			},
+			success: function (text) {
+				response = text;
 			}
 		});
-		console.log(res['responseText']);
+		console.log(response);
 		event.preventDefault();
 	}
 	else
