@@ -79,5 +79,15 @@ class RoomRepository extends PDORepository {
     public function roomAdd($data) {
         $query = $this->queryList("INSERT INTO habitacion (capacidad, precio, hotel_id) VALUES (?,?,?)",$data);
     }
+
+    public function duplicity($hotel,$precio,$capacidad) {
+        $sql = "SELECT count(id) as cantidad FROM habitacion WHERE hotel_id = ? AND precio = ? AND capacidad = ?";
+        $query = $this->queryList($sql,array($hotel,$precio,$capacidad));
+        $rooms=0;
+        foreach ($query[0] as $row) {
+            $rooms=$row['cantidad'];
+        }
+        return $rooms;
+    }
 }
 ?>

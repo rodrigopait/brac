@@ -47,6 +47,6 @@ class AirlineController {
     {
         $airline = $_POST['airline'];
         $cant = AirlineRepository::getInstance()->duplicity($airline);
-        return $cant;
+        echo($cant);
     }
 }

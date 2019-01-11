@@ -30,14 +30,12 @@ class AirlineRepository extends PDORepository {
             $airline = new Airline( $row['id'], $row['nombre'], $row['reputacion_id']);
             $airlines[]=$airline;
         }
-
-
         return $airlines;
     }
 
     public function duplicity($airline)
     {
-        $query = $this->queryList("SELECT * FROM aerolinea WHERE nombre = ?",array($airline));
-        return count($query[0]);
+        $query = $this->queryList("SELECT count(id) as cantidad FROM aerolinea WHERE nombre = ?",array($airline));
+        return $query[0];
     }
 }

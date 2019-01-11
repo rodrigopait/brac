@@ -113,4 +113,13 @@ class RoomController {
         }
     }
 
+    public function verifyDuplicity()
+    {
+        $hotel = $_POST['hotel'];
+        $precio = $_POST['precio'];
+        $capacidad = $_POST['capacidad'];
+        $cant = RoomRepository::getInstance()->duplicity($hotel,$precio,$capacidad);
+        echo($cant);
+    }
+
 }
