@@ -12,7 +12,7 @@ $("#roomCreateValidation").submit(function(event){
 	$('#precio-error').text('');
 	$('#capacidad-error').text('');
 	
-	if (pais == ''){
+	if (pais == null){
 		$('#pais-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
@@ -20,7 +20,7 @@ $("#roomCreateValidation").submit(function(event){
 		$('#ciudad-error').text('Debe ingresar el pais de la habitación.');
 		errors++;
 	}
-	if (precio == ''){
+	if (precio == null){
 		$('#precio-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
@@ -28,15 +28,18 @@ $("#roomCreateValidation").submit(function(event){
 		$('#hotel-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
-	if (capacidad == ''){
+	if (capacidad == null){
 		$('#capacidad-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
+
 	$.ajax({
 		type: "POST",
 		url: "index.php?controller=Room&method=roomCreate",
 		async: false,
-		data:{}
+		data:{
+			message: capacidad
+		}
 	});
 	//no realiza bien el envio de arriba para mostrar mensaje de error pero ya esta hecho la otra parte de validacio
 	/*
@@ -75,7 +78,7 @@ $("#roomCreateValidation").submit(function(event){
 		else{
 			$.ajax({
 				type: "GET",
-				url: "index.php?controller=Room&method=roomCreate&message='Ya existen una habitacion con esos campos.'",
+				url: "index.php?controller=Room&method=roomCreate",
 				async: false
 			});
 		}

@@ -124,4 +124,25 @@ class FlightRepository extends PDORepository {
         return $flights;
     }
 }
+
+/*
+vuelo directos
+SELECT * FROM `vuelo` WHERE ciudad_destino = 'lisboa' AND fecha_salida BETWEEN '2018-01-10 00:00:00'  AND '2018-01-10 23:59:59' AND ciudad_origen = 'buenos aires' AND capacidad_economica >= 1
+vuelos con escala
+SELECT *
+FROM vuelo
+WHERE ciudad_origen = 'buenos aires' 
+	AND fecha_salida BETWEEN '2018-01-10 00:00:00'  AND '2018-01-10 23:59:59'
+    AND ciudad_destino IN (SELECT ciudad_origen 
+                           FROM `vuelo` as vl 
+                           WHERE ciudad_destino = 'lisboa' 
+                          	 AND fecha_salida BETWEEN '2018-01-10 00:00:00'  AND '2018-01-10 23:59:59'
+							AND ciudad_origen != 'buenos aires')
+                            
+UNION
+
+SELECT * FROM `vuelo` as vl WHERE ciudad_destino = 'lisboa' AND fecha_salida BETWEEN '2018-01-10 00:00:00'  AND '2018-01-10 23:59:59'
+AND ciudad_origen != 'buenos aires'
+
+ */
 ?>
