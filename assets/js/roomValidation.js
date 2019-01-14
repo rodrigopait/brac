@@ -6,28 +6,40 @@ $("#roomCreateValidation").submit(function(event){
 	var precio = $("#precio").val();
 	var capacidad = $("#capacidad").val();
 	var errors = 0;
+	$('#pais-error').text('');
+	$('#ciudad-error').text('');
+	$('#hotel-error').text('');
+	$('#precio-error').text('');
+	$('#capacidad-error').text('');
 	
 	if (pais == ''){
-		alert("Por favor ingrese el pais de la habitación.");
+		$('#pais-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
 	if (ciudad == null){
-		alert("Por favor ingrese la ciudad de la habitación.");
+		$('#ciudad-error').text('Debe ingresar el pais de la habitación.');
 		errors++;
 	}
 	if (precio == ''){
-		alert("Por favor ingrese el precio de la habitación.");
+		$('#precio-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
 	if (hotel == null){
-		alert("Por favor ingrese el hotel de la habitación.");
+		$('#hotel-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
 	if (capacidad == ''){
-		alert("Por favor ingrese la capacidad de la habitación.");
+		$('#capacidad-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
-	
+	$.ajax({
+		type: "POST",
+		url: "index.php?controller=Room&method=roomCreate",
+		async: false,
+		data:{}
+	});
+	//no realiza bien el envio de arriba para mostrar mensaje de error pero ya esta hecho la otra parte de validacio
+	/*
 	if (errors == 0){
 		var response = '';
 		$.ajax({
@@ -43,11 +55,32 @@ $("#roomCreateValidation").submit(function(event){
 				response = text;
 			}
 		});
-		console.log(response);
-		event.preventDefault();
+		if (response == 0){
+			$.ajax({
+				type: "POST",
+				url: "index.php?controller=Room&method=roomAdd",
+				async: false,
+				data: {
+					pais: pais,
+					ciudad: ciudad,
+					hotel: hotel,
+					precio: precio,
+					capacidad: capacidad
+				},
+				success: function (text) {
+					response = text;
+				}
+			});
+		}
+		else{
+			$.ajax({
+				type: "GET",
+				url: "index.php?controller=Room&method=roomCreate&message='Ya existen una habitacion con esos campos.'",
+				async: false
+			});
+		}
 	}
-	else
-	$("#capacidad").text('12');
-	event.preventDefault();
+	else{
+		event.preventDefault();
+	}*/
 });
-//action="index.php?controller=Room&method=roomAdd" 

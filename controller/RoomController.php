@@ -31,13 +31,12 @@ class RoomController {
         }
     }
 
-    public function roomCreate()
-    {
+    public function roomCreate($message = null){
         try {
             $rol = $_SESSION['rol'];
             $paises = CountryRepository::getInstance()->listWithRoom();
             $view = new RoomCreate();
-            $view->show($rol,$paises);
+            $view->show($rol,$paises,$message);
         } catch (PDOException $e) {
             $error = "Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
             $view = new Error_display();
@@ -92,11 +91,10 @@ class RoomController {
         if (!empty($precio) && !empty($ciudad) && !empty($pais) && !empty($capacidad) && !empty($hotel)){
             $data=array($capacidad,$precio,$hotel);
             RoomRepository::getInstance()->roomAdd($data);
-            $view = new Home ();
-            $view->show();
+            RoomController::getInstance()->roomsListAll();
         }else{
-            $view = new Home ();
-            $view->show();
+            $message = 'No se pudo agregar la habitacion';
+            RoomController::getInstance()->roomCreate($message);
         }
     }
 

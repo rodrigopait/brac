@@ -4,6 +4,9 @@
 {% endblock %}
 {% block main %}
     <div class="container" style="margin: auto">
+        {% if message %}
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+        {% endif %}
         <h1 class="col-lg-12 well">Alta de Habitación</h1>
         <div class="col-lg-12 well">
             <div class="row">
@@ -11,7 +14,7 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">
-                                <label>Pais</label>
+                                <label>Pais <span id="pais-error" style="color: red"></span></label>
                                 <select  class="form-control" name="pais" required="true" id="pais" onchange="ciudadesConHabitaciones(this.id,'ciudad')">
                                     <option disabled selected>Elejí un Pais</option>
                                     {% for country in countries %}
@@ -20,21 +23,21 @@
                                 </select>
                             </div>
                             <div class="col-sm-4 form-group">
-                                <label>Ciudad</label>
+                                <label>Ciudad <span id="ciudad-error" style="color: red"></span></label>
                                 <select  class="form-control" name="ciudad" required="true" id="ciudad"  onchange="hoteles(this.id,'hotel')" disabled>
                                 </select>
                             </div>
                             <div class="col-sm-4 form-group">
-                                <label>Hotel</label>
+                                <label>Hotel <span id="hotel-error" style="color: red"></span></label>
                                 <select  class="form-control" name="hotel" required="true" id="hotel" disabled>
                                 </select>
                             </div>
                             <div class="col-sm-6 form-group">
-                                <label>Precio por persona</label>
+                                <label>Precio por persona <span id="precio-error" style="color: red"></span></label>
                                 <input type="number" class="form-control" min="0.00"  step="0.01"  id="precio" name="precio" placeholder="Precio por persona" required="true">
                             </div>
                             <div class="col-sm-6 form-group">
-                                <label>Capacidad</label>
+                                <label>Capacidad <span id="capacidad-error" style="color: red"></span></label>
                                 <input type="number" class="form-control" min="0.0"  step="0.1" name="capacidad" id="capacidad" placeholder="Capacidad" required="true">
                             </div>
 

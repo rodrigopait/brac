@@ -17,18 +17,37 @@ class RoomRepository extends PDORepository {
 
     }
 
-    // public function listAll() {
-    //     $sql = "SELECT * 
-    //             FROM habitacion
-    //                 INNER JOIN hotel ON habitacion.hotel_id = hotel.id";
-    //     $query = RoomRepository::getInstance()->queryList($sql, array());
-    //     foreach ($query[0] as $row) {
-    //         $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad'], $row['ciudad_origen'], $row['ciudad_destino'], $row['pais_origen'], $row['pais_destino'], $row['precio']);
-    //         $flights[]=$flight;
-    //     }
-    //     $query = null;
-    //     return $flights;
-    // }
+    public function listAll() {
+        $sql = "SELECT habitacion.id as habitacion_id,
+                    habitacion.capacidad as capacidad, 
+                    habitacion.precio as precio, 
+                    habitacion.hotel_id as hotel_id, 
+                    hotel.nombre as hotel_nombre, 
+                    hotel.ciudad_id as hotel_ciudad_id,
+                    hotel.estrellas as hotel_estrellas,
+                    ciudad.nombre as ciudad,
+                    pais.nombre as pais
+                FROM habitacion
+                    INNER JOIN hotel ON habitacion.hotel_id = hotel.id
+                    INNER JOIN ciudad ON hotel.ciuad_id = ciudad.id
+                    INNER JOIN pais ON pais.id = ciudad.pais_id";
+        $query = RoomRepository::getInstance()->queryList($sql, array());
+        foreach ($query[0] as $row) {
+            $hotel = new Hotel ($row['hotel_id'],
+                                $row['hotel_nombre'],
+                                $row['hotel_ciudad_id'],
+                                $row['hotel_estrellas']);
+            $room = new Room ( $row['habitacion_id'], 
+                                $row['capacidad'], 
+                                $row['precio'],
+                                $hotel, 
+                                $row['ciudad'], 
+                                $row['pais']);
+            $rooms[]=$room;
+        }
+        $query = null;
+        return $rooms;
+    }
 
     public function listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $capacidad) {
 
