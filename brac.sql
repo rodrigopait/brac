@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-12-2018 a las 04:11:22
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.1.24
+-- Tiempo de generación: 14-01-2019 a las 20:02:05
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.1.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -240,7 +240,16 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 CREATE TABLE `clase` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `clase`
+--
+
+INSERT INTO `clase` (`id`, `descripcion`) VALUES
+(1, 'economica'),
+(2, 'primera'),
+(3, 'ejecutiva');
 
 -- --------------------------------------------------------
 
@@ -338,7 +347,8 @@ CREATE TABLE `habitacion` (
 --
 
 INSERT INTO `habitacion` (`id`, `numero`, `capacidad`, `precio`, `hotel_id`) VALUES
-(1, '100', 5, 300, 4);
+(1, '100', 5, 300, 4),
+(2, '', 2, 9000, 7);
 
 -- --------------------------------------------------------
 
@@ -576,8 +586,11 @@ CREATE TABLE `vuelo` (
 --
 
 INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
-(6, '2018-12-18 23:30:00', '2018-12-19 02:30:00', '1', '17', 2500, 250, 100, 50, 1),
-(7, '2018-12-19 21:50:00', '2018-12-21 22:50:00', '1', '113', 40000, 600, 300, 100, 3);
+(6, '2018-01-10 09:30:00', '2018-01-10 20:30:00', 'buenos aires', 'lisboa', 30000, 100, 20, 10, 1),
+(7, '2018-01-10 09:30:00', '2018-01-10 09:30:00', 'buenos aires', 'montevideo', 2000, 50, 10, 1, 3),
+(8, '2018-01-10 22:30:00', '2018-01-10 23:30:00', 'montevideo', 'lisboa', 28000, 100, 10, 10, 1),
+(10, '2018-01-10 22:30:00', '2018-01-10 23:30:00', 'buenos aires', 'rio', 2356, 100, 100, 10, 5),
+(11, '2018-01-10 09:30:00', '2018-01-10 10:30:00', 'rio', 'lisboa', 2555, 200, 20, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -639,6 +652,12 @@ ALTER TABLE `auto_alquiler`
 ALTER TABLE `ciudad`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pais_id` (`pais_id`);
+
+--
+-- Indices de la tabla `clase`
+--
+ALTER TABLE `clase`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `compra`
@@ -755,6 +774,12 @@ ALTER TABLE `ciudad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
+-- AUTO_INCREMENT de la tabla `clase`
+--
+ALTER TABLE `clase`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -770,7 +795,7 @@ ALTER TABLE `concesionaria`
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
@@ -818,7 +843,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
