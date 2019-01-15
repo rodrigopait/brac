@@ -36,9 +36,6 @@ class RoomController {
             $rol = $_SESSION['rol'];
             $paises = CountryRepository::getInstance()->listWithRoom();
             $view = new RoomCreate();
-            if(isset($_POST['message'])){
-                $message = $_POST['message'];
-            }
             $view->show($rol,$paises,$message);
         } catch (PDOException $e) {
             $error = "Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

@@ -79,7 +79,11 @@ require_once('view/ConfigurationList.php');
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {
     $method = $_GET["method"];
     $controller = $_GET["controller"]."Controller";
-    $controller::getInstance()->$method();
+    $parameters = null;
+    if (isset($_GET['parameters'])) {
+        $parameters = $_GET['parameters'];
+    }
+    $controller::getInstance()->$method($parameters);
 }else{
     DefaultController::getInstance()->home();
 }

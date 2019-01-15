@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-01-2019 a las 20:02:05
+-- Tiempo de generación: 15-01-2019 a las 19:53:04
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.1.22
 
@@ -586,11 +586,15 @@ CREATE TABLE `vuelo` (
 --
 
 INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
-(6, '2018-01-10 09:30:00', '2018-01-10 20:30:00', 'buenos aires', 'lisboa', 30000, 100, 20, 10, 1),
-(7, '2018-01-10 09:30:00', '2018-01-10 09:30:00', 'buenos aires', 'montevideo', 2000, 50, 10, 1, 3),
-(8, '2018-01-10 22:30:00', '2018-01-10 23:30:00', 'montevideo', 'lisboa', 28000, 100, 10, 10, 1),
-(10, '2018-01-10 22:30:00', '2018-01-10 23:30:00', 'buenos aires', 'rio', 2356, 100, 100, 10, 5),
-(11, '2018-01-10 09:30:00', '2018-01-10 10:30:00', 'rio', 'lisboa', 2555, 200, 20, 20, 1);
+(6, '2018-01-10 13:00:00', '2018-01-11 03:00:00', 'buenos aires', 'lisboa', 30000, 100, 20, 10, 1),
+(7, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'buenos aires', 'montevideo', 2000, 50, 10, 0, 3),
+(8, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'montevideo', 'lisboa', 28000, 90, 10, 10, 1),
+(10, '2018-01-10 19:00:00', '2018-01-11 07:00:00', 'montevideo', 'lisboa', 2800, 90, 10, 10, 5),
+(11, '2018-01-11 04:00:00', '2018-01-11 07:00:00', 'lisboa', 'madrid', 5800, 50, 10, 20, 1),
+(12, '2018-01-11 08:00:00', '2018-01-11 11:00:00', 'lisboa', 'madrid', 6500, 50, 10, 20, 3),
+(13, '2018-04-15 05:00:00', '2018-04-15 18:00:00', 'buenos aires', 'madrid', 2500, 10, 0, 0, 1),
+(14, '2018-04-15 07:00:00', '2018-04-15 21:00:00', 'buenos aires', 'madrid', 1900, 20, 20, 22, 1),
+(15, '2018-04-15 12:00:00', '2018-04-16 06:00:00', 'buenos aires', 'madrid', 22000, 15, 18, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -843,7 +847,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`

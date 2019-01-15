@@ -32,16 +32,15 @@ $("#roomCreateValidation").submit(function(event){
 		$('#capacidad-error').text('Debe ingresar el pais de la habitación.');
 		errors+=1;
 	}
-
 	$.ajax({
 		type: "POST",
-		url: "index.php?controller=Room&method=roomCreate",
+		url: "index.php?controller=Room&method=roomCreate&parameters=hola",
 		async: false,
-		data:{
-			message: capacidad
+		data: {},
+		success: function () {
+
 		}
 	});
-	//no realiza bien el envio de arriba para mostrar mensaje de error pero ya esta hecho la otra parte de validacio
 	/*
 	if (errors == 0){
 		var response = '';
@@ -77,9 +76,13 @@ $("#roomCreateValidation").submit(function(event){
 		}
 		else{
 			$.ajax({
-				type: "GET",
-				url: "index.php?controller=Room&method=roomCreate",
-				async: false
+				type: "POST",
+				url: "index.php?controller=Room&method=roomCreate&parameters=hola",
+				async: false,
+				data: {},
+				success: function () {
+					
+				}
 			});
 		}
 	}
