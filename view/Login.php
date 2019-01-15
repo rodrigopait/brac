@@ -1,16 +1,16 @@
 <?php
 class Login extends TwigView {
     
-    public function show() {
+    public function show($user = null) {
         
-	    $templateDir="./templates";
-		$templateDirCompi="./templates-c";
-		$loader = new Twig_Loader_Filesystem($templateDir);
-		$twig = new Twig_Environment($loader);
-    	$template = $twig->loadTemplate("login.html.twig");
-    	$rol = $_SESSION['rol'];
-    	
-    	$template->display(array('rol' => $rol));               
+        $templateDir="./templates";
+        $templateDirCompi="./templates-c";
+        $loader = new Twig_Loader_Filesystem($templateDir);
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate("login.html.twig");
+        $rol = $_SESSION['rol'];
+        
+        $template->display(array('rol' => $rol, 'user' => $user));               
     }   
 }
 ?>

@@ -33,6 +33,25 @@
                                 <label>Tarjeta De Crédito</label>
                                 <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx" id="tarjeta" name="tarjeta" pattern="^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$" class="form-control" required/>
                             </div>
+                            <div class="col-sm-6 form-group">
+                            <dl class="form-group">
+                                <dt><label>Pregunta Secreta</label></dt>
+                                <dd >
+                                    <select name="pregunta" id="pregunta" class="form-control">
+                                        <option disabled="disabled" selected="selected">Elegí una pregunta</option>
+                                        {% for pregunta in preguntas %}
+                                            <option value={{pregunta.idPregunta}}>{{pregunta.pregunta}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </dd>
+                                
+                            </dl>
+                        </div>
+
+                            <div class="col-sm-4 form-group">
+                                <label>Respuesta Secreta</label>
+                                <input type="text" placeholder="Respuesta" id="respuesta" name="respuesta"  class="form-control" required/>
+                            </div>
                         </div>
                         <div align="center">
                             <button type="submit" class="btn btn-success navbar-btn">Confirmar</button>

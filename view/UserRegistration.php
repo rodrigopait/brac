@@ -2,7 +2,7 @@
 
 class UserRegistration extends TwigView {
     
-    public function show() {
+    public function show($preguntas) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -10,8 +10,7 @@ class UserRegistration extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("userRegistration.html.twig");
     	$rol = $_SESSION['rol'];
-
-    	$template->display(array('rol' => $rol)); 
+    	$template->display(array('rol' => $rol, 'preguntas' => $preguntas)); 
                 
     }
     

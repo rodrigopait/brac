@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-01-2019 a las 20:02:05
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.1.22
+-- Tiempo de generación: 15-01-2019 a las 23:58:46
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -515,6 +515,25 @@ INSERT INTO `pais` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `preguntas`
+--
+
+CREATE TABLE `preguntas` (
+  `id_pregunta` int(11) NOT NULL,
+  `pregunta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id_pregunta`, `pregunta`) VALUES
+(1, 'Cuál es tu color favorito?'),
+(2, 'Cuál es tu lugar favorito?');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rol`
 --
 
@@ -547,20 +566,24 @@ CREATE TABLE `usuario` (
   `dni` varchar(8) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `nro_tarjeta` varchar(255) DEFAULT NULL
+  `nro_tarjeta` varchar(255) DEFAULT NULL,
+  `pregunta` int(11) NOT NULL,
+  `respuesta` varchar(255) NOT NULL,
+  `cant_intentos` int(11) NOT NULL DEFAULT '0',
+  `bloqueado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`) VALUES
-(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, NULL),
-(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, 'null'),
-(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, 'null'),
-(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, 'null'),
-(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, 'null'),
-(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966');
+INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`, `pregunta`, `respuesta`, `cant_intentos`, `bloqueado`) VALUES
+(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, NULL, 1, 'verde', 0, 0),
+(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, 'null', 1, 'verde', 0, 0),
+(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, 'null', 1, 'verde', 0, 0),
+(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, 'null', 1, 'verde', 0, 0),
+(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, 'null', 1, 'verde', 0, 0),
+(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 1, 'verde', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -714,6 +737,12 @@ ALTER TABLE `pais`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`id_pregunta`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -723,7 +752,8 @@ ALTER TABLE `rol`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pregunta` (`pregunta`);
 
 --
 -- Indices de la tabla `vuelo`
@@ -828,6 +858,12 @@ ALTER TABLE `pais`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -885,6 +921,12 @@ ALTER TABLE `hotel`
 --
 ALTER TABLE `modelo`
   ADD CONSTRAINT `modelo_ibfk_1` FOREIGN KEY (`marca_id`) REFERENCES `marca` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`pregunta`) REFERENCES `preguntas` (`id_pregunta`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
