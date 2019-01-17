@@ -28,7 +28,7 @@ class UserRepository extends PDORepository {
                 ':clave' => $password
             );
 
-            $res = self::getInstance()->queryList("SELECT u.id, u.usuario,u.clave,u.nombre,u.apellido,u.dni,u.email,u.rol_id,u.nro_tarjeta,r.descripcion_rol FROM usuario u INNER JOIN rol r ON u.rol_id = r.id WHERE usuario =? AND clave = ?", array($username, $password));
+            $res = self::getInstance()->queryList("SELECT u.id, u.usuario,u.clave,u.nombre,u.apellido,u.dni,u.email,u.rol_id,u.nro_tarjeta,r.descripcion_rol FROM usuario u INNER JOIN rol r ON u.rol_id = r.id WHERE usuario =? AND clave = ? and bloqueado != 1", array($username, $password));
             $user = $res[0]->fetch(PDO::FETCH_ASSOC);
             if(($user['usuario'] == $username) && ($user['clave'] == $password)){
                 $_SESSION['rol'] = $user['descripcion_rol'];
@@ -45,10 +45,29 @@ class UserRepository extends PDORepository {
                 return $user;
             }
             else{
-                $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
-                echo "<script>";
-                echo "alert('$mensaje');";
-                echo "</script>";
+                 
+                $res = self::getInstance()->queryList("SELECT * FROM usuario where usuario = ?", array($username));
+                $user = $res[0]->fetch(PDO::FETCH_ASSOC);
+                
+                $res = self::getInstance()->queryList("SELECT * FROM configuracion where id = 1");
+                $conf = $res[0]->fetch(PDO::FETCH_ASSOC);
+
+                if($user['cant_intentos'] + 1 >= $conf['intentos_sesion']){
+                    $this->queryList("UPDATE usuario SET cant_intentos=cant_intentos + 1, bloqueado = 1  WHERE usuario = ?", array($username));
+
+                    $mensaje = "Tu usuario fue bloqueado";
+                    echo "<script>";
+                    echo "alert('$mensaje');";
+                    echo "</script>";
+                } else {
+                    $this->queryList("UPDATE usuario SET cant_intentos=cant_intentos + 1  WHERE usuario = ?", array($username));
+
+                    $mensaje = "Tu usuario o contraseña no son correctas. Por favor vuelve a intentar.";
+                    echo "<script>";
+                    echo "alert('$mensaje');";
+                    echo "</script>";
+                }
+                
             }
         }
         else{
@@ -57,7 +76,6 @@ class UserRepository extends PDORepository {
             echo "alert('$mensaje');";
             echo "</script>";
         }
-
     }
 
     public function listAllByRol($rol) {
@@ -89,15 +107,15 @@ class UserRepository extends PDORepository {
         $query = $this->queryList("DELETE FROM usuario WHERE id = ?", array($userId));
     }
 
-    public function user_add($usuario, $clave, $nombre, $apellido, $email, $tarjeta) {
-        $query = $this->queryList("INSERT INTO usuario (usuario, clave, nombre, apellido, email,rol_id,nro_tarjeta) VALUES (?,?,?,?,?,?,?)", array($usuario, $clave, $nombre, $apellido, $email,1,$tarjeta));
+    public function user_add($usuario, $clave, $nombre, $apellido, $email, $tarjeta, $pregunta, $respuesta) {
+        $query = $this->queryList("INSERT INTO usuario (usuario, clave, nombre, apellido, email,rol_id,nro_tarjeta,pregunta,respuesta) VALUES (?,?,?,?,?,?,?,?,?)", array($usuario, $clave, $nombre, $apellido, $email,1,$tarjeta,$pregunta,$respuesta));
     }
 
     public function user_information($userId) {
         $user=null;
         $query = $this->queryList("SELECT * FROM usuario  WHERE id = ?", array($userId));
         foreach ($query[0] as $row) {
-            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['nro_tarjeta'],$row['dni'] ,$row['rol_id']);
+            $user = new User ( $row['id'], $row['usuario'], $row['clave'], $row['nombre'], $row['apellido'], $row['email'], $row['nro_tarjeta'],$row['dni'] ,$row['rol_id'], $row['cant_intentos'], $row['cant_intentos'], $row['pregunta'], $row['respuesta'], $row['bloqueado']);
         }
         $query = null;
         return $user;
@@ -116,6 +134,32 @@ class UserRepository extends PDORepository {
       }
       $query = null;
       return $user;
+    }
+    public function user_information_by_username($username) {
+        $user=null;
+        $res = self::getInstance()->queryList("SELECT u.id AS id, u.usuario AS usuario, p.pregunta AS pregunta, p.id_pregunta FROM usuario u INNER JOIN preguntas p ON p.id_pregunta = u.pregunta WHERE u.usuario =?", array($username));
+        $user = $res[0]->fetch(PDO::FETCH_ASSOC);
+        return $user;
+    }
+    
+
+     public function desbloquear($user_id, $pregunta_id, $respuesta) {
+        $info=null;
+        $res = self::getInstance()->queryList("SELECT * FROM usuario WHERE id =? AND respuesta = ? AND pregunta = ?", array($user_id, $respuesta, $pregunta_id));
+        $info = $res[0]->fetch(PDO::FETCH_ASSOC);
+        if($info != null) {
+            $this->queryList("UPDATE usuario SET bloqueado = 0, cant_intentos=0 WHERE id = ?", array($user_id));
+            $mensaje = "El usuario fue desbloqueado con éxito!";
+            echo "<script>";
+            echo "alert('$mensaje');";
+            echo "</script>";
+        } else {
+            $mensaje = "La respuesta es incorrecta";
+            echo "<script>";
+            echo "alert('$mensaje');";
+            echo "</script>";
+        }
+        return $info;
     }
 
 

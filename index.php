@@ -74,6 +74,9 @@ require_once('view/FlightCreate.php');
 require_once('view/CarCreate.php');
 require_once('view/RoomCreate.php');
 require_once('view/ConfigurationList.php');
+require_once('model/Pregunta.php');
+require_once('model/PreguntaRepository.php');
+require_once('view/UserRecovery.php');
 
 
 if(isset($_GET["method"]) & isset($_GET["controller"]) ) {

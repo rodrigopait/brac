@@ -11,8 +11,12 @@ class User {
     private $numeroTarjeta;
     private $dni;
     private $rol;
+    private $cant_intentos;
+    private $pregunta;
+    private $respuesta;
+    private $bloqueado;
     
-    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email, $numeroTarjeta, $dni,$rol) {
+    public function __construct($id, $usuario, $clave, $nombre, $apellido, $email, $numeroTarjeta, $dni,$rol, $cant_intentos, $pregunta, $respuesta, $bloqueado) {
 
         $this->id = $id;
         $this->usuario = $usuario;
@@ -23,6 +27,11 @@ class User {
         $this->numeroTarjeta = $numeroTarjeta;
         $this->dni = $dni;
         $this->rol = $rol;
+        $this->cant_intentos = $cant_intentos;
+        $this->pregunta = $pregunta;
+        $this->respuesta = $respuesta;
+        $this->bloqueado = $bloqueado;
+
     }
 
     public function getId() {
@@ -66,6 +75,22 @@ class User {
     public function getDni()
     {
         return $this->dni;
+    }
+
+    public function getCant_intentos() {
+        return $this->cant_intentos;
+    }
+
+    public function getPregunta() {
+        return $this->pregunta;
+    }
+
+    public function getRespuesta() {
+        return $this->respuesta;
+    }
+
+    public function getBloqueado() {
+        return $this->bloqueado;
     }
 
 }

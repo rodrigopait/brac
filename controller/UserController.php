@@ -124,7 +124,9 @@ class UserController {
    public function userRegistration(){
        try{
            $view = new UserRegistration();
-           $view->show();
+           $preguntas = PreguntaRepository::getInstance()->listAll();
+           //var_dump($preguntas);die;
+           $view->show($preguntas);
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -141,9 +143,12 @@ class UserController {
            $apellido = $_POST['apellido'];
            $email = $_POST['email'];
            $tarjeta = $_POST['tarjeta'];
-           if (isset($usuario) and isset($clave) and isset($nombre) and isset($apellido) and isset($email) and isset($tarjeta)){
+           $pregunta = $_POST['pregunta'];
+           $respuesta = $_POST['respuesta'];
 
-               UserRepository::getInstance()->user_add($usuario, $clave, $nombre, $apellido, $email,$tarjeta);
+           if (isset($usuario) and isset($clave) and isset($nombre) and isset($apellido) and isset($email) and isset($tarjeta) and isset($pregunta) and isset($respuesta)){
+
+               UserRepository::getInstance()->user_add($usuario, $clave, $nombre, $apellido, $email,$tarjeta,$pregunta,$respuesta);
                $view = new Login();
                $view->show();
            }else{
@@ -157,6 +162,21 @@ class UserController {
            $view->show($error);
        }
    }
+
+   /*public function preguntasSearch(){
+        try{
+  
+            $preguntas = PreguntaRepository::getInstance()->listAll();
+            #var_dump($preguntas);die;
+            $view = new UserRegistration();
+            $view->show($preguntas);
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }*/
 
    public function userInformation($user_id=null){
        try{
@@ -258,7 +278,7 @@ class UserController {
 
         }else {
           $view = new login();
-            $view->show();
+            $view->show($usuario);
         }
      }
    }
@@ -295,5 +315,53 @@ class UserController {
           $view->show();
       }
   }
+
+   
+
+    public function userRecovery(){
+       try{
+           $username = $_GET['username'];
+           if (isset($username)){
+               $user = UserRepository::getInstance()->user_information_by_username($username);
+               $view = new UserRecovery();
+               $view->show($user);
+           }else{
+               $view = new Login ();
+               $view->show();
+           }
+       }
+       catch (PDOException $e){
+           $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+           $view = new Error_display();
+           $view->show($error);
+       }
+   }
+
+   public function user_recovery_check(){
+       try{
+           $user_id = $_POST['user_id'];
+           $pregunta= $_POST['pregunta_id'];
+           $respuesta = $_POST['respuesta'];
+           $username = $_POST['usuario'];
+           if (isset($user_id) && isset($pregunta) && isset($respuesta)){
+               $info = UserRepository::getInstance()->desbloquear($user_id, $pregunta, $respuesta);
+               if($info) {
+                  $view = new Login();
+                  $view->show();
+               } else {
+                  $view = new UserRecovery($username);
+                 $view->show();
+               }
+           }else{
+               $view = new UserRecovery($username);
+               $view->show();
+           }
+       }
+       catch (PDOException $e){
+           $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+           $view = new Error_display();
+           $view->show($error);
+       }
+   }
 
 }

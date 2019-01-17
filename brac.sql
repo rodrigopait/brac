@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-01-2019 a las 19:53:04
+-- Tiempo de generación: 16-01-2019 a las 14:49:05
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.1.22
 
@@ -87,7 +87,8 @@ INSERT INTO `auto` (`id`, `ciudad_id`, `precio`, `gama`, `modelo_id`, `capacidad
 (4, 17, 1600, 'Alta', 3, 5, 'B9B-WA8', 20, 7),
 (5, 2, 800, 'Media', 26, 5, 'LKJ-6D2', 16, 3),
 (6, 5, 400, 'Baja', 13, 5, 'AG8-SS6', 10, 4),
-(7, 5, 950, 'Media', 14, 5, 'POA-65A', 14, 4);
+(7, 5, 950, 'Media', 14, 5, 'POA-65A', 14, 4),
+(8, 96, 4000, 'Alta', 19, 2, 'AXX-253', 100, 9);
 
 -- --------------------------------------------------------
 
@@ -234,26 +235,6 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clase`
---
-
-CREATE TABLE `clase` (
-  `id` int(11) NOT NULL,
-  `descripcion` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `clase`
---
-
-INSERT INTO `clase` (`id`, `descripcion`) VALUES
-(1, 'economica'),
-(2, 'primera'),
-(3, 'ejecutiva');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `compra`
 --
 
@@ -286,14 +267,14 @@ CREATE TABLE `concesionaria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `ciudad_id` int(11) NOT NULL,
-  `reputacion_id` int(11) NOT NULL
+  `reputacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `concesionaria`
 --
 
-INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUES
+INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion`) VALUES
 (1, 'Espasa   VOLKSWAGEN', 1, 0),
 (2, ' Automotores Mataderos S.A.', 1, 0),
 (3, 'CORDOBA - Auto Haus S.A', 2, 0),
@@ -301,7 +282,8 @@ INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion_id`) VALUE
 (5, 'PLM EXPORT GMBH', 82, 0),
 (6, 'AUTOCENTER SCHMOLKE GMBH & CO. KG', 84, 0),
 (7, ' Autostar', 17, 0),
-(8, 'Audi Lounge', 17, 0);
+(8, 'Audi Lounge', 17, 0),
+(9, 'Paris Car', 96, 0);
 
 -- --------------------------------------------------------
 
@@ -336,7 +318,6 @@ INSERT INTO `configuracion` (`id`, `gap_max`, `descuento_escala`, `precio_puntos
 
 CREATE TABLE `habitacion` (
   `id` int(11) NOT NULL,
-  `numero` varchar(255) NOT NULL,
   `capacidad` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
   `hotel_id` int(11) NOT NULL
@@ -346,9 +327,10 @@ CREATE TABLE `habitacion` (
 -- Volcado de datos para la tabla `habitacion`
 --
 
-INSERT INTO `habitacion` (`id`, `numero`, `capacidad`, `precio`, `hotel_id`) VALUES
-(1, '100', 5, 300, 4),
-(2, '', 2, 9000, 7);
+INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `hotel_id`) VALUES
+(1, 5, 450, 10),
+(2, 3, 600, 11),
+(3, 3, 450, 10);
 
 -- --------------------------------------------------------
 
@@ -383,22 +365,25 @@ CREATE TABLE `hotel` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `ciudad_id` int(11) NOT NULL,
-  `estrellas` int(11) NOT NULL
+  `estrellas` int(11) NOT NULL,
+  `reputacion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `hotel`
 --
 
-INSERT INTO `hotel` (`id`, `nombre`, `ciudad_id`, `estrellas`) VALUES
-(2, 'Hotel Madero', 1, 4),
-(3, ' Hilton', 1, 5),
-(4, ' Savoy Hotel', 1, 3),
-(5, ' Sileo Hotel', 1, 4),
-(6, 'Novotel Munich City', 83, 4),
-(7, ' Radisson Blu Hotel, Berlin', 82, 2),
-(8, ' Holiday Inn Munich - Westpark', 83, 5),
-(9, 'Centro Hotel City Gate', 84, 2);
+INSERT INTO `hotel` (`id`, `nombre`, `ciudad_id`, `estrellas`, `reputacion`) VALUES
+(2, 'Hotel Madero', 1, 4, '1.25'),
+(3, ' Hilton', 1, 5, '4.58'),
+(4, ' Savoy Hotel', 1, 3, '5.00'),
+(5, ' Sileo Hotel', 1, 4, '4.37'),
+(6, 'Novotel Munich City', 83, 4, '2.75'),
+(7, ' Radisson Blu Hotel, Berlin', 82, 2, '3.64'),
+(8, ' Holiday Inn Munich - Westpark', 83, 5, '4.02'),
+(9, 'Centro Hotel City Gate', 84, 2, '4.53'),
+(10, 'iQ Hotel Roma', 99, 3, '4.66'),
+(11, 'Hotel Paris', 96, 3, '3.22');
 
 -- --------------------------------------------------------
 
@@ -515,6 +500,25 @@ INSERT INTO `pais` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `preguntas`
+--
+
+CREATE TABLE `preguntas` (
+  `id_pregunta` int(11) NOT NULL,
+  `pregunta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id_pregunta`, `pregunta`) VALUES
+(1, 'Cuál es tu color favorito?'),
+(2, 'Cuál es tu lugar favorito?');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rol`
 --
 
@@ -547,20 +551,24 @@ CREATE TABLE `usuario` (
   `dni` varchar(8) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `rol_id` int(11) NOT NULL,
-  `nro_tarjeta` varchar(255) DEFAULT NULL
+  `nro_tarjeta` varchar(255) DEFAULT NULL,
+  `pregunta` int(11) NOT NULL,
+  `respuesta` varchar(255) NOT NULL,
+  `cant_intentos` int(11) NOT NULL,
+  `bloqueado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`) VALUES
-(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, NULL),
-(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, 'null'),
-(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, 'null'),
-(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, 'null'),
-(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, 'null'),
-(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966');
+INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`, `pregunta`, `respuesta`, `cant_intentos`, `bloqueado`) VALUES
+(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 0, 0),
+(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, '5486-6233-4877-8965', 2, '', 0, 0),
+(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, '', 0, 0),
+(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, '1536-6233-4877-1592', 2, '', 0, 0),
+(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, '1234-1234-1334-1343', 2, '', 0, 0),
+(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -658,12 +666,6 @@ ALTER TABLE `ciudad`
   ADD KEY `pais_id` (`pais_id`);
 
 --
--- Indices de la tabla `clase`
---
-ALTER TABLE `clase`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -718,6 +720,12 @@ ALTER TABLE `pais`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`id_pregunta`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -763,7 +771,7 @@ ALTER TABLE `aeropuerto`
 -- AUTO_INCREMENT de la tabla `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `auto_alquiler`
@@ -778,12 +786,6 @@ ALTER TABLE `ciudad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
--- AUTO_INCREMENT de la tabla `clase`
---
-ALTER TABLE `clase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
@@ -793,13 +795,13 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `concesionaria`
 --
 ALTER TABLE `concesionaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
@@ -811,7 +813,7 @@ ALTER TABLE `habitacion_alquiler`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -830,6 +832,12 @@ ALTER TABLE `modelo`
 --
 ALTER TABLE `pais`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
