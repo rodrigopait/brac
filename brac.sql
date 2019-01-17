@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-01-2019 a las 14:49:05
+-- Tiempo de generación: 17-01-2019 a las 13:01:05
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.1.22
 
@@ -563,12 +563,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`, `pregunta`, `respuesta`, `cant_intentos`, `bloqueado`) VALUES
-(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 0, 0),
-(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, '5486-6233-4877-8965', 2, '', 0, 0),
-(4, 'juanperezzs', 'negro', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, '', 0, 0),
-(6, 'josesito', 'negro', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 3, '1536-6233-4877-1592', 2, '', 0, 0),
-(8, 'pedrito', 'negro', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 3, '1234-1234-1334-1343', 2, '', 0, 0),
-(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, '', 0, 0);
+(0, 'administrador', 'Admin951.	', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 0, 0),
+(1, 'comerciante', 'Comer753.', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, '5486-6233-4877-8965', 2, 'playa', 0, 0),
+(4, 'juanperezzs', 'Clien852.', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, 'rojo', 0, 0),
+(6, 'josesito', 'Clien852.', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 1, '1536-6233-4877-1592', 2, 'campo', 0, 0),
+(8, 'pedrito', 'Clien852.', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 1, '1234-1234-1334-1343', 2, 'ciudad', 0, 0),
+(13, 'alex', 'Clien852.', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 0, 0);
 
 -- --------------------------------------------------------
 
