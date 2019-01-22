@@ -17,112 +17,142 @@ class FlightRepository extends PDORepository {
 
     }
 
-    public function listAll() {
+    public function flightSearchById($id)
+    {
+      $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aereolinea.id)WHERE id=?", array($id));
 
-        $query = FlightRepository::getInstance()->queryList("SELECT * FROM vuelo", array());
-
-        #var_dump($query[0]);die;
-        foreach ($query[0] as $row) {
-            #var_dump($row['escala']);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad'], $row['ciudad_origen'], $row['ciudad_destino'], $row['pais_origen'], $row['pais_destino'], $row['precio'],$row['escala'],$row['tipo_vuelo']);
-            $flights[]=$flight;
-        }
-
-        $query = null;
-        return $flights;
+      foreach ($query[0] as $row) {
+          $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+      }
+      return $flight;
     }
 
-
-    public function listFromSearch($fecha, $ciudadOrigen, $ciudadDestino, $escalas, $clase) {
-        #var_dump($ciudadDestino);die;
-
-        $query = FlightRepository::getInstance()->queryList("select * FROM vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala = ? AND capacidad > 0 ORDER BY precio", array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
-        #var_dump($query);die;
-
-#var_dump($query[0]);die;
-        $flights = [];
-        foreach ($query[0] as $row ) {
-            #var_dump($row);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['capacidad'], $row['ciudad_origen'], $row['ciudad_destino'], $row['pais_origen'], $row['pais_destino'], $row['precio'],$row['escala'],$row['tipo_vuelo']);
-            $flights[]=$flight;
-
-        }
-
-        $query = null;
-        return $flights;
-    }
-
-
-
-        //agrego un vuelo
+    //agrego un vuelo
     public function flightAdd($data) {
         $query = $this->queryList("INSERT INTO vuelo (fecha_salida, fecha_llegada, ciudad_origen,ciudad_destino,precio,capacidad_economica,capacidad_ejecutiva,capacidad_primera,aerolinea_id) VALUES (?,?,?,?,?,?,?,?,?)",$data);
     }
 
-    public function listFromSearchByClase1($fecha, $ciudadOrigen, $ciudadDestino, $escalas)
-    {
+    //Busqueda de vuelos directos y con escalas
+    public function flightSearch($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$clase)
+    {   
 
-        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala >= ? AND capacidad_economica > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
+        $data=array($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros);
+        //Busqueda de vuelos directos
 
-        $flights = [];
+        if ($clase == 'economica') {
+            $clase = 'capacidad_economica';
+        }
+        elseif ($clase == 'ejecutiva') {
+            $clase = 'capacidad_ejecutiva';
+        }
+        else{
+            $clase = 'capacidad_primera';
+        }
+        $sqlDirectos="SELECT vuelo.id,
+                             vuelo.fecha_salida,
+                             vuelo.fecha_llegada,
+                             vuelo.ciudad_origen,
+                             vuelo.ciudad_destino,
+                             vuelo.precio,
+                             aerolinea.nombre as aerolinea
 
-        foreach ($query[0] as $row ) {
-            #var_dump($row['aerolinea_id']);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
+                      FROM  vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)
+                      WHERE
+                            
+                            ciudad_destino = ? 
+                            AND fecha_salida BETWEEN ?  AND ? 
+                            AND ciudad_origen = ? 
+                            AND ".$clase." >= ?";
 
-            $queryOrigen = CityRepository::getInstance()->queryList("select * from ciudad where id = ?", array($flight->getCiudadOrigen()));
-            $queryDestino = CityRepository::getInstance()->queryList("select * from ciudad where id = ?", array($flight->getCiudadDestino()));
-            $ciudadesO = [];
-            $ciudadesD = [];
-            foreach ($queryOrigen[0] as $rowO) {
-              $ciudadO = new City($rowO['id'],$rowO['nombre'],$rowO['pais_id']);
+                  
+        $query=$this->queryList($sqlDirectos,$data);
+
+        $directos= array();
+        foreach ($query[0] as $row) {
+            $flight =  new stdClass();
+            $flight->id = $row['id'];
+            $flight->fechaSalida  = $row['fecha_salida'];
+            $flight->fechaLlegada = $row['fecha_llegada'];
+            $flight->ciudadOrigen = $row['ciudad_origen'];
+            $flight->ciudadDestino= $row['ciudad_destino'];
+            $flight->precio  = $row['precio'];
+            $flight->aerolinea=$row['aerolinea'];
+            $directos[]=$flight;
+        }
+        $vuelos=array();
+        $vuelos['directos']=$directos;
+
+        //Busqueda de vuelos con escalas
+
+        $sqlEscalas="
+        SELECT vuelo.id,
+               vuelo.fecha_salida,
+               vuelo.fecha_llegada,
+               vuelo.ciudad_origen,
+               vuelo.ciudad_destino,
+               vuelo.precio,
+               aerolinea.nombre as aerolinea
+        FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)
+        WHERE ciudad_origen = ? 
+            AND fecha_salida BETWEEN ? AND ?
+            AND ciudad_destino IN (SELECT ciudad_origen 
+                                   FROM vuelo as vl 
+                                   WHERE ciudad_destino = ?
+                                     AND fecha_salida BETWEEN ?  AND ?
+                                    AND ciudad_origen != ?
+                                    AND ".$clase." >= ?)
+
+                                    
+        UNION
+
+        SELECT vuelo.id,
+               vuelo.fecha_salida,
+               vuelo.fecha_llegada,
+               vuelo.ciudad_origen,
+               vuelo.ciudad_destino,
+               vuelo.precio,
+               aerolinea.nombre as aerolinea
+        FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)
+        WHERE 
+            ciudad_destino = ? 
+            AND fecha_salida BETWEEN ?  AND ?
+            AND ciudad_origen != ?
+            AND ".$clase." >= ?";
+
+        $data1=array($origen,$fecha_desde,$fecha_hasta,$destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros);
+
+        
+        
+        $queryEscala=$this->queryList($sqlEscalas,$data1);
+        $aux=array();
+        $vuelosEscala=array();
+        foreach ($queryEscala[0] as $row) {
+
+            $flight =  new stdClass();
+            $flight->id = $row['id'];
+            $flight->fechaSalida  = $row['fecha_salida'];
+            $flight->fechaLlegada = $row['fecha_llegada'];
+            $flight->ciudadOrigen = $row['ciudad_origen'];
+            $flight->ciudadDestino= $row['ciudad_destino'];
+            $flight->precio  = $row['precio'];
+            $flight->aerolinea=$row['aerolinea'];
+            if (!empty($aux)) {
+                foreach ($aux as $vuelo) {
+                    $escala=array();
+                    if ($vuelo->ciudadDestino == $flight->ciudadOrigen && $vuelo->aerolinea == $flight->aerolinea) {
+                        $escala['vuelos'][]=$vuelo;
+                        $escala['vuelos'][]=$flight;
+                        $escala['precio']=$vuelo->precio+$flight->precio;
+                        $vuelosEscala[]=$escala;
+                    }
+                }
             }
-            foreach ($queryDestino[0] as $rowD) {
-              $ciudadD = new City($rowD['id'],$rowD['nombre'],$rowD['pais_id']);
-            }
-            #var_dump($ciudadD);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $ciudadO->getNombre(), $ciudadD->getNombre(), $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
-
-
-            #var_dump($flights);die;
-            $flights[]=$flight;
+            $aux[]=$flight;
         }
-           #var_dump($flights);die;
-             $query = null;
-        return $flights;
+        $vuelos['escalas']=$vuelosEscala;
+        return json_encode($vuelos);
     }
 
-    public function listFromSearchByClase2($fecha, $ciudadOrigen, $ciudadDestino, $escalas)
-    {
-
-        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala >= ? AND capacidad_primera > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
-
-        $flights = [];
-        foreach ($query[0] as $row ) {
-            #var_dump($row);die;
-            $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
-            $flights[]=$flight;
-        }
-             $query = null;
-        return $flights;
-    }
-
-    public function listFromSearchByClase3($fecha, $ciudadOrigen, $ciudadDestino, $escalas)
-    {
-
-        $query = FlightRepository::getInstance()->queryList("select * from vuelo where fecha_salida = ? AND ciudad_origen = ? AND ciudad_destino = ? AND escala > ? AND capacidad_ejecutiva > 0 ORDER BY precio",array($fecha,$ciudadOrigen,$ciudadDestino,$escalas));
-
-        $flights = [];
-        foreach ($query[0] as $row ) {
-            #var_dump($row);die;
-           $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'], $row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'], $row['capacidad_ejecutiva'], $row['capacidad_primera'], $row['aerolinea_id'], $row['escala'],$row['tipo_vuelo']);
-            $flights[]=$flight;
-
-        }
-
-        $query = null;
-        return $flights;
-    }
 }
 
 /*

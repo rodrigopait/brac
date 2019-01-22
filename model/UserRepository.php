@@ -34,13 +34,9 @@ class UserRepository extends PDORepository {
                 $_SESSION['rol'] = $user['descripcion_rol'];
                 $_SESSION['usuario'] = $user['usuario'];
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['flights'][] = null;
-                $_SESSION['rooms'][] = null;
-                $_SESSION['roomsFechaDesde'][] = null;
-                $_SESSION['roomsFechaHasta'][] = null;
-                $_SESSION['cars'][] = null;
-                $_SESSION['carsFechaDesde'][] = null;
-                $_SESSION['carsFechaHasta'][] = null;
+                $_SESSION['carrito']['vuelos'] =[];
+                $_SESSION['carrito']['autos']=[];
+                $_SESSION['carrito']['habitaciones']=[];
                 $res[0] = null;
                 return $user;
             }

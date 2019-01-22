@@ -8,7 +8,7 @@ abstract class PDORepository {
 	const DB = "brac";
     
     
-    private function getConnection(){
+    public function getConnection(){
         $u=self::USERNAME;
         $p=self::PASSWORD;
         $db=self::DB;

@@ -84,7 +84,8 @@ class CartController {
         try{
             $id_vuelo = $_GET['id'];
             $rol = $_SESSION['rol'];
-            CartRepository::getInstance()->addFlight($id_vuelo);
+            $flight=FlightRepository::getInstance()->flightSearchById($id_vuelo);
+            CartRepository::getInstance()->addFlight($flight);
             $cart = CartRepository::getInstance()->listAll();
             $view = new CartList();
             $view->show($rol, $cart);

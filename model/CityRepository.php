@@ -68,6 +68,13 @@ class CityRepository extends PDORepository {
 
 
         return json_encode($cities);
-    } 
+    }
+
+    public function cityName($id)
+    {
+        $query=$this->queryList('SELECT nombre FROM ciudad WHERE id=?',array($id));
+        $data = $query[0]->fetch(PDO::FETCH_ASSOC);
+        return $data['nombre'];
+    }
 
 }

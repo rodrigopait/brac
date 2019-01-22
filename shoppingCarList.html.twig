@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <div class="container" style="max-width: 55%;">
+        <h1 class="well">Carrito de Compras</h1>
+        {% if compras %}
+        <div class="panel panel-default">
+            <table class="table">
+                <tr>
+                    <td align="center"><strong>Fecha</strong></td>
+                    <td align="center"><strong>Total</strong></td>
+                    <td align="center"></td>
+                </tr>
+                {% for compra in compras %}
+                <tr>
+                    <td align="center">{{ compra.getFecha }}</td>
+                    <td align="center">${{ compra.getTotal }}</td>
+                    <td align="center"><a style="text-decoration: none;" href="./?action=userPurchasesDetail&compraId={{compra.getId}}">Ver detalle <i class="glyphicon glyphicon-eye-open"></i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> Aún no has realizado compras en el sistema.</div>
+        {% endif %}
+        <div align="center">
+            <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
+        </div>  
+    </div>
+{% endblock %}

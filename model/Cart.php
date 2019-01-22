@@ -7,7 +7,7 @@ class Cart {
     private $habitaciones;
     private $autos;
     
-    public function __construct($vuelos, $habitaciones, $autos) {
+    public function __construct($vuelos=[], $habitaciones=[], $auto=[]) {
         $this->vuelos = $vuelos;
         $this->habitaciones = $habitaciones;
         $this->autos = $autos;

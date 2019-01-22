@@ -1,63 +1,73 @@
 {% extends 'base.html.twig' %}
 {% block main %}
     <div class="container">
-        <h1 class="well">Listado de Vuelos</h1>
 
-        {% if flight %}
-
-            <div class="panel panel-default">
-                <table class="table">
-                    <tr>
-                        <td align="center"><strong>Origen</strong></td>
-                        <td align="center"><strong>Destino</strong></td>
-                        <td align="center"><strong>Escalas</strong></td>
-                        <td align="center"><strong>Fecha Salida</strong></td>
-                        <td align="center"><strong>Fecha Llegada</strong></td>
-                        <td align="center"><strong>Precio</strong></td>
-                        <td align="center"><strong>Categoria</strong></td>
-                        <td align="center"><strong>Aerolinea</strong></td>
-
+        <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Coiny', cursive;">Listado de Vuelos</h2>
+       <h4 class="well" style="background-color:#9E9E9E; color:white; font-family: 'Coiny', cursive;">Vuelos Directos  <span class="glyphicon glyphicon-arrow-right"></span></h4>
+        {% if flights.directos %}
+            {% for flight in flights.directos%}
+            <div class="well">
+                <table class="table table-responsive" style="background-color:white">
+                  <thead>
+                    <tr style="background-color:#6B9293">
+                      <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{flight.fechaSalida|date('d/m/Y')}}</h3></th>
+                      <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadOrigen|capitalize}}</h3></th>
+                      <th><h3 style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadDestino|capitalize}}</h3></th>
                     </tr>
-                    {% for fly in flight %}
+                  </thead>
+                  <tbody>
                     <tr>
-                        <td align="center">{{ fly.getCiudadOrigen }}</td>
-                        <td align="center">{{ fly.getCiudadDestino }}</td>
-                        <td align="center">{{ fly.getEscala }}</td>
-                        <td align="center">{{ fly.getFechaSalida }}</td>
-                        <td align="center">{{ fly.getFechaLlegada }}</td>
-                        <td align="center">${{ fly.getPrecio }}</td>
-                        {% if fly.getCategoria == 1 %}
-                        <td align="center">Economico</td>
-                    {% endif %}
-                    {% if fly.getCategoria == 2 %}
-                        <td align="center">Primera</td>
-                    {% endif %}
-                    {% if fly.getCategoria == 3 %}
-                        <td align="center">Ejecutivo</td>
-                    {% endif %}
-                    {%if fly.getAereolinea == 1 %}
-                       <td align="center">KLM</td>
-                {% endif %}
-                {%if fly.getAereolinea == 2 %}
-                       <td align="center">Transilvania Airlines</td>
-                {% endif %}
-                {%if fly.getAereolinea == 3 %}
-                       <td align="center">Denim Air</td>
-                {% endif %}
-                {%if fly.getAereolinea == 4 %}
-                       <td align="center">Qatar Airways</td>
-                {% endif %}
-                {%if fly.getAereolinea == 5 %}
-                       <td align="center">Singapur Airlines</td>
-                {% endif %}
-                        {% if rol == 'cliente' %}
-                            <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_flight_to_cart&id={{flight.getId}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>
-                        {% endif %}
+                      <th><h4  style="font-family: 'Coiny', cursive;">{{flight.aerolinea}}</h4></th>
+                      <td><h4  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h4></td>
+                      <td><h4 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h4></td>
                     </tr>
-                    {% endfor %}
+                  </tbody>
                 </table>
+                <div class="text-center">
+                   <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
+                </div>
+                <div class="text-right">                
+                    <a href="index.php?controller=Flight&method=flightsPurchase" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </div>
             </div>
-        {% else %}
+            {% endfor %}
+        {% endif %}
+        <br>
+        <br>
+
+        {% if flights.escalas %}
+            <h4 class="well" style="font-family: 'Coiny', cursive; background-color:#9E9E9E; color:white">Vuelos con Escalas   <span class="glyphicon glyphicon-retweet"></span></h4>
+            {% for flight in flights.escalas%}
+                <div class="well">
+                     <table class="table table-responsive" style="background-color:white">
+                     {% for escala in flight.vuelos %}
+                          <thead>
+                            <tr style="background-color:#6B9293">
+                              <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{escala.fechaSalida|date('d/m/Y')}}</h3></th>
+                              <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadOrigen|capitalize}}</h3></th>
+                              <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadDestino|capitalize}}</h3></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-left">
+                              <th><h4  style="font-family: 'Coiny', cursive;">{{escala.aerolinea}}</h4></th>
+                              <td><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h4></td>
+                              <td><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h4></td>
+                            </tr>
+                            <tr></tr>
+                          </tbody>
+                    {% endfor %}
+                    </table>
+                    <div class="text-center">
+                        <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
+                    </div>
+                    <div class="text-right">
+                        <a  href="#!" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px">Agregar  <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if flights.directos is empty and flights.escalas is empty %}
             <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>
         {% endif %}
     </div>

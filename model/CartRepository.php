@@ -57,10 +57,9 @@ class CartRepository extends PDORepository {
 
     }
 
-    public function addFlight($id_flight){
-        if (!in_array($id_flight, $_SESSION['flights'])) {
-            $_SESSION['flights'][] = $id_flight;
-        }
+    public function addFlight($flight){
+            $_SESSION['carrito']['vuelos'][]= $flight;
+
     }
 
     public function addRoom($id_room, $fechaDesde, $fechaHasta){

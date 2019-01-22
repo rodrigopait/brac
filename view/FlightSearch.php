@@ -2,7 +2,7 @@
 
 class FlightSearch extends TwigView {
 
-    public function show($clase,$paises) {
+    public function show($rol,$clase,$paises) {
       #var_dump($paises);die;
       $templateDir="./templates";
 		  $templateDirCompi="./templates-c";
@@ -10,7 +10,7 @@ class FlightSearch extends TwigView {
 		  $twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("flightSearch.html.twig");
 
-    	$template->display(array('clases' => $clase, 'countries' => $paises));
+    	$template->display(array('rol'=>$rol,'clases' => $clase, 'countries' => $paises));
 
 
     }

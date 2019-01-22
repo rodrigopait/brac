@@ -7,13 +7,9 @@
             <form name="form" method="post" action="index.php?controller=Flight&method=flightsList" enctype="multipart/form-data">
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-6 form-group">
+                        <div class="col-sm-12 form-group">
                             <label>Fecha de partida</label>
                             <input type="date" class="form-control" name="fechaPartida" required="true">
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label>Fecha de vuelta</label>
-                            <input type="date" class="form-control" name="fechaLlegada" required="false">
                         </div>
                         <div class="col-sm-6 form-group">
                             <dl class="form-group">
@@ -47,18 +43,7 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="col-sm-4 form-group">
-                            <dl class="form-group">
-                                <dt><label>Escalas</label></dt>
-                                <dd>
-                                    <select class="form-control" name="escalas">
-                                        <option value="1">Directo</option>
-                                        <option value="2">2 escalas</option>
-                                    </select>
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="col-sm-4 form-group">
+                        <div class="col-sm-6 form-group">
                             <dl class="form-group">
                                 <dt><label>Pasajeros </label></dt>
                                 <dd>
@@ -66,14 +51,14 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="col-sm-4 form-group">
+                        <div class="col-sm-6 form-group">
                            <dl class="form-group">
                                 <dt><label>Clase</label></dt>
                                 <dd>
-                                    <select class="form-control" name="clase">
-                                        {% for cls in clases %}
-                                        <option value="{{cls.id}}">{{cls.descripcion}}</option>
-                                        {% endfor %}
+                                    <select id="clase" class="form-control" name="clase">
+                                        <option value="economica">Económica</option>
+                                        <option value="ejecutiva">Ejecutiva</option>
+                                        <option value="primera">Primera Clase</option>
                                     </select>
                                 </dd>
                             </dl>
