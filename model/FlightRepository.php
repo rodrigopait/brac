@@ -19,12 +19,28 @@ class FlightRepository extends PDORepository {
 
     public function flightSearchById($id)
     {
-      $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aereolinea.id)WHERE id=?", array($id));
+      $escalas=strpos('%',$id);
+      if ($escalas === false) {
 
-      foreach ($query[0] as $row) {
-          $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+          $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aereolinea.id)WHERE id=?", array($id));
+
+          foreach ($query[0] as $row) {
+              $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+          }
+          return $flight;
       }
-      return $flight;
+      else{
+        $vuelos=explode('%',$id);
+        $escalas=array();
+        foreach ($vuelos as $flightId) {
+            $query = FlightRepository::getInstance()->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aereolinea.id)WHERE id=?", array($flightId));
+            foreach ($query[0] as $row) {
+                $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+            }
+            $escalas[]=$flight;
+        }
+        return $escalas;
+      }
     }
 
     //agrego un vuelo
@@ -81,6 +97,8 @@ class FlightRepository extends PDORepository {
         }
         $vuelos=array();
         $vuelos['directos']=$directos;
+
+       
 
         //Busqueda de vuelos con escalas
 
@@ -143,6 +161,7 @@ class FlightRepository extends PDORepository {
                         $escala['vuelos'][]=$vuelo;
                         $escala['vuelos'][]=$flight;
                         $escala['precio']=$vuelo->precio+$flight->precio;
+                        $escala['id']=$vuelo->id.'%'.$flight->id;
                         $vuelosEscala[]=$escala;
                     }
                 }

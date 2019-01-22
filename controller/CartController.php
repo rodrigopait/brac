@@ -80,15 +80,12 @@ class CartController {
         }
     }
 
-    public function add_flight_to_cart(){
+    public function addFlightToCart(){
         try{
             $id_vuelo = $_GET['id'];
             $rol = $_SESSION['rol'];
             $flight=FlightRepository::getInstance()->flightSearchById($id_vuelo);
             CartRepository::getInstance()->addFlight($flight);
-            $cart = CartRepository::getInstance()->listAll();
-            $view = new CartList();
-            $view->show($rol, $cart);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

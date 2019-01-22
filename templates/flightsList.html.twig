@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block main %}
+
     <div class="container">
 
         <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Coiny', cursive;">Listado de Vuelos</h2>
@@ -27,7 +28,7 @@
                    <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
                 </div>
                 <div class="text-right">                
-                    <a href="index.php?controller=Flight&method=flightsPurchase" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <button id="{{flight.id}}" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito({{flight.id}});">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
                 </div>
             </div>
             {% endfor %}
@@ -44,25 +45,26 @@
                           <thead>
                             <tr style="background-color:#6B9293">
                               <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{escala.fechaSalida|date('d/m/Y')}}</h3></th>
-                              <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadOrigen|capitalize}}</h3></th>
+                              <th><h3  style="font-family: 'Anton', sans-serif;color:white;width=120%">{{escala.ciudadOrigen|capitalize}}</h3></th>
                               <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadDestino|capitalize}}</h3></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr class="text-left">
-                              <th><h4  style="font-family: 'Coiny', cursive;">{{escala.aerolinea}}</h4></th>
-                              <td><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h4></td>
-                              <td><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h4></td>
+                              <th><h4 style="font-family: 'Coiny', cursive;">{{escala.aerolinea}}</h4></th>
+                              <td><h4 style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h4></td>
+                              <td><h4 style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h4></td>
                             </tr>
                             <tr></tr>
                           </tbody>
+                          
                     {% endfor %}
                     </table>
                     <div class="text-center">
                         <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
                     </div>
                     <div class="text-right">
-                        <a  href="#!" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px">Agregar  <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                        <button id="{{flight.id}}" class="btn btn-primary btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar  <span class="glyphicon glyphicon-shopping-cart"></span></button>
                     </div>
                 </div>
             {% endfor %}
@@ -71,4 +73,7 @@
             <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>
         {% endif %}
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/carrito/carrito.js"></script>
 {% endblock %}
