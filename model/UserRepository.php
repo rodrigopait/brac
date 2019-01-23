@@ -35,7 +35,7 @@ class UserRepository extends PDORepository {
                 $_SESSION['usuario'] = $user['usuario'];
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['carrito']['vuelos']['directos'] =[];
-                $_SESSION['carrito']['vuelos']['escala'] =[];
+                $_SESSION['carrito']['vuelos']['escalas'] =[];
                 $_SESSION['carrito']['autos']=[];
                 $_SESSION['carrito']['habitaciones']=[];
                 $res[0] = null;
@@ -165,14 +165,13 @@ class UserRepository extends PDORepository {
     public function logout_user(){
         session_destroy();
         session_start();
-        $_SESSION['rol']=0;
-        $_SESSION['flights'] = null;
-        $_SESSION['rooms'] = null;
-        $_SESSION['cars'] = null;
-        $_SESSION['carsFechaDesde'][] = null;
-        $_SESSION['carsFechaHasta'][] = null;
-        $_SESSION['roomsFechaDesde'][] = null;
-        $_SESSION['roomsFechaHasta'][] = null;
+        $_SESSION['rol'] = null;
+        $_SESSION['usuario'] =null;
+        $_SESSION['user_id'] = null;
+        $_SESSION['carrito']['vuelos']['directos'] =[];
+        $_SESSION['carrito']['vuelos']['escalas'] =[];
+        $_SESSION['carrito']['autos']=[];
+        $_SESSION['carrito']['habitaciones']=[];
     }
 
     public function userComercialAdd($data)

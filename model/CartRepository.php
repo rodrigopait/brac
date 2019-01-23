@@ -58,7 +58,8 @@ class CartRepository extends PDORepository {
     }
 
     public function addFlight($flight){
-            if(! is_array($flight)){
+            $escalas=strpos($flight,'v');
+            if($escalas === false){
                 $_SESSION['carrito']['vuelos']['directos'][]= $flight;
             }
             else{
@@ -84,10 +85,19 @@ class CartRepository extends PDORepository {
         }
     }
 
-    public function removeFlight($id_flight){
-        if (($key = array_search($id_flight, $_SESSION['flights'])) !== false) {
-            unset($_SESSION['flights'][$key]);
+    public function removeFlight($flight){
+        $escalas=strpos($flight,'v');
+        if ($escalas === false) {
+            if (($key = array_search($flight, $_SESSION['carrito']['vuelos']['directos'])) !== false) {
+                unset($_SESSION['carrito']['vuelos']['directos'][$key]);
+            }
         }
+        else{
+            if (($key = array_search($flight, $_SESSION['carrito']['vuelos']['escalas'])) !== false) {
+                unset($_SESSION['carrito']['vuelos']['escalas'][$key]);
+            }
+        }
+
     }
 
     public function removeRoom($id_room){

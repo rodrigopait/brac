@@ -69,7 +69,8 @@ class FlightController {
                 $flights=FlightRepository::getInstance()->flightSearch($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$clase);
                 
                 $view = new FlightsList();
-                $view->show($rol, $flights);
+
+                $view->show($rol, $flights, $_SESSION['carrito']['vuelos']);
             }
         }
         catch (PDOException $e){

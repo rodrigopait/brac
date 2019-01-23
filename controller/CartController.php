@@ -79,13 +79,51 @@ class CartController {
             $view->show($error);
         }
     }
-
+/**
+    ALTA  DE VUELOS A CARRITO
+**/
     public function addFlightToCart(){
         try{
-            $id_vuelo = $_GET['id'];
+            $id_vuelo = $_POST['id'];
             $rol = $_SESSION['rol'];
-            $flight=FlightRepository::getInstance()->flightSearchById($id_vuelo);
-            CartRepository::getInstance()->addFlight($flight);
+            $data=array();
+            if ($rol != '') {
+                CartRepository::getInstance()->addFlight($id_vuelo);
+                $response = new stdClass();
+                $response->session=$_SESSION['carrito']['vuelos']['escalas'];
+                $response->data='Agregado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }else{
+                $response=new stdClass();
+                $response->data='Denegado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }
+/**
+    BAJA DE VUELOS A CARRITO
+**/
+    public function removeFlightFromCart(){
+        try{
+            $id_flight = $_POST['id'];
+            $rol = $_SESSION['rol'];
+            if ($rol != '') {
+                CartRepository::getInstance()->removeFlight($id_flight);
+                $response = new stdClass();
+                $response->session=$_SESSION['carrito']['vuelos']['escalas'];
+                $response->data='Eliminado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -134,21 +172,7 @@ class CartController {
         }
     }
 
-    public function remove_flight_from_cart(){
-        try{
-            $id_flight = $_GET['id'];
-            $rol = $_SESSION['rol'];
-            CartRepository::getInstance()->removeFlight($id_flight);
-            $cart = CartRepository::getInstance()->listAll();
-            $view = new CartList();
-            $view->show($rol, $cart);  
-        }
-        catch (PDOException $e){
-            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
-            $view = new Error_display();
-            $view->show($error);
-        }
-    }
+
 
     public function remove_room_from_cart(){
         try{
