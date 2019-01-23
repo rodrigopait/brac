@@ -10,12 +10,11 @@ class Flight {
     private $capacidad_ejecutiva;
     private $ciudad_origen;
     private $ciudad_destino;
-    private $aereolinea;
-  
+    private $aerolinea;
     private $precio;
 
     
-    public function __construct($id, $fecha_salida, $fecha_llegada,$ciudad_origen, $ciudad_destino, $precio, $capacidad_economica,$capacidad_ejecutiva, $capacidad_primera, $aereolinea) {
+    public function __construct($id, $fecha_salida, $fecha_llegada,$ciudad_origen, $ciudad_destino, $precio, $capacidad_economica,$capacidad_ejecutiva, $capacidad_primera, $aerolinea) {
 
         $this->id = $id;
         $this->fecha_salida = $fecha_salida;
@@ -26,7 +25,7 @@ class Flight {
         $this->ciudad_origen = $ciudad_origen;
         $this->ciudad_destino = $ciudad_destino;
         $this->precio = $precio;
-        $this->aereolinea = $aereolinea;
+        $this->aerolinea = $aerolinea;
     }
 
     public function getId() {
@@ -58,16 +57,9 @@ class Flight {
         return $this->precio;
     }
 
-    public function getEscala() {
-        return $this->escala;
-    }
 
-    public function getCategoria() {
-        return $this->categoria;
-    }
-
-    public function getAereolinea() {
-        return $this->aereolinea;
+    public function getAerolinea() {
+        return $this->aerolinea;
     }
 }
 

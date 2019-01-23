@@ -28,11 +28,15 @@
                    <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
                 </div>
                 <div class="text-right">
-                    {% if flight.id not in carrito['directos'] %}              
-                          <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                    {% else %}
-                          <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                    {% endif %}
+                  {% if carrito is not null %}
+                      {% if flight.id not in carrito['directos'] %}              
+                            <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                      {% else %}
+                            <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                      {% endif %}
+                  {% else %}
+                      <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                  {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -68,11 +72,17 @@
                         <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
                     </div>
                     <div class="text-right">
-                      {% if flight.id not in carrito['escalas'] %}              
-                            <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                      {% if carrito is not null %}
+                          {% if flight.id not in carrito['escalas'] %}              
+                                <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          {% else %}
+                                <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          {% endif %}
                       {% else %}
-                            <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
                       {% endif %}
+
+
                     </div>
                 </div>
             {% endfor %}

@@ -18,18 +18,39 @@ class CartRepository extends PDORepository {
     }
 
     public function listAll(){
-        $flights = array();
-        $cars = array();
-        $rooms = array();
-        foreach ($_SESSION['carrito']['vuelos'] as $flightId) {
-            $query = FlightRepository::getInstance()->queryList("SELECT * FROM vuelo WHERE id = ?", array($flightId));
-            foreach ($query[0] as $row) {
-                $flight = new Flight ( $row['id'], $row['fecha_salida'], $row['fecha_llegada'],$row['ciudad_origen'], $row['ciudad_destino'], $row['precio'], $row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['precio']);
-                $flights[]=$flight;
+        $flightsDirectos=array();
+        $flightsEscalas=array();
+
+        if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
+            foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
+                $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)WHERE vuelo.id=?", array($flightId));
+                foreach ($query[0] as $row) {
+                    $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+                }
+                $flightsDirectos[]=$flight;
+            }
+        }
+        if (!empty($_SESSION['carrito']['vuelos']['escalas'])) {
+            foreach ($_SESSION['carrito']['vuelos']['escalas'] as $flightId) {
+                $idEscala=explode('v',$flightId);
+                $escala=array();
+                $escala['precio']=0;
+                $escala['id']=$flightId;
+                for ($i=0; $i < count($idEscala); $i++) { 
+                    $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)WHERE vuelo.id=?", array($idEscala[$i]));
+                    foreach ($query[0] as $row) {
+                        $flightEscala = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
+                    }
+                    $escala['vuelos'][]=$flightEscala;
+                    $escala['precio']+=$flightEscala->getPrecio();
+                }
+
+                $flightsEscalas[]=$escala;
             }
         }
 
-        foreach ($_SESSION['rooms'] as $roomId) {
+/*        foreach ($_SESSION['rooms'] as $roomId) {
+
             $query = RoomRepository::getInstance()->queryList("SELECT * FROM habitacion WHERE id = ?", array($roomId));
             foreach ($query[0] as $row) {
                 $key = array_search($roomId, $_SESSION['rooms']);
@@ -51,10 +72,11 @@ class CartRepository extends PDORepository {
                     $cars[]=$car;
                 }
             }
-        }
-        $cart = new Cart($flights, $rooms, $cars);
-        return $cart;
-
+        }*/
+        $vuelos['directos']=$flightsDirectos;
+        $vuelos['escalas']=$flightsEscalas;
+        $carrito['vuelos']=$vuelos;
+        return $carrito;
     }
 
     public function addFlight($flight){

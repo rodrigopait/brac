@@ -2,7 +2,7 @@
 
 class FlightsList extends TwigView {
 
-    public function show($rol, $flights,$session) {
+    public function show($rol, $flights,$session=null) {
         #var_dump($flights);die;
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";

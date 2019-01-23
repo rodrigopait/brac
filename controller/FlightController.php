@@ -51,6 +51,7 @@ class FlightController {
         try{
 
             $rol = $_SESSION['rol'];
+
             $ciudadOrigen = $_POST['ciudadOrigen'];
             $ciudadDestino = $_POST['ciudadDestino'];
             $fechaPartida = new DateTime($_POST['fechaPartida']);
@@ -69,8 +70,13 @@ class FlightController {
                 $flights=FlightRepository::getInstance()->flightSearch($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$clase);
                 
                 $view = new FlightsList();
-
-                $view->show($rol, $flights, $_SESSION['carrito']['vuelos']);
+                if ($rol == '') {
+                    $carrito=null;
+                }
+                else{
+                    $carrito=$_SESSION['carrito']['vuelos'];
+                }
+                $view->show($rol, $flights, $carrito);
             }
         }
         catch (PDOException $e){
