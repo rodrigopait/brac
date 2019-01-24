@@ -109,6 +109,31 @@ class CartController {
         }
     }
 
+    /**
+        BAJA DE VUELOS A CARRITO
+    **/
+    public function removeFlightFromCart(){
+            try{
+                $id_flight = $_POST['id'];
+                $rol = $_SESSION['rol'];
+                if ($rol != '') {
+                    CartRepository::getInstance()->removeFlight($id_flight);
+                    $response = new stdClass();
+                    $response->session=$_SESSION['carrito']['vuelos'];
+                    $response->data='Eliminado';
+                    $data[]=$response;
+                    echo (json_encode($data));
+                }
+
+            }
+            catch (PDOException $e){
+                $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+                $view = new Error_display();
+                $view->show($error);
+            }
+        }
+
+
     public function addRoomToCart(){
         try{
             $id_room = $_POST['id'];
@@ -130,29 +155,6 @@ class CartController {
                 $data[]=$response;
                 echo (json_encode($data));
             }
-        }
-        catch (PDOException $e){
-            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
-            $view = new Error_display();
-            $view->show($error);
-        }
-    }
-/**
-    BAJA DE VUELOS A CARRITO
-**/
-    public function removeFlightFromCart(){
-        try{
-            $id_flight = $_POST['id'];
-            $rol = $_SESSION['rol'];
-            if ($rol != '') {
-                CartRepository::getInstance()->removeFlight($id_flight);
-                $response = new stdClass();
-                $response->session=$_SESSION['carrito']['vuelos'];
-                $response->data='Eliminado';
-                $data[]=$response;
-                echo (json_encode($data));
-            }
-
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

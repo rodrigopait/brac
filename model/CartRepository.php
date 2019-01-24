@@ -24,10 +24,22 @@ class CartRepository extends PDORepository {
 
         if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
             foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
-                $query = $this->queryList("SELECT * FROM vuelo inner join aerolinea on(vuelo.aerolinea_id = aerolinea.id)WHERE vuelo.id=?", array($flightId));
+                $query = $this->queryList("SELECT v.id,
+                                                  v.fecha_salida,
+                                                  v.fecha_llegada,
+                                                  v.ciudad_origen,
+                                                  v.ciudad_destino,
+                                                  v.precio,
+                                                  v.capacidad_economica,
+                                                  v.capacidad_ejecutiva,
+                                                  v.capacidad_primera,
+                                                  a.nombre
+                                           FROM vuelo as v inner join aerolinea as a on(v.aerolinea_id = a.id)
+                                           WHERE v.id=?", array($flightId));
                 foreach ($query[0] as $row) {
                     $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
                 }
+                
                 $flightsDirectos[]=$flight;
             }
         }
@@ -139,6 +151,7 @@ class CartRepository extends PDORepository {
         if ($escalas === false) {
             if (($key = array_search($flight, $_SESSION['carrito']['vuelos']['directos'])) !== false) {
                 unset($_SESSION['carrito']['vuelos']['directos'][$key]);
+
             }
         }
         else{

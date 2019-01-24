@@ -33,6 +33,7 @@ function agregarCarrito(id) {
 		    success:  function (response) {
 		    	var data = JSON.parse(response);
 		    	if (data[0].data == 'Eliminado') {
+		    		console.log(data[0].session);
 		    		element.classList.add(id);
 		    		element.classList.remove("btn-success");
 		    		element.classList.add("btn-primary");
@@ -51,7 +52,7 @@ function agregarCarrito(id) {
 
 
 function eliminarVueloCarrito(id) {	
-	var element = document.getElementById(id);
+	var element = document.getElementById('flight'+'_'+id);
 	var params= {'id' : id}
 	$.ajax({
 	    data:  params,
@@ -59,10 +60,10 @@ function eliminarVueloCarrito(id) {
 	    type:  'post',
 	    success:  function (response) {
 	    	var data = JSON.parse(response);
-	    	if ((data[0].session.directos).length > 0 || (data[0].session.escalas).length > 0  ) {
-	    		var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
-	    		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
-	    		console.log('hola')
+	    	console.log(data[0].session);
+	    	if (data[0].data == 'Eliminado') {
+		    	element.remove();
+		    	alertify.error('Eliminado del Carrito');
 	    	}
 	    	else{
 	    		location.href ="index.php?controller=Login&method=login";
