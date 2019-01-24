@@ -147,7 +147,7 @@ class CartController {
             if ($rol != '') {
                 CartRepository::getInstance()->removeFlight($id_flight);
                 $response = new stdClass();
-                $response->session=$_SESSION['carrito']['vuelos']['escalas'];
+                $response->session=$_SESSION['carrito']['vuelos'];
                 $response->data='Eliminado';
                 $data[]=$response;
                 echo (json_encode($data));
@@ -160,6 +160,7 @@ class CartController {
             $view->show($error);
         }
     }
+
 
     public function add_car_to_cart(){
         try{

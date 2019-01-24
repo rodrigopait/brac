@@ -44,6 +44,8 @@ class CartRepository extends PDORepository {
                     }
                     $escala['vuelos'][]=$flightEscala;
                     $escala['precio']+=$flightEscala->getPrecio();
+                    $escala['origen']=reset($escala['vuelos'])->getCiudadOrigen();
+                    $escala['destino']=end($escala['vuelos'])->getCiudadDestino();
                 }
 
                 $flightsEscalas[]=$escala;

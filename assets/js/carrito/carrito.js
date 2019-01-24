@@ -1,3 +1,4 @@
+/**CARRITO DE VUELOS**/
 function agregarCarrito(id) {
 	var element = document.getElementById(id);
 	if($('.'+id).length) {
@@ -46,10 +47,34 @@ function agregarCarrito(id) {
 		
 	}
 
-
-
 }
 
+
+function eliminarVueloCarrito(id) {	
+	var element = document.getElementById(id);
+	var params= {'id' : id}
+	$.ajax({
+	    data:  params,
+	    url:  'index.php?controller=Cart&method=removeFlightFromCart',
+	    type:  'post',
+	    success:  function (response) {
+	    	var data = JSON.parse(response);
+	    	if ((data[0].session.directos).length > 0 || (data[0].session.escalas).length > 0  ) {
+	    		var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+	    		el.style.display = (el.style.display == 'none') ? 'block' : 'none';
+	    		console.log('hola')
+	    	}
+	    	else{
+	    		location.href ="index.php?controller=Login&method=login";
+	    	}
+	    }
+	});
+}
+
+
+
+
+/**CARRITO DE HABITACIONES**/
 function agregarHabitacionCarrito(id, f_desde, f_hasta) {
 	var element = document.getElementById(id);
 	if($('.'+id).length) {
