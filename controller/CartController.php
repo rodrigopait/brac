@@ -108,6 +108,35 @@ class CartController {
             $view->show($error);
         }
     }
+
+    public function addRoomToCart(){
+        try{
+            $id_room = $_POST['id'];
+            $rol = $_SESSION['rol'];
+            $fechaDesde = $_POST['fechaDesde'];
+            $fechaHasta = $_POST['fechaHasta'];
+            $desde = new DateTime($_POST['fechaDesde']);
+            $hasta = new DateTime($_POST['fechaHasta']);
+            if ($rol != '') {
+            CartRepository::getInstance()->addRoom($id_room, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
+            $response = new stdClass();
+                $response->session=$_SESSION['carrito']['rooms'];
+                $response->data='Agregado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }else{
+                $response=new stdClass();
+                $response->data='Denegado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }
 /**
     BAJA DE VUELOS A CARRITO
 **/
@@ -152,36 +181,23 @@ class CartController {
         }
     }
 
-    public function add_room_to_cart(){
+    
+
+
+
+    public function removeRoomFromCart(){
         try{
-            $id_room = $_GET['id'];
+            $id_room = $_POST['id'];
             $rol = $_SESSION['rol'];
-            $fechaDesde = $_GET['fechaDesde'];
-            $fechaHasta = $_GET['fechaHasta'];
-            $desde = new DateTime($_GET['fechaDesde']);
-            $hasta = new DateTime($_GET['fechaHasta']);
-            CartRepository::getInstance()->addRoom($id_room, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
-            $cart = CartRepository::getInstance()->listAll();
-            $view = new CartList();
-            $view->show($rol, $cart); 
-        }
-        catch (PDOException $e){
-            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
-            $view = new Error_display();
-            $view->show($error);
-        }
-    }
-
-
-
-    public function remove_room_from_cart(){
-        try{
-            $id_room = $_GET['id'];
-            $rol = $_SESSION['rol'];
-            CartRepository::getInstance()->removeRoom($id_room);
-            $cart = CartRepository::getInstance()->listAll();
-            $view = new CartList();
-            $view->show($rol, $cart);  
+            if ($rol != '') {
+                CartRepository::getInstance()->removeRoom($id_room);
+                $response = new stdClass();
+                $response->session=$_SESSION['carrito']['rooms'];
+                $response->data='Eliminado';
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+             
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

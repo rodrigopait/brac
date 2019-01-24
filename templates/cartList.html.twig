@@ -63,5 +63,56 @@
                     {% endif %}
                 </div>
                 </div>
+
+
+
+<!-- ROOMS -->
+
+            <div class="panel panel-success">
+                <div class="panel-heading"><h3 style="font-family: 'Alfa Slab One', cursive;">Habitaciones</h3></div>
+                <div class="panel-body">
+                    {% if carrito['rooms'] is not empty %}
+                        {% for room in carrito['rooms'] %}
+                          <div class="panel panel-info" id="room_{{room.id}}">
+                            <div class="panel-heading text-left col-md-12">
+                                <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top: 2%; margin-bottom: -3%">{{room.hotel}}<span class="glyphicon glyphicon-chevron-right"></span>{{room.ciudadDestino}} <span class="glyphicon glyphicon-chevron-right"></span> {{room.paisDestino}}</h4>
+                                <button class="btn btn-danger btn-md" style="float:right" onclick="eliminarHabitacionCarrito('room_{{room.id}}', '{{room.id}}')"><span class="glyphicon glyphicon-remove"></span></button>
+                            </div>
+                            <table class="table table-responsive" style="background-color:white">
+                              <thead>
+                                <tr style="background-color:#6B9293">
+                                  <th><h3 style="font-family: 'Anton', sans-serif;color:white">Fecha desde</h3></th>
+                                  <th><h3  style="font-family: 'Anton', sans-serif;color:white">Fecha hasta</h3></th>
+                                  <th><h3 style="font-family: 'Anton', sans-serif;color:white">Capacidad</h3></th>
+                                  <th><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th><h4  style="font-family: 'Coiny', cursive;">{{room.fechaDesde|date('d/m/Y')}}</h4></th>
+                                  <td><h4  style="font-family: 'Coiny', cursive;">{{room.fechaHasta|date('d/m/Y')}}</h4></td>
+                                  <td><h4 style="font-family: 'Coiny', cursive;">{{room.capacidad}}</h4></td>
+                                  <td><h4 style="font-family: 'Coiny', cursive;">$ {{room.precio|number_format}}</h4> </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="panel panel-info" id="room_{{room.id}}">
+                            <div class="panel-heading text-left col-md-12">
+                                <h4 class="text-center" style="font-family: 'Anton', sans-serif;">
+                                    No hay habitaciones para mostrar
+                                </h4>
+                            </div>
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+
+
             </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/carrito/carrito.js"></script>
 {% endblock %}
