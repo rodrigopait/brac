@@ -73,7 +73,13 @@ class RoomController {
             // var_dump($estrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta);die;
             $rooms = RoomRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $estrellas, $ciudadDestino, $paisDestino, $capacidad);
             $view = new RoomsList(); 
-            $view->show($rol, $rooms, $fechaDesde, $fechaHasta);
+             if ($rol == '') {
+                    $rooms_carrito=null;
+                }
+                else{
+                    $rooms_carrito=$_SESSION['carrito']['rooms'];
+                }
+            $view->show($rol, $rooms, $fechaDesde, $fechaHasta, $rooms_carrito);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

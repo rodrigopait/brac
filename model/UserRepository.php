@@ -37,7 +37,7 @@ class UserRepository extends PDORepository {
                 $_SESSION['carrito']['vuelos']['directos'] =[];
                 $_SESSION['carrito']['vuelos']['escalas'] =[];
                 $_SESSION['carrito']['autos']=[];
-                $_SESSION['carrito']['habitaciones']=[];
+                $_SESSION['carrito']['rooms']=[];
                 $res[0] = null;
                 return $user;
             }
@@ -171,7 +171,7 @@ class UserRepository extends PDORepository {
         $_SESSION['carrito']['vuelos']['directos']=[];
         $_SESSION['carrito']['vuelos']['escalas']=[];
         $_SESSION['carrito']['autos']=[];
-        $_SESSION['carrito']['habitaciones']=[];
+        $_SESSION['carrito']['rooms']=[];
     }
 
     public function userComercialAdd($data)

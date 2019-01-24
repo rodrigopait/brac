@@ -25,7 +25,21 @@
                         <td align="center">{{ room.getCapacidad }}</td>
                         <td align="center">${{ room.getPrecio }}</td>
                         {% if rol == 'cliente' %}
-                            <td align="center"><a style="text-decoration: none;" href="./?controller=Cart&method=add_room_to_cart&id={{room.getId}}&fechaDesde={{fechaDesde}}&fechaHasta={{fechaHasta}}">Agregar <i class="glyphicon glyphicon-shopping-cart"></i></a></td>    
+
+                    <div class="text-right">
+                      {% if rooms_carrito is not null %}
+                          {% if room.id not in rooms_carrito %}              
+                                <button id="{{room.id}}" class="btn btn-primary btn-lg {{room.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarHabitacionCarrito('{{room.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          {% else %}
+                                <button id="{{room.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarHabitacionCarrito('{{room.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          {% endif %}
+                      {% else %}
+                          <button id="{{room.id}}" class="btn btn-primary btn-lg {{room.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarHabitacionCarrito('{{room.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                      {% endif %}
+
+
+                    </div>
+                                
                         {% endif %}
                     </tr>
                     {% endfor %}
@@ -38,4 +52,8 @@
             <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
         </div>  
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="assets/js/carrito/carrito.js"></script>
 {% endblock %}

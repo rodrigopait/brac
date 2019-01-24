@@ -20,6 +20,7 @@ class CartRepository extends PDORepository {
     public function listAll(){
         $flightsDirectos=array();
         $flightsEscalas=array();
+        $rooms=array();
 
         if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
             foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
@@ -46,6 +47,29 @@ class CartRepository extends PDORepository {
                 }
 
                 $flightsEscalas[]=$escala;
+            }
+        }
+        /* $id;
+    private $capacidad;
+    private $precio;
+    private $hotel;
+    private $ciudadDestino;
+    private $paisDestino;
+    private $fechaDesde;
+    private $fechaHasta;*/
+        if (!empty($_SESSION['carrito']['rooms'])) {
+            foreach ($_SESSION['carrito']['rooms'] as $room_id) {
+                $query = $this->queryList("SELECT habitacion.id as id,habitacion.precio as precio, habitacion.capacidad as capacidad, ciudad.nombre as ciudad ,hotel.nombre as hotel, hotel.estrellas as estrellas, pais.nombre as pais FROM habitacion inner join hotel on(hotel.id = habitacion.hotel_id) inner join ciudad on(hotel.ciudad_id = ciudad.id) inner join pais on(ciudad.pais_id= pais.id) WHERE habitacion.id=?", array($room_id));
+                foreach ($query[0] as $row) {
+                    $key = array_search($room_id, $_SESSION['carrito']['rooms']) ;
+                    $f_desde = $_SESSION['carrito']['roomsFechaDesde'][$key];
+                    $f_hasta = $_SESSION['carrito']['roomsFechaHasta'][$key];
+                    $room = new Room($row['id'],$row['capacidad'], $row['precio'],$row['hotel'],$row['ciudad'],$row['pais']);
+                    $room->setFechaDesde($f_desde);
+                    $room->setFechaHasta($f_hasta);
+
+                }
+                $rooms[]=$room;
             }
         }
 
@@ -76,6 +100,7 @@ class CartRepository extends PDORepository {
         $vuelos['directos']=$flightsDirectos;
         $vuelos['escalas']=$flightsEscalas;
         $carrito['vuelos']=$vuelos;
+        $carrito['rooms']=$rooms;
         return $carrito;
     }
 
@@ -92,10 +117,10 @@ class CartRepository extends PDORepository {
     }
 
     public function addRoom($id_room, $fechaDesde, $fechaHasta){
-        if (!in_array($id_room, $_SESSION['rooms'])) {
-            $_SESSION['rooms'][] = $id_room;
-            $_SESSION['roomsFechaDesde'][] = $fechaDesde;
-            $_SESSION['roomsFechaHasta'][] = $fechaHasta;
+        if (!in_array($id_room, $_SESSION['carrito']['rooms'])) {
+            $_SESSION['carrito']['rooms'][] = $id_room;
+            $_SESSION['carrito']['roomsFechaDesde'][] = $fechaDesde;
+            $_SESSION['carrito']['roomsFechaHasta'][] = $fechaHasta;
         }
     }
 
@@ -123,8 +148,10 @@ class CartRepository extends PDORepository {
     }
 
     public function removeRoom($id_room){
-        if (($key = array_search($id_room, $_SESSION['rooms'])) !== false) {
-            unset($_SESSION['rooms'][$key]);
+        if (($key = array_search($id_room, $_SESSION['carrito']['rooms'])) !== false) {
+            unset($_SESSION['carrito']['rooms'][$key]);
+            unset($_SESSION['carrito']['roomsFechaDesde'][$key]);
+            unset($_SESSION['carrito']['roomsFechaHasta'][$key]);
         }
     }
 
