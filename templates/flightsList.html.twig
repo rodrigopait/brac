@@ -3,44 +3,50 @@
 
     <div class="container">
 
-        <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Coiny', cursive;">Listado de Vuelos</h2>
-       <h4 class="well" style="background-color:#9E9E9E; color:white; font-family: 'Coiny', cursive;">Vuelos Directos  <span class="glyphicon glyphicon-arrow-right"></span></h4>
+        <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-serif;color:white">Listado de Vuelos</h2>
+       <div class="panel panel-primary">
+        <div class="panel-heading"><h3 style="font-family: 'Anton', sans-serif;">Vuelos Directos</h3></div>
         {% if flights.directos %}
+            <div class="panel-body">
             {% for flight in flights.directos%}
-            <div class="well">
-                <table class="table table-responsive" style="background-color:white">
-                  <thead>
-                    <tr style="background-color:#6B9293">
-                      <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{flight.fechaSalida|date('d/m/Y')}}</h3></th>
-                      <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadOrigen|capitalize}}</h3></th>
-                      <th><h3 style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadDestino|capitalize}}</h3></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th><h4  style="font-family: 'Coiny', cursive;">{{flight.aerolinea}}</h4></th>
-                      <td><h4  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h4></td>
-                      <td><h4 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h4></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="text-center">
-                   <h1 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h1> 
-                </div>
-                <div class="text-right">
-                  {% if carrito is not null %}
-                      {% if flight.id not in carrito['directos'] %}              
-                            <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                      {% else %}
-                            <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                      {% endif %}
-                  {% else %}
-                      <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                  {% endif %}
-                </div>
-            </div>
+                <div class="panel panel-info">
+                   <div class="panel-heading"><h4 class="text-left" style="font-family: 'Anton', sans-serif;">{{flight.ciudadOrigen|capitalize}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.ciudadDestino|capitalize}}</h4></div>
+                   <div class="panel-body">
+                      <table class="table table-responsive" style="background-color:white">
+                        <thead>
+                          <tr style="background-color:#6B9293">
+                            <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{flight.fechaSalida|date('d/m/Y')}}</h4></th>
+                            <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadOrigen|capitalize}}</h3></th>
+                            <th><h3 style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadDestino|capitalize}}</h3></th>
+                            <th><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th><h4  style="font-family: 'Coiny', cursive;">{{flight.aerolinea}}</h4></th>
+                            <td><h4  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h4></td>
+                            <td><h4 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h4></td>
+                            <td><h4 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h4></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-right">
+                        {% if carrito is not null %}
+                            {% if flight.id not in carrito['directos'] %}              
+                                  <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                            {% else %}
+                                  <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                            {% endif %}
+                        {% else %}
+                            <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
             {% endfor %}
+            </div>
         {% endif %}
+        </div>
         <br>
         <br>
 
@@ -74,12 +80,12 @@
                     <div class="text-right">
                       {% if carrito is not null %}
                           {% if flight.id not in carrito['escalas'] %}              
-                                <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
                           {% else %}
                                 <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
                           {% endif %}
                       {% else %}
-                          <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                          <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
                       {% endif %}
 
 

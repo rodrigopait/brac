@@ -35,7 +35,7 @@ function agregarCarrito(id) {
 		    		element.classList.add(id);
 		    		element.classList.remove("btn-success");
 		    		element.classList.add("btn-primary");
-		    		element.innerHTML= "Agregar <span class='glyphicon glyphicon-shopping-cart'>";
+		    		element.innerHTML= "Agregar al Carrito <span class='glyphicon glyphicon-shopping-cart'>";
 		    		alertify.error('Eliminado del Carrito');
 		    	}
 		    	else{
