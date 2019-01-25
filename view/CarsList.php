@@ -2,7 +2,7 @@
 
 class CarsList extends TwigView {
     
-    public function show($rol, $cars, $fechaDesde, $fechaHasta) {
+    public function show($rol, $cars, $fechaDesde, $fechaHasta, $cars_carrito=null) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
@@ -10,7 +10,7 @@ class CarsList extends TwigView {
 		$twig = new Twig_Environment($loader);
     	$template = $twig->loadTemplate("carsList.html.twig");
 
-    	$template->display(array('rol' => $rol, 'cars' => $cars, 'fechaDesde' => $fechaDesde, 'fechaHasta' => $fechaHasta)); 
+    	$template->display(array('rol' => $rol, 'cars' => $cars, 'fechaDesde' => $fechaDesde, 'fechaHasta' => $fechaHasta, 'cars_carrito' => $cars_carrito)); 
                 
     }
     

@@ -19,8 +19,11 @@ class PurchaseRepository extends PDORepository {
         if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
             foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
                 $precioVuelo = $this->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
+                $key = array_search($flightId, $_SESSION['carrito']['vuelos']['directos']);
+                $pasajeros=$_SESSION['carrito']['directos']['datos'][$key]['pasajeros'];
                 foreach ($precioVuelo[0] as $row) {
-                    $total += $row['precio'];
+
+                    $total += $row['precio'] * $pasajeros;
                 }
                 
             }
@@ -28,27 +31,33 @@ class PurchaseRepository extends PDORepository {
 
         if (!empty($_SESSION['carrito']['vuelos']['escalas'])) {
             foreach ($_SESSION['carrito']['vuelos']['escalas'] as $flightId) {
-                $precioVueloEscala = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
-                foreach ($precioVueloEscala[0] as $row) {
-                    $total += $row['precio'];
+                $idEscala=explode('v',$flightId);
+                foreach ($idEscala as $value) {
+                    $precioVueloEscala = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($value));
+                    $key = array_search($flightId, $_SESSION['carrito']['vuelos']['escalas']);
+                    $pasajeros=$_SESSION['carrito']['escalas']['datos'][$key]['pasajeros'];
+                    foreach ($precioVueloEscala[0] as $row) {
+                        $total += $row['precio'] * $pasajeros;
+                    }
                 }
+
             }
         }
 
-/*        foreach ($_SESSION['rooms'] as $roomId) {
+        foreach ($_SESSION['carrito']['rooms'] as $roomId) {
             $precioHabitacion = RoomRepository::getInstance()->queryList("SELECT precio FROM habitacion WHERE id = ?", array($roomId));
             foreach ($precioHabitacion[0] as $row) {
                 $total += $row['precio'];
             }
         }
 
-        foreach ($_SESSION['cars'] as $carId) {
+        foreach ($_SESSION['carrito']['cars'] as $carId) {
             $precioAuto = CarRepository::getInstance()->queryList("SELECT precio FROM auto WHERE id = ?", array($carId));
             foreach ($precioAuto[0] as $row) {
                 $total += $row['precio'];
             }
         }
-*/
+
         //REGISTRO LA COMPRA
         $fecha_actual=date('Y-m-d H:i:s');
         $query = $this->queryList("INSERT INTO compra (fecha, total, usuario_id) VALUES (?,?,?)", array($fecha_actual, $total, $usuarioId));
@@ -80,16 +89,18 @@ class PurchaseRepository extends PDORepository {
 
 
         //REGISTRO LAS HABITACIONES
-        if (!empty($_SESSION['rooms'])) {
-            foreach ($_SESSION['rooms'] as $index => $value) {
-                $this->queryList("INSERT INTO habitacion_alquiler (desde, hasta, id_habitacion, compra_id) VALUES (?,?,?,?)", array($_SESSION['roomsFechaDesde'][$index+1], $_SESSION['roomsFechaHasta'][$index+1], $_SESSION['rooms'][$index], $compra_id));
+        if (!empty($_SESSION['carrito']['rooms'])) {
+            foreach ($_SESSION['carrito']['rooms'] as $roomId) {
+                $key = array_search($roomId, $_SESSION['carrito']['rooms']);
+                $this->queryList("INSERT INTO habitacion_alquiler (desde, hasta, id_habitacion, compra_id) VALUES (?,?,?,?)", array($_SESSION['carrito']['roomsFechaDesde'][$key], $_SESSION['carrito']['roomsFechaHasta'][$key], $roomId, $compra_id));
             }
         }
 
         //REGISTRO LOS AUTOS
-        if (!empty($_SESSION['cars'])) {
-            foreach ($_SESSION['cars'] as $index => $value) {
-                $this->queryList("INSERT INTO auto_alquiler (desde, hasta, id_auto, compra_id) VALUES (?,?,?,?)", array($_SESSION['carsFechaDesde'][$index+1], $_SESSION['carsFechaHasta'][$index+1], $_SESSION['cars'][$index], $compra_id));
+        if (!empty($_SESSION['carrito']['cars'])) {
+            foreach ($_SESSION['carrito']['cars'] as $carId) {
+                $key = array_search($carId, $_SESSION['carrito']['cars']);
+                $this->queryList("INSERT INTO auto_alquiler (desde, hasta, id_auto, compra_id) VALUES (?,?,?,?)", array($_SESSION['carrito']['carsFechaDesde'][$key], $_SESSION['carrito']['carsFechaHasta'][$key], $carId, $compra_id));
             }
         }
 

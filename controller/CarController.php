@@ -41,9 +41,17 @@ class CarController {
             $hasta = new DateTime($_POST['fechaHasta']);
             $fechaDesde = $desde->format('Y-m-d');
             $fechaHasta = $hasta->format('Y-m-d');
+
             $cars = CarRepository::getInstance()->listFromSearch($fechaDesde, $fechaHasta, $capacidad, $ciudadDestino, $paisDestino);
             $view = new CarsList();
-            $view->show($rol, $cars, $desde->format('Y-m-d'), $hasta->format('Y-m-d'));
+            
+            if ($rol == '') {
+                    $cars_carrito=null;  
+                }
+                else{
+                    $cars_carrito=$_SESSION['carrito']['cars'];
+                }
+            $view->show($rol, $cars, $fechaDesde, $fechaHasta, $cars_carrito);
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
