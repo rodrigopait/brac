@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-01-2019 a las 13:01:05
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.1.22
+-- Tiempo de generación: 25-01-2019 a las 22:33:06
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -255,7 +255,8 @@ INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
 (37, '2017-12-10 01:54:31', 1000, 1),
 (38, '2017-12-10 01:55:46', 500, 1),
 (39, '2017-12-10 01:56:15', 9999, 1),
-(40, '2017-12-10 03:01:34', 1000, 1);
+(40, '2017-12-10 03:01:34', 1000, 1),
+(47, '2019-01-25 18:26:08', 75000, 13);
 
 -- --------------------------------------------------------
 
@@ -563,12 +564,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`, `pregunta`, `respuesta`, `cant_intentos`, `bloqueado`) VALUES
-(0, 'administrador', 'Admin951.	', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 0, 0),
+(0, 'administrador', 'Admin951.', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 5, 0),
 (1, 'comerciante', 'Comer753.', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, '5486-6233-4877-8965', 2, 'playa', 0, 0),
 (4, 'juanperezzs', 'Clien852.', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, 'rojo', 0, 0),
 (6, 'josesito', 'Clien852.', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 1, '1536-6233-4877-1592', 2, 'campo', 0, 0),
 (8, 'pedrito', 'Clien852.', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 1, '1234-1234-1334-1343', 2, 'ciudad', 0, 0),
-(13, 'alex', 'Clien852.', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 0, 0);
+(13, 'alex', 'Clien852.', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -595,14 +596,16 @@ CREATE TABLE `vuelo` (
 
 INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
 (6, '2018-01-10 13:00:00', '2018-01-11 03:00:00', 'buenos aires', 'lisboa', 30000, 100, 20, 10, 1),
-(7, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'buenos aires', 'montevideo', 2000, 50, 10, 0, 3),
-(8, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'montevideo', 'lisboa', 28000, 90, 10, 10, 1),
+(7, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'buenos aires', 'montevideo', 2000, 50, 7, 0, 3),
+(8, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'montevideo', 'lisboa', 28000, 90, 10, 10, 3),
 (10, '2018-01-10 19:00:00', '2018-01-11 07:00:00', 'montevideo', 'lisboa', 2800, 90, 10, 10, 5),
 (11, '2018-01-11 04:00:00', '2018-01-11 07:00:00', 'lisboa', 'madrid', 5800, 50, 10, 20, 1),
 (12, '2018-01-11 08:00:00', '2018-01-11 11:00:00', 'lisboa', 'madrid', 6500, 50, 10, 20, 3),
 (13, '2018-04-15 05:00:00', '2018-04-15 18:00:00', 'buenos aires', 'madrid', 2500, 10, 0, 0, 1),
 (14, '2018-04-15 07:00:00', '2018-04-15 21:00:00', 'buenos aires', 'madrid', 1900, 20, 20, 22, 1),
-(15, '2018-04-15 12:00:00', '2018-04-16 06:00:00', 'buenos aires', 'madrid', 22000, 15, 18, 13, 1);
+(15, '2018-04-15 12:00:00', '2018-04-16 06:00:00', 'buenos aires', 'madrid', 22000, 15, 18, 13, 1),
+(16, '2018-01-10 08:00:00', '2018-01-10 12:00:00', 'buenos aires', 'Goias', 10000, 100, 47, 20, 4),
+(17, '2018-01-10 13:00:00', '2018-01-10 23:00:00', 'Goias', 'lisboa', 15000, 230, 100, 50, 4);
 
 -- --------------------------------------------------------
 
@@ -612,7 +615,7 @@ INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ci
 
 CREATE TABLE `vuelo_compra` (
   `id` int(11) NOT NULL,
-  `vuelo_id` int(11) NOT NULL,
+  `vuelo` varchar(64) NOT NULL,
   `compra_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -620,11 +623,12 @@ CREATE TABLE `vuelo_compra` (
 -- Volcado de datos para la tabla `vuelo_compra`
 --
 
-INSERT INTO `vuelo_compra` (`id`, `vuelo_id`, `compra_id`) VALUES
-(8, 1, 35),
-(9, 1, 36),
-(10, 1, 37),
-(11, 1, 40);
+INSERT INTO `vuelo_compra` (`id`, `vuelo`, `compra_id`) VALUES
+(8, '1', 35),
+(9, '1', 36),
+(10, '1', 37),
+(11, '1', 40),
+(23, '16v17', 47);
 
 --
 -- Índices para tablas volcadas
@@ -748,7 +752,7 @@ ALTER TABLE `vuelo`
 --
 ALTER TABLE `vuelo_compra`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `vuelo` (`vuelo_id`),
+  ADD KEY `vuelo` (`vuelo`),
   ADD KEY `compra` (`compra_id`);
 
 --
@@ -777,7 +781,7 @@ ALTER TABLE `auto`
 -- AUTO_INCREMENT de la tabla `auto_alquiler`
 --
 ALTER TABLE `auto_alquiler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `ciudad`
@@ -789,7 +793,7 @@ ALTER TABLE `ciudad`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `concesionaria`
@@ -807,7 +811,7 @@ ALTER TABLE `habitacion`
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
 --
 ALTER TABLE `habitacion_alquiler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `hotel`
@@ -855,13 +859,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
 --
 ALTER TABLE `vuelo_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
