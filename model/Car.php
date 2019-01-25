@@ -10,12 +10,12 @@ class Car {
     private $marca;
     private $capacidad;
     private $patente;
-    private $autonomia;
-    private $paisDestino;
+    //private $autonomia;
+    //private $paisDestino;
     private $fechaDesde;
     private $fechaHasta;
     
-    public function __construct($id, $ciudadDestino, $precio, $gama, $modelo, $marca, $capacidad, $patente, $autonomia, $paisDestino) {
+    public function __construct($id, $ciudadDestino, $precio, $gama, $modelo, $marca, $capacidad, $patente) {
 
         $this->id = $id;
         $this->ciudadDestino = $ciudadDestino;
@@ -25,8 +25,8 @@ class Car {
         $this->marca = $marca;
         $this->capacidad = $capacidad;
         $this->patente = $patente;
-        $this->autonomia = $autonomia;
-        $this->paisDestino = $paisDestino;
+        //$this->autonomia = $autonomia;
+        //$this->paisDestino = $paisDestino;
     }
 
     public function setFechaDesde($fechaDesde) {

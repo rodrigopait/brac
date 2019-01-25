@@ -21,6 +21,7 @@ class CartRepository extends PDORepository {
         $flightsDirectos=array();
         $flightsEscalas=array();
         $rooms=array();
+        $cars=array();
 
         if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
             foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
@@ -63,14 +64,7 @@ class CartRepository extends PDORepository {
                 $flightsEscalas[]=$escala;
             }
         }
-        /* $id;
-    private $capacidad;
-    private $precio;
-    private $hotel;
-    private $ciudadDestino;
-    private $paisDestino;
-    private $fechaDesde;
-    private $fechaHasta;*/
+        
         if (!empty($_SESSION['carrito']['rooms'])) {
             foreach ($_SESSION['carrito']['rooms'] as $room_id) {
                 $query = $this->queryList("SELECT habitacion.id as id,habitacion.precio as precio, habitacion.capacidad as capacidad, ciudad.nombre as ciudad ,hotel.nombre as hotel, hotel.estrellas as estrellas, pais.nombre as pais FROM habitacion inner join hotel on(hotel.id = habitacion.hotel_id) inner join ciudad on(hotel.ciudad_id = ciudad.id) inner join pais on(ciudad.pais_id= pais.id) WHERE habitacion.id=?", array($room_id));
@@ -87,7 +81,41 @@ class CartRepository extends PDORepository {
             }
         }
 
-/*        foreach ($_SESSION['rooms'] as $roomId) {
+
+        if (!empty($_SESSION['carrito']['cars'])) {
+            foreach ($_SESSION['carrito']['cars'] as $car_id) {
+                $query = $this->queryList("SELECT
+                                                auto.id AS id,
+                                                auto.precio AS precio,
+                                                ciudad.nombre AS ciudadDestino,
+                                                auto.gama AS gama,
+                                                marca.descripcion AS marca,
+                                                auto.capacidad AS capacidad,
+                                                modelo.descripcion AS modelo,
+                                                auto.patente AS patente
+                                            FROM
+                                                auto
+                                            INNER JOIN modelo ON
+                                                (auto.modelo_id = modelo.id)
+                                            INNER JOIN ciudad ON(auto.ciudad_id = ciudad.id)
+                                            INNER JOIN marca ON(modelo.marca_id = marca.id)
+                                            WHERE
+                                                auto.id =?", array($car_id));
+                foreach ($query[0] as $row) {
+                    $key = array_search($car_id, $_SESSION['carrito']['cars']) ;
+                    $f_desde = $_SESSION['carrito']['carsFechaDesde'][$key];
+                    $f_hasta = $_SESSION['carrito']['carsFechaHasta'][$key];
+                    $car = new Car($row['id'],$row['ciudadDestino'],$row['precio'],$row['gama'],$row['modelo'],$row['marca'],$row['capacidad'] ,$row['patente']);
+                    $car->setFechaDesde($f_desde);
+                    $car->setFechaHasta($f_hasta);
+                    $cars[]=$car;
+                }
+                
+        
+        }
+    }
+
+/*        foreach ($_SESSION['cars'] as $roomId) {
 
             $query = RoomRepository::getInstance()->queryList("SELECT * FROM habitacion WHERE id = ?", array($roomId));
             foreach ($query[0] as $row) {
@@ -115,6 +143,7 @@ class CartRepository extends PDORepository {
         $vuelos['escalas']=$flightsEscalas;
         $carrito['vuelos']=$vuelos;
         $carrito['rooms']=$rooms;
+        $carrito['cars']=$cars;
         return $carrito;
     }
 
@@ -139,10 +168,10 @@ class CartRepository extends PDORepository {
     }
 
     public function addCar($id_car, $fechaDesde, $fechaHasta){
-        if (!in_array($id_car, $_SESSION['cars'])) {
-            $_SESSION['cars'][] = $id_car;
-            $_SESSION['carsFechaDesde'][] = $fechaDesde;
-            $_SESSION['carsFechaHasta'][] = $fechaHasta;
+        if (!in_array($id_car, $_SESSION['carrito']['cars'])) {
+            $_SESSION['carrito']['cars'][] = $id_car;
+            $_SESSION['carrito']['carsFechaDesde'][] = $fechaDesde;
+            $_SESSION['carrito']['carsFechaHasta'][] = $fechaHasta;
         }
     }
 
@@ -171,10 +200,10 @@ class CartRepository extends PDORepository {
     }
 
     public function removeCar($id_car){
-        if (($key = array_search($id_car, $_SESSION['cars'])) !== false) {
-            unset($_SESSION['cars'][$key]);
-            unset($_SESSION['carsFechaDesde'][$key+1]);
-            unset($_SESSION['carsFechaHasta'][$key+1]);
+        if (($key = array_search($id_car, $_SESSION['carrito']['cars'])) !== false) {
+            unset($_SESSION['carrito']['cars'][$key]);
+            unset($_SESSION['carrito']['carsFechaDesde'][$key]);
+            unset($_SESSION['carrito']['carsFechaHasta'][$key]);
         }
     }
 
