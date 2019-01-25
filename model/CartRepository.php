@@ -21,7 +21,6 @@ class CartRepository extends PDORepository {
         $flightsDirectos=array();
         $flightsEscalas=array();
         $rooms=array();
-
         if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
             foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
                 $query = $this->queryList("SELECT v.id,
@@ -39,12 +38,11 @@ class CartRepository extends PDORepository {
                 foreach ($query[0] as $row) {
                     $flight = new Flight( $row['id'], $row['fecha_salida'],$row['fecha_llegada'],$row['ciudad_origen'],$row['ciudad_destino'],$row['precio'],$row['capacidad_economica'],$row['capacidad_ejecutiva'],$row['capacidad_primera'],$row['nombre']);
                 }
-                
                 $flightsDirectos[]=$flight;
             }
         }
         if (!empty($_SESSION['carrito']['vuelos']['escalas'])) {
-            foreach ($_SESSION['carrito']['vuelos']['escalas'] as $flightId) {
+            foreach ($_SESSION['carrito']['vuelos']['escalas']['id'] as $flightId) {
                 $idEscala=explode('v',$flightId);
                 $escala=array();
                 $escala['precio']=0;
@@ -122,9 +120,11 @@ class CartRepository extends PDORepository {
             $escalas=strpos($flight,'v');
             if($escalas === false){
                 $_SESSION['carrito']['vuelos']['directos'][]= $flight;
+                $_SESSION['carrito']['directos']['datos'][]= $_SESSION['vuelos']['datos'];
             }
             else{
                 $_SESSION['carrito']['vuelos']['escalas'][]= $flight;
+                $_SESSION['carrito']['escalas']['datos'][]= $_SESSION['vuelos']['datos'];
             }
 
 
@@ -151,12 +151,14 @@ class CartRepository extends PDORepository {
         if ($escalas === false) {
             if (($key = array_search($flight, $_SESSION['carrito']['vuelos']['directos'])) !== false) {
                 unset($_SESSION['carrito']['vuelos']['directos'][$key]);
+                unset($_SESSION['carrito']['directos']['datos'][$key]);
 
             }
         }
         else{
             if (($key = array_search($flight, $_SESSION['carrito']['vuelos']['escalas'])) !== false) {
                 unset($_SESSION['carrito']['vuelos']['escalas'][$key]);
+                unset($_SESSION['carrito']['escalas']['datos'][$key]);
             }
         }
 

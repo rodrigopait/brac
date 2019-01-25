@@ -28,15 +28,7 @@
                               <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h3></td>
                               <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h3></td>
                               <td class="col-md-2">
-                                {% if carrito is not null %}
-                                    {% if flight.id not in carrito['directos'] %}              
-                                          <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white;" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                                    {% else %}
-                                          <button id="{{flight.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white;" onclick="agregarCarrito('{{flight.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                                    {% endif %}
-                                {% else %}
                                     <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                                {% endif %}
                               </td>
                             </tr>
                           </tbody>

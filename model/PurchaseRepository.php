@@ -13,20 +13,21 @@ class PurchaseRepository extends PDORepository {
         return self::$instance;
     }
 
-    public function purchase_add($usuarioId) {
+    public function purchaseAdd($usuarioId) {
 
         $total = 0;
-        if (!empty($_SESSION['vuelos']['directos'])) {
-            foreach ($_SESSION['vuelos']['directos'] as $flightId) {
-                $precioVuelo = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
+        if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
+            foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
+                $precioVuelo = $this->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
                 foreach ($precioVuelo[0] as $row) {
                     $total += $row['precio'];
                 }
+                
             }
         }
 
-        if (!empty($_SESSION['vuelos']['escalas'])) {
-            foreach ($_SESSION['vuelos']['escalas'] as $flightId) {
+        if (!empty($_SESSION['carrito']['vuelos']['escalas'])) {
+            foreach ($_SESSION['carrito']['vuelos']['escalas'] as $flightId) {
                 $precioVueloEscala = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
                 foreach ($precioVueloEscala[0] as $row) {
                     $total += $row['precio'];
@@ -48,21 +49,51 @@ class PurchaseRepository extends PDORepository {
             }
         }
 */
-        $query = $this->queryList("INSERT INTO compra (total, usuario_id) VALUES (?,?)", array($total, $usuarioId));
+        //REGISTRO LA COMPRA
+        $fecha_actual=date('Y-m-d H:i:s');
+        $query = $this->queryList("INSERT INTO compra (fecha, total, usuario_id) VALUES (?,?,?)", array($fecha_actual, $total, $usuarioId));
         $compra_id = $query[1];
 
-        foreach ($_SESSION['vuelos']['directos'] as $flightId) {
-            $this->queryList("INSERT INTO vuelo_compra (vuelo, compra_id) VALUES (?,?)", array($flightId, $compra_id));
-            $this->queryList("UPDATE vuelo SET capacidad=capacidad-1 WHERE id = ?", array($flightId));
+
+        //REGISTRO LOS VUELOS DIRECTOS DE LA COMPRA 
+        if (!empty($_SESSION['carrito']['vuelos']['directos'])) {
+            foreach ($_SESSION['carrito']['vuelos']['directos'] as $flightId) {
+                $key = array_search($flightId, $_SESSION['carrito']['vuelos']['directos']);
+                $clase=$_SESSION['carrito']['directos']['datos'][$key]['tipo'];
+                $pasajeros=$_SESSION['carrito']['directos']['datos'][$key]['pasajeros'];
+                $this->queryList("INSERT INTO vuelo_compra (vuelo, compra_id) VALUES (?,?)", array($flightId, $compra_id));
+                $this->queryList("UPDATE vuelo SET $clase = $clase - ? WHERE id = ?", array($pasajeros, $flightId));
+            }
         }
 
-        foreach ($_SESSION['rooms'] as $index => $value) {
-            $this->queryList("INSERT INTO habitacion_alquiler (desde, hasta, id_habitacion, compra_id) VALUES (?,?,?,?)", array($_SESSION['roomsFechaDesde'][$index+1], $_SESSION['roomsFechaHasta'][$index+1], $_SESSION['rooms'][$index], $compra_id));
+        //REGISTRO LOS VUELOS ESCALAS DE LA COMPRA 
+        if (!empty($_SESSION['carrito']['vuelos']['escalas'])) {
+
+            foreach ($_SESSION['carrito']['vuelos']['escalas'] as $flightId) {
+                $key = array_search($flightId, $_SESSION['carrito']['vuelos']['escalas']);
+                $clase=$_SESSION['carrito']['escalas']['datos'][$key]['tipo'];
+                $pasajeros=$_SESSION['carrito']['escalas']['datos'][$key]['pasajeros'];
+                $this->queryList("INSERT INTO vuelo_compra (vuelo, compra_id) VALUES (?,?)", array($flightId, $compra_id));
+                $this->queryList("UPDATE vuelo SET $clase = $clase - ? WHERE id = ?", array($pasajeros, $flightId));
+            }
         }
 
-        foreach ($_SESSION['cars'] as $index => $value) {
-            $this->queryList("INSERT INTO auto_alquiler (desde, hasta, id_auto, compra_id) VALUES (?,?,?,?)", array($_SESSION['carsFechaDesde'][$index+1], $_SESSION['carsFechaHasta'][$index+1], $_SESSION['cars'][$index], $compra_id));
+
+        //REGISTRO LAS HABITACIONES
+        if (!empty($_SESSION['rooms'])) {
+            foreach ($_SESSION['rooms'] as $index => $value) {
+                $this->queryList("INSERT INTO habitacion_alquiler (desde, hasta, id_habitacion, compra_id) VALUES (?,?,?,?)", array($_SESSION['roomsFechaDesde'][$index+1], $_SESSION['roomsFechaHasta'][$index+1], $_SESSION['rooms'][$index], $compra_id));
+            }
         }
+
+        //REGISTRO LOS AUTOS
+        if (!empty($_SESSION['cars'])) {
+            foreach ($_SESSION['cars'] as $index => $value) {
+                $this->queryList("INSERT INTO auto_alquiler (desde, hasta, id_auto, compra_id) VALUES (?,?,?,?)", array($_SESSION['carsFechaDesde'][$index+1], $_SESSION['carsFechaHasta'][$index+1], $_SESSION['cars'][$index], $compra_id));
+            }
+        }
+
+
     }
 
     public function user_purchases($usuarioId) {

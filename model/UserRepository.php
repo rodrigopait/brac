@@ -34,8 +34,13 @@ class UserRepository extends PDORepository {
                 $_SESSION['rol'] = $user['descripcion_rol'];
                 $_SESSION['usuario'] = $user['usuario'];
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['carrito']['vuelos']['directos'] =[];
+                $_SESSION['carrito']['vuelos']['directos']=[];
+                $_SESSION['carrito']['directos']['datos']=[];
+
                 $_SESSION['carrito']['vuelos']['escalas'] =[];
+                $_SESSION['carrito']['escalas']['datos']=[];
+
+
                 $_SESSION['carrito']['autos']=[];
                 $_SESSION['carrito']['rooms']=[];
                 $res[0] = null;
@@ -177,6 +182,17 @@ class UserRepository extends PDORepository {
     public function userComercialAdd($data)
     {
         $query = $this->queryList("INSERT INTO usuario (usuario,clave,nombre, apellido, dni, email,rol_id) VALUES (?,?,?,?,?,?,?)",$data);
+    }
+
+    public function tarjetaUsuario($usuario)
+    {
+        $query=$this->queryList("SELECT nro_tarjeta as tarjeta FROM usuario WHERE id = ?",array($usuario));
+        foreach ($query[0] as $row) {
+            $tarjeta = $row['tarjeta'];
+        }
+
+        return $tarjeta;
+
     }
 
 }

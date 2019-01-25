@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block main %}
-    {{dump(session)}}
     <div class="container">
             <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-sereif;">Carrito de Compras</h2>
             {% if (carrito['vuelos']['directos'] is not empty) or (carrito['vuelos']['escalas'] is not empty) or (carrito['rooms'] is not empty) %}
@@ -110,8 +109,8 @@
                   </div>
               {% endif %}
             </div>
-            <div  class="text-center" id="compra">
-              <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <div  class="text-center" id="compra" >
+              <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="reset()">
                   <h3 style="font-family: 'Anton', sans-serif;color:white">Comprar  <span class="glyphicon glyphicon-tag"></span></h3>
               </button>
             </div>
@@ -125,11 +124,12 @@
                     <h3 class="modal-title" style="font-family: 'Francois One', sans-serif;">Confirmar Compra</h3>
                   </div>
                   <div class="modal-body">
-                        <input type="text" class="form-control" placeholder="Ingresa los últimos 4 números de tu tarjeta">
+                        <input id="tarjeta" type="text" class="form-control" placeholder="Ingresa los últimos 4 números de tu tarjeta">
+                        <span id="error_tarjeta" class="text-danger"><h3></h3></span>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary"onclick="comprar()" >Comprar</button>
+                    <button type="button" class="btn btn-primary"onclick="comprar()" id="compra_check">Verificar</button>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->

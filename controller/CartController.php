@@ -22,7 +22,11 @@ class CartController {
             $rol = $_SESSION['rol'];
             $cart = CartRepository::getInstance()->listAll();
             $view = new CartList();
+            /*echo '<pre>';
+            print_r($_SESSION['carrito']);
+            echo '</pre>';*/
             $view->show($rol, $cart);
+
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -44,14 +48,15 @@ class CartController {
         }
     }
 
-    public function cartPurchase_check(){
+    public function cartPurchaseCheck(){
          try{
             $usuarioId=$_SESSION['user_id'];
             $rol = $_SESSION['rol'];
             $username = $_SESSION['usuario'];
-            if ((!empty($_SESSION['vuelos']['directos'])) OR (!empty($_SESSION['vuelos']['escalas'])) OR !empty($_SESSION['rooms'])){
-                PurchaseRepository::getInstance()->purchase_add($usuarioId);
-                foreach($_SESSION['cars'] as $key => $value){
+            if ((!empty($_SESSION['carrito']['vuelos']['directos'])) OR (!empty($_SESSION['carrito']['vuelos']['escalas'])) OR !empty($_SESSION['carrito']['rooms'])){
+                PurchaseRepository::getInstance()->purchaseAdd($usuarioId);
+
+/*                foreach($_SESSION['cars'] as $key => $value){
                     unset($_SESSION['cars'][$key]);
                     unset($_SESSION['carsFechaDesde'][$key+1]);
                     unset($_SESSION['carsFechaHasta'][$key+1]);
@@ -60,16 +65,21 @@ class CartController {
                     unset($_SESSION['rooms'][$key2]);
                     unset($_SESSION['roomsFechaDesde'][$key2+1]);
                     unset($_SESSION['roomsFechaHasta'][$key2+1]);
-                }
-                foreach($_SESSION['flights'] as $key3 => $value){
+                }*/
+/*                foreach($_SESSION['flights'] as $key3 => $value){
                     unset($_SESSION['flights'][$key3]);
-                }
-                $compras= PurchaseRepository::getInstance()->user_purchases($usuarioId);
-                $view = new UserPurchases();
-                $view->show($compras, $rol, $username);
-            }else{
-                $view = new Home ();
-                $view->show();
+                }*/
+                $_SESSION['carrito']['vuelos']['directos'] = [];
+                $_SESSION['carrito']['directos']['datos'] = [];
+                $_SESSION['carrito']['vuelos']['escalas'] = [];
+                $_SESSION['carrito']['escalas']['datos'] = [];
+
+                $response = new stdClass();
+                $response->data='Comprado';
+                $response->id=$usuarioId;
+                $data[]=$response;
+                echo (json_encode($data)); 
+
             }
         }
         catch (PDOException $e){
@@ -215,6 +225,40 @@ class CartController {
             $cart = CartRepository::getInstance()->listAll();
             $view = new CartList();
             $view->show($rol, $cart);  
+        }
+        catch (PDOException $e){
+            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+            $view = new Error_display();
+            $view->show($error);
+        }
+    }
+
+    public function validate(){
+        try{
+            $usuario=$_SESSION['user_id'];
+            $valorTarjeta=$_POST['tarjeta'];
+            
+            $tarjeta=UserRepository::getInstance()->tarjetaUsuario($usuario);
+            $ultimos=explode('-',$tarjeta);
+            $miTarjeta = $ultimos[3];
+            
+            if ($miTarjeta == $valorTarjeta) {
+                $response = new stdClass();
+                $response->data='Correcto';
+                $response->tarjeta=$miTarjeta;
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+            else{
+                $response = new stdClass();
+                $response->data='Incorrecto';
+                $response->tarjeta=$miTarjeta;
+                $data[]=$response;
+                echo (json_encode($data));
+            }
+
+
+
         }
         catch (PDOException $e){
             $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";

@@ -138,6 +138,10 @@ function agregarHabitacionCarrito(id, f_desde, f_hasta) {
 
 }
 
+function reset() {
+	$('#error_tarjeta').text('');
+}
+
 function eliminarHabitacionCarrito(element_id, id) {
 	var element = $('#'+element_id);
 	var params = {'id' : id}
@@ -159,15 +163,58 @@ function eliminarHabitacionCarrito(element_id, id) {
 		
 	}
 
-function comprar(carrito){
-	$.ajax({
-	    url:  'index.php?controller=Cart&method=cartPurchase_check',
+function comprar(){
+	var element = document.getElementById('error_tarjeta');
+	var elementCheck = document.getElementById('compra_check');
+	var tarjeta = $("#tarjeta").val();
+	if (tarjeta == '') {
+		$('#error_tarjeta').text('• Complete este campo');
+	}
+	else{
+		var params= {'tarjeta' : tarjeta}
+		$.ajax({
+			data: params,
+		    url:  'index.php?controller=Cart&method=validate',
+		    type:  'post',
+		    success:  function (response) {
+		    	var data = JSON.parse(response);
+		    	if (data[0].data == 'Correcto' && $('#compra_check').text() != 'Comprar') {
+		    		$('#error_tarjeta').text('• El número es correcto');
+		    		element.classList.remove("text-danger");
+		    		element.classList.add("text-success");
+		    		elementCheck.innerHTML='Comprar';
+
+		    	}
+		    	else if (data[0].data== 'Correcto' && $('#compra_check').text() == 'Comprar') {
+		    		$.ajax({
+		    		    url:  'index.php?controller=Cart&method=cartPurchaseCheck',
+		    		    type:  'post',
+		    		    success:  function (response) {
+		    		    	var data = JSON.parse(response);
+		    		    	if (data[0].data == 'Comprado') {
+		    		    		location.href ="index.php?controller=User&method=userPurchases"
+		    		    	}
+		    		    }
+		    		  });
+		    	}
+
+		    	else if(data[0].data == 'Incorrecto'){
+		    		console.log(response);
+		    		$('#error_tarjeta').text('• El número no es correcto');
+		    	}
+		    }
+		});
+	}
+
+	
+
+/*	$.ajax({
+	    url:  'index.php?controller=Cart&method=cartPurchaseCheck',
 	    type:  'post',
 	    success:  function (response) {
-	    	
 
 	    }
-	});
+	});*/
 }
 
 
