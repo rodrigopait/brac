@@ -172,6 +172,8 @@ class FlightRepository extends PDORepository {
         $vuelos['escalas']=$vuelosEscala;
         $vuelos['origen']=$origen;
         $vuelos['destino']=$destino;
+        $_SESSION['vuelo']['capacidad_actual']['tipo']=$clase;
+        $_SESSION['vuelo']['capacidad_actual']['pasajeros']=$pasajeros;
         return json_encode($vuelos);
     }
 

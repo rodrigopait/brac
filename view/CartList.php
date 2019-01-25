@@ -12,7 +12,7 @@ class CartList extends TwigView {
 		$twig->getExtension('Twig_Extension_Core')->setNumberFormat(0, ',', '.');
     	$template = $twig->loadTemplate("cartList.html.twig");
 
-    	$template->display(array('rol' => $rol, 'carrito' => $cart)); 
+    	$template->display(array('rol' => $rol, 'carrito' => $cart, 'session'=>$_SESSION)); 
     }
     
 }

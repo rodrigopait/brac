@@ -51,8 +51,10 @@ function agregarCarrito(id) {
 }
 
 
-function eliminarVueloCarrito(id) {	
+function eliminarVueloCarrito(id) {
 	var element = document.getElementById('flight'+'_'+id);
+	console.log(element);
+	
 	var params= {'id' : id}
 	$.ajax({
 	    data:  params,
@@ -60,9 +62,17 @@ function eliminarVueloCarrito(id) {
 	    type:  'post',
 	    success:  function (response) {
 	    	var data = JSON.parse(response);
-	    	console.log(data[0].session);
+	    	console.log(data[0].carrito.vuelos.escalas);
 	    	if (data[0].data == 'Eliminado') {
 		    	element.remove();
+		    	if ((data[0].carrito.vuelos.escalas).length < 1 && (data[0].carrito.vuelos.directos).length < 1 ){
+		    		
+		    		$('#vuelos').remove();
+		    		if (data[0].carrito.rooms.length <1 ) {
+		    			$('#compra').remove();
+		    		}
+		    	}
+
 		    	alertify.error('Eliminado del Carrito');
 	    	}
 	    	else{
@@ -149,7 +159,16 @@ function eliminarHabitacionCarrito(element_id, id) {
 		
 	}
 
+function comprar(carrito){
+	$.ajax({
+	    url:  'index.php?controller=Cart&method=cartPurchase_check',
+	    type:  'post',
+	    success:  function (response) {
+	    	
 
+	    }
+	});
+}
 
 
 /*$( document ).ready(function() {

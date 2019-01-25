@@ -13,17 +13,28 @@ class PurchaseRepository extends PDORepository {
         return self::$instance;
     }
 
-    public function purchase_add($usuarioId, $cart) {
+    public function purchase_add($usuarioId) {
 
         $total = 0;
-        foreach ($_SESSION['flights'] as $flightId) {
-            $precioVuelo = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
-            foreach ($precioVuelo[0] as $row) {
-                $total += $row['precio'];
+        if (!empty($_SESSION['vuelos']['directos'])) {
+            foreach ($_SESSION['vuelos']['directos'] as $flightId) {
+                $precioVuelo = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
+                foreach ($precioVuelo[0] as $row) {
+                    $total += $row['precio'];
+                }
             }
         }
 
-        foreach ($_SESSION['rooms'] as $roomId) {
+        if (!empty($_SESSION['vuelos']['escalas'])) {
+            foreach ($_SESSION['vuelos']['escalas'] as $flightId) {
+                $precioVueloEscala = FlightRepository::getInstance()->queryList("SELECT precio FROM vuelo WHERE id = ?", array($flightId));
+                foreach ($precioVueloEscala[0] as $row) {
+                    $total += $row['precio'];
+                }
+            }
+        }
+
+/*        foreach ($_SESSION['rooms'] as $roomId) {
             $precioHabitacion = RoomRepository::getInstance()->queryList("SELECT precio FROM habitacion WHERE id = ?", array($roomId));
             foreach ($precioHabitacion[0] as $row) {
                 $total += $row['precio'];
@@ -36,12 +47,12 @@ class PurchaseRepository extends PDORepository {
                 $total += $row['precio'];
             }
         }
-
+*/
         $query = $this->queryList("INSERT INTO compra (total, usuario_id) VALUES (?,?)", array($total, $usuarioId));
         $compra_id = $query[1];
 
-        foreach ($_SESSION['flights'] as $flightId) {
-            $this->queryList("INSERT INTO vuelo_compra (vuelo_id, compra_id) VALUES (?,?)", array($flightId, $compra_id));
+        foreach ($_SESSION['vuelos']['directos'] as $flightId) {
+            $this->queryList("INSERT INTO vuelo_compra (vuelo, compra_id) VALUES (?,?)", array($flightId, $compra_id));
             $this->queryList("UPDATE vuelo SET capacidad=capacidad-1 WHERE id = ?", array($flightId));
         }
 

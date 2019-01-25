@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block main %}
+    {{dump(session)}}
     <div class="container">
             <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-sereif;">Carrito de Compras</h2>
-            {% if (carrito['vuelos']['directos'] is not empty) or (carrito['rooms'] is not empty) %}
-            <div class="panel panel-success">
+            {% if (carrito['vuelos']['directos'] is not empty) or (carrito['vuelos']['escalas'] is not empty) or (carrito['rooms'] is not empty) %}
+            <div class="panel panel-success" id="vuelos">
                 <div class="panel-heading"><h3 style="font-family: 'Alfa Slab One', cursive;">Vuelos</h3></div>
                 <div class="panel-body">
                     {% if carrito['vuelos']['directos'] is not empty %}
@@ -37,10 +38,11 @@
 
                     {% if carrito['vuelos']['escalas'] is not empty %}
                         {% for flight in carrito['vuelos']['escalas'] %}
-                            <div class="panel panel-info">
+                            <div class="panel panel-info" id="flight_{{flight.id}}">
                               <div class="panel-heading text-left col-md-12">
-                                  <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top: 2%; margin-bottom: -3%">{{flight.origen}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.destino}}</h4>
-                                  <button id="{{flight.id}}" class="btn btn-danger btn-md {{flight.id}}" style="float:right" title="Eliminar del carrito"><span class="glyphicon glyphicon-remove"></span></button>
+                                  <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top: 2%; margin-bottom: -3%">{{flight.origen}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.destino}}
+                                  </h4>
+                                  <button id="{{flight.id}}" class="btn btn-danger btn-md" style="float:right" title="Eliminar del carrito" onclick="eliminarVueloCarrito('{{flight.id}}')"><span class="glyphicon glyphicon-remove"></span></button>
                               </div>
                                 <table class="table" style="background-color:white">
                                 {% for escala in flight['vuelos'] %}
@@ -108,7 +110,7 @@
                   </div>
               {% endif %}
             </div>
-            <div  class="text-center">
+            <div  class="text-center" id="compra">
               <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                   <h3 style="font-family: 'Anton', sans-serif;color:white">Comprar  <span class="glyphicon glyphicon-tag"></span></h3>
               </button>
@@ -127,8 +129,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Com
-                      prar</button>
+                    <button type="button" class="btn btn-primary"onclick="comprar()" >Comprar</button>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->

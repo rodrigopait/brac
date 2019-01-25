@@ -49,9 +49,8 @@ class CartController {
             $usuarioId=$_SESSION['user_id'];
             $rol = $_SESSION['rol'];
             $username = $_SESSION['usuario'];
-            $cart = CartRepository::getInstance()->listAll();
-            if (($_SESSION['cars'] != null) OR ($_SESSION['cars'] != null) OR ($_SESSION['cars'] != null)){
-                PurchaseRepository::getInstance()->purchase_add($usuarioId, $cart);
+            if ((!empty($_SESSION['vuelos']['directos'])) OR (!empty($_SESSION['vuelos']['escalas'])) OR !empty($_SESSION['rooms'])){
+                PurchaseRepository::getInstance()->purchase_add($usuarioId);
                 foreach($_SESSION['cars'] as $key => $value){
                     unset($_SESSION['cars'][$key]);
                     unset($_SESSION['carsFechaDesde'][$key+1]);
@@ -90,7 +89,6 @@ class CartController {
             if ($rol != '') {
                 CartRepository::getInstance()->addFlight($id_vuelo);
                 $response = new stdClass();
-                $response->session=$_SESSION['carrito']['vuelos']['escalas'];
                 $response->data='Agregado';
                 $data[]=$response;
                 echo (json_encode($data));
@@ -119,7 +117,7 @@ class CartController {
                 if ($rol != '') {
                     CartRepository::getInstance()->removeFlight($id_flight);
                     $response = new stdClass();
-                    $response->session=$_SESSION['carrito']['vuelos'];
+                    $response->carrito=$_SESSION['carrito'];
                     $response->data='Eliminado';
                     $data[]=$response;
                     echo (json_encode($data));
