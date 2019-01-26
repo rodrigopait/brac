@@ -11,8 +11,10 @@ class CartList extends TwigView {
         $twig->addExtension(new Twig_Extension_Debug());
 		$twig->getExtension('Twig_Extension_Core')->setNumberFormat(0, ',', '.');
     	$template = $twig->loadTemplate("cartList.html.twig");
+        $pasajerosDirectos=$_SESSION['carrito']['directos']['datos'];
+        $pasajerosEscala=$_SESSION['carrito']['escalas']['datos'];
 
-    	$template->display(array('rol' => $rol, 'carrito' => $cart, 'session'=>$_SESSION)); 
+    	$template->display(array('rol' => $rol, 'carrito' => $cart, 'pasajerosEscala'=>$pasajerosEscala, 'pasajerosDirectos'=>$pasajerosDirectos)); 
     }
     
 }

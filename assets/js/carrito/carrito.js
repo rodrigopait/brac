@@ -13,8 +13,8 @@ function agregarCarrito(id) {
 		    	if (data[0].data == 'Agregado') {
 		    		element.classList.remove(id);
 		    		element.classList.remove("btn-primary");
-		    		element.classList.add("btn-success");
-		    		element.innerHTML= "Agregado <span class='glyphicon glyphicon-shopping-cart'>";
+		    		element.classList.add("btn-danger");
+		    		element.innerHTML= "Eliminar del carrito <span class='glyphicon glyphicon-shopping-cart'>";
 		    		alertify.success('Agregado al Carrito');
 		    	}
 		    	else{
@@ -35,7 +35,7 @@ function agregarCarrito(id) {
 		    	if (data[0].data == 'Eliminado') {
 		    		console.log(data[0].session);
 		    		element.classList.add(id);
-		    		element.classList.remove("btn-success");
+		    		element.classList.remove("btn-danger");
 		    		element.classList.add("btn-primary");
 		    		element.innerHTML= "Agregar al Carrito <span class='glyphicon glyphicon-shopping-cart'>";
 		    		alertify.error('Eliminado del Carrito');

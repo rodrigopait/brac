@@ -56,8 +56,8 @@ class CartRepository extends PDORepository {
                     }
                     $escala['vuelos'][]=$flightEscala;
                     $escala['precio']+=$flightEscala->getPrecio();
-                    $escala['origen']=reset($escala['vuelos'])->getCiudadOrigen();
-                    $escala['destino']=end($escala['vuelos'])->getCiudadDestino();
+                    $escala['origen']=utf8_encode(reset($escala['vuelos'])->getCiudadOrigen());
+                    $escala['destino']=utf8_encode(end($escala['vuelos'])->getCiudadDestino());
                 }
 
                 $flightsEscalas[]=$escala;
@@ -71,7 +71,7 @@ class CartRepository extends PDORepository {
                     $key = array_search($room_id, $_SESSION['carrito']['rooms']) ;
                     $f_desde = $_SESSION['carrito']['roomsFechaDesde'][$key];
                     $f_hasta = $_SESSION['carrito']['roomsFechaHasta'][$key];
-                    $room = new Room($row['id'],$row['capacidad'], $row['precio'],$row['hotel'],$row['ciudad'],$row['pais']);
+                    $room = new Room($row['id'],$row['capacidad'], $row['precio'],utf8_encode($row['hotel']),utf8_encode($row['ciudad']),utf8_encode($row['pais']));
                     $room->setFechaDesde($f_desde);
                     $room->setFechaHasta($f_hasta);
 

@@ -4,70 +4,106 @@
             <h2 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-sereif;">Carrito de Compras</h2>
             {% if (carrito['vuelos']['directos'] is not empty) or (carrito['vuelos']['escalas'] is not empty) or (carrito['rooms'] is not empty) or (carrito['cars'] is not empty) %}
               {% if carrito['vuelos']['directos'] is not empty or carrito['vuelos']['escalas'] is not empty %}
+            <!-- filtros para la busqueda !-->
+            <!--FIN de filtros!-->
             <div class="panel panel-success" id="vuelos">
                 <div class="panel-heading"><h3 style="font-family: 'Alfa Slab One', cursive;">Vuelos</h3></div>
                 <div class="panel-body">
 
                     {% if carrito['vuelos']['directos'] is not empty %}
-                        {% for flight in carrito['vuelos']['directos'] %}
+                        {% for key, flight in carrito['vuelos']['directos'] %}
                             <div  class="panel panel-info" id="flight_{{flight.id}}"> 
                               <div class="panel-heading text-left col-md-12">
-                                  <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top: 2%; margin-bottom: -3%">{{flight.ciudadOrigen}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.ciudadDestino}}</h4>
+                                  <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top:2%; margin-bottom:-3%">{{flight.ciudadOrigen}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.ciudadDestino}}</h4>
                                   <button id="{{flight.id}}" class="btn btn-danger btn-md {{flight.id}}" style="float:right" title="Eliminar del carrito" onclick="eliminarVueloCarrito({{flight.id}})"><span class="glyphicon glyphicon-remove"></span></button>
                               </div>
-                              <table class="table table-responsive" style="background-color:white">
+                              <table class="table" style="background-color:white">
                                 <thead>
-                                  <tr style="background-color:#6B9293">
-                                    <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{flight.fechaSalida|date('d/m/Y')}}</h4></th>
-                                    <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadOrigen|capitalize}}</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadDestino|capitalize}}</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
+                                  <tr class="row" style="background-color:#6B9293">
+                                    <th class="col-md-3"><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{flight.fechaSalida|date('d/m/Y')}}</h4></th>
+                                    <th class="col-md-3"><h3  style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadOrigen|capitalize}}</h3></th>
+                                    <th class="col-md-3"><h3 style="font-family: 'Anton', sans-serif;color:white">{{flight.ciudadDestino|capitalize}}</h3></th>
+                                    <th class="col-md-3"></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th><h4  style="font-family: 'Coiny', cursive;">{{flight.aerolinea}}</h4></th>
-                                    <td><h4  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">$ {{flight.precio|number_format}}</h4> </td>
+                                  <tr class="row">
+                                    <th class="col-md-4"><h4  style="font-family: 'Coiny', cursive;">{{flight.aerolinea}}</h4></th>
+                                    <td class="col-md-3 "><h4  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h4></td>
+                                    <td class="col-md-3"><h4 style="font-family: 'Coiny', cursive;">{{flight.fechaLlegada|date('H:i')}}</h4></td>
+                                    <td class="col-md-2">                                    
+                                      <button class="btn btn-success btn-lg" type="button" data-toggle="collapse" data-target="#collapseDirecto{{flight.id}}" aria-expanded="false" aria-controls="collapseDirecto{{flight.id}}" style="font-family: 'Anton', sans-serif;color:white" >
+                                          <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                          Detalles
+                                      </button>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
+                              <div id="collapseDirecto{{flight.id}}" class="collapse alert alert-success" role="alert">
+                                <div class="row">
+                                  <div class="col-md-6 text-left" style="padding-top:6%">
+                                    <h5 style="margin-right:7%;font-family: 'Anton', sans-serif;">Cantidad de Pasajeros:{{pasajerosDirectos[key]['pasajeros']}}</h5>
+                                  </div>
+                                  <div class="col-md-6 text-right" >
+                                    <h4 style="margin-right:7%;font-family: 'Anton', sans-serif;">Precio.</h4>
+                                    <h2 style="font-family: 'Coiny', cursive">$ {{flight.precio|number_format}}</h2>
+                                    <h5 style="font-family: 'Anton', sans-serif;">Precio por persona</h5>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                         {% endfor %}
                     {% endif %}
 
                     {% if carrito['vuelos']['escalas'] is not empty %}
-                        {% for flight in carrito['vuelos']['escalas'] %}
+                        {% for key, flight in carrito['vuelos']['escalas'] %}
                             <div class="panel panel-info" id="flight_{{flight.id}}">
                               <div class="panel-heading text-left col-md-12">
                                   <h4 class="text-left" style="font-family: 'Anton', sans-serif; margin-top: 2%; margin-bottom: -3%">{{flight.origen}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.destino}}
                                   </h4>
                                   <button id="{{flight.id}}" class="btn btn-danger btn-md" style="float:right" title="Eliminar del carrito" onclick="eliminarVueloCarrito('{{flight.id}}')"><span class="glyphicon glyphicon-remove"></span></button>
                               </div>
-                                <table class="table" style="background-color:white">
+                                <table class="table" style="background-color:white" class="row">
                                 {% for escala in flight['vuelos'] %}
                                              <thead>
-                                               <tr style="background-color:#6B9293">
-                                                 <th><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{escala.getFechaSalida|date('d/m/Y')}}</h4></th>
-                                                 <th><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.getCiudadOrigen|capitalize}}</h3></th>
-                                                 <th><h3 style="font-family: 'Anton', sans-serif;color:white">{{escala.getCiudadDestino|capitalize}}</h3></th>
+                                               <tr class="row" style="background-color:#6B9293">
+                                                 <th class="col-md-4"><h4 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span> {{escala.getFechaSalida|date('d/m/Y')}}</h4></th>
+                                                 <th class="col-md-3"><h3  style="font-family: 'Anton', sans-serif;color:white">{{escala.getCiudadOrigen|capitalize}}</h3></th>
+                                                 <th class="col-md-3"><h3 style="font-family: 'Anton', sans-serif;color:white">{{escala.getCiudadDestino|capitalize}}</h3></th>
+                                                 <th class="col-md-2">
+                                                 </th>
                                                </tr>
                                              </thead>
                                              <tbody>
-                                               <tr>
-                                                 <th><h4  style="font-family: 'Coiny', cursive;">{{escala.aerolinea}}</h4></th>
-                                                 <td><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h4></td>
-                                                 <td><h4 style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h4></td>
+                                               <tr class="row">
+                                                 <th class="col-md-4"><h4  style="font-family: 'Coiny', cursive;">{{escala.aerolinea}}</h4></th>
+                                                 <td class="col-md-4"><h4  style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h4></td>
+                                                 <td class="col-md-4"><h4 style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h4></td>
+                                                 <td class="col-md-2">
+                                                 </td>
                                                </tr>
                                              </tbody>
                                 {% endfor %}   
                                 </table>
-                            <div class="alert alert-success" role="alert">
-                              <h4 style="text-align:right; margin-right:7%;font-family: 'Anton', sans-serif;text-align:right">Precio.</h4>
-                              <h2 style="font-family: 'Coiny', cursive; text-align:right">$ {{flight.precio|number_format}}</h2>
-        
-                            </div>
+                                <div class="text-center">
+                                  <button class="btn btn-success btn-lg" type="button" data-toggle="collapse" data-target="#collapseEscala{{flight.id}}" aria-expanded="false" aria-controls="collapseEscala{{flight.id}}" style="font-family: 'Anton', sans-serif;color:white" >
+                                      <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                      Detalles
+                                  </button>
+                                </div>
+                                <div id="collapseEscala{{flight.id}}" class="collapse alert alert-success" role="alert">
+                                  <div class="row">
+                                    <div class="col-md-6 text-left" style="padding-top:6%">
+                                      <h5 style="margin-right:7%;font-family: 'Anton', sans-serif;">Cantidad de Pasajeros:{{pasajerosEscala[key]['pasajeros']}}</h5>
+                                    </div>
+                                    <div class="col-md-6 text-right" >
+                                      <h4 style="margin-right:7%;font-family: 'Anton', sans-serif;">Precio.</h4>
+                                      <h2 style="font-family: 'Coiny', cursive">$ {{flight.precio|number_format}}</h2>
+                                      <h5 style="font-family: 'Anton', sans-serif;">Precio por persona</h5>
+                                    </div>
+                                  </div>
+                              </div>
                           </div>   
                         {% endfor %}
                     {% endif %}
@@ -78,7 +114,7 @@
 
 <!-- ROOMS -->
             {% if carrito['rooms'] is not empty %}
-              <div class="panel panel-success" id="rooms">
+              <div class="panel panel-info" id="rooms">
                   <div class="panel-heading"><h3 style="font-family: 'Alfa Slab One', cursive;">Habitaciones</h3></div>
                   <div class="panel-body">
                           {% for room in carrito['rooms'] %}
@@ -89,19 +125,19 @@
                               </div>
                               <table class="table table-responsive" style="background-color:white">
                                 <thead>
-                                  <tr style="background-color:#6B9293">
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Fecha desde</h3></th>
-                                    <th><h3  style="font-family: 'Anton', sans-serif;color:white">Fecha hasta</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Capacidad</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
+                                  <tr style="background-color:#6B9293" class="row">
+                                    <th class="col-md-3"><h3 style="font-family: 'Anton', sans-serif;color:white">Fecha desde</h3></th>
+                                    <th class="col-md-3"><h3  style="font-family: 'Anton', sans-serif;color:white">Fecha hasta</h3></th>
+                                    <th class="col-md-3"><h3 style="font-family: 'Anton', sans-serif;color:white; text-align:center">Capacidad</h3></th>
+                                    <th class="col-md-3"><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th><h4  style="font-family: 'Coiny', cursive;">{{room.fechaDesde|date('d/m/Y')}}</h4></th>
-                                    <td><h4  style="font-family: 'Coiny', cursive;">{{room.fechaHasta|date('d/m/Y')}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">{{room.capacidad}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">$ {{room.precio|number_format}}</h4> </td>
+                                  <tr class="row">
+                                    <th class="col-md-3"><h4  style="font-family: 'Coiny', cursive;">{{room.fechaDesde|date('d/m/Y')}}</h4></th>
+                                    <td class="col-md-3"><h4  style="font-family: 'Coiny', cursive;">{{room.fechaHasta|date('d/m/Y')}}</h4></td>
+                                    <td class="col-md-3"><h4 style="font-family: 'Coiny', cursive; text-align:center">{{room.capacidad}}</h4></td>
+                                    <td class="col-md-3"><h4 style="font-family: 'Coiny', cursive;">$ {{room.precio|number_format}}</h4> </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -112,7 +148,7 @@
               {% endif %}
               <!-- cars -->
             {% if carrito['cars'] is not empty %}
-              <div class="panel panel-success" id="cars">
+              <div class="panel panel-warning" id="cars">
                   <div class="panel-heading"><h3 style="font-family: 'Alfa Slab One', cursive;">Autos</h3></div>
                   <div class="panel-body">
                           {% for car in carrito['cars'] %}
@@ -123,20 +159,20 @@
                               </div>
                               <table class="table table-responsive" style="background-color:white">
                                 <thead>
-                                  <tr style="background-color:#6B9293">
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Fecha desde</h3></th>
-                                    <th><h3  style="font-family: 'Anton', sans-serif;color:white">Fecha hasta</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Capacidad</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Patente</h3></th>
-                                    <th><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
+                                  <tr style="background-color:#6B9293" class="row">
+                                    <th class="col-md-2"><h3 style="font-family: 'Anton', sans-serif;color:white">Fecha desde</h3></th>
+                                    <th class="col-md-2"><h3  style="font-family: 'Anton', sans-serif;color:white">Fecha hasta</h3></th>
+                                    <th class="col-md-2"><h3 style="font-family: 'Anton', sans-serif;color:white;">Capacidad</h3></th>
+                                    <th class="col-md-2"><h3 style="font-family: 'Anton', sans-serif;color:white">Patente</h3></th>
+                                    <th class="col-md-4"><h3 style="font-family: 'Anton', sans-serif;color:white">Precio</h3></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th><h4  style="font-family: 'Coiny', cursive;">{{car.fechaDesde|date('d/m/Y')}}</h4></th>
-                                    <td><h4  style="font-family: 'Coiny', cursive;">{{car.fechaHasta|date('d/m/Y')}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">{{car.capacidad}}</h4></td>
-                                    <td><h4 style="font-family: 'Coiny', cursive;">{{car.patente}}</h4></td>
+                                  <tr class="row">
+                                    <th class="col-md-3"><h4  style="font-family: 'Coiny', cursive;">{{car.fechaDesde|date('d/m/Y')}}</h4></th>
+                                    <td class="col-md-3"><h4  style="font-family: 'Coiny', cursive;">{{car.fechaHasta|date('d/m/Y')}}</h4></td>
+                                    <td class="col-md-3"><h4 style="font-family: 'Coiny', cursive;">{{car.capacidad}}</h4></td>
+                                    <td class="col-md-3"><h4 style="font-family: 'Coiny', cursive;">{{car.patente}}</h4></td>
                                     <td><h4 style="font-family: 'Coiny', cursive;">$ {{car.precio|number_format}}</h4> </td>
                                   </tr>
                                 </tbody>

@@ -56,14 +56,18 @@ class FlightRepository extends PDORepository {
         $data=array($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros);
         //Busqueda de vuelos directos
 
+        $configuration=ConfigurationRepository::getInstance()->listConf();
         if ($clase == 'economica') {
             $clase = 'capacidad_economica';
+            $suma=0;
         }
         elseif ($clase == 'ejecutiva') {
             $clase = 'capacidad_ejecutiva';
+            $suma=$configuration->getPrecioEjecutiva();
         }
         else{
             $clase = 'capacidad_primera';
+            $suma=$configuration->getPrecioPrimera();
         }
         $sqlDirectos="SELECT vuelo.id,
                              vuelo.fecha_salida,
@@ -92,8 +96,20 @@ class FlightRepository extends PDORepository {
             $flight->fechaLlegada = $row['fecha_llegada'];
             $flight->ciudadOrigen = $row['ciudad_origen'];
             $flight->ciudadDestino= $row['ciudad_destino'];
-            $flight->precio  = $row['precio'];
+            $flight->precio  = $row['precio'] + $suma;
             $flight->aerolinea=$row['aerolinea'];
+            
+            $claseVuelo=explode('_',$clase);
+            $flight->clase = $claseVuelo[1];
+            //Codigo para obtener la duracion de los vuelos
+            $fecha_desde=date('H:i', strtotime($row['fecha_salida']));
+            $hora_desde=explode(':',$fecha_desde);
+
+            $duracion=date('H:i', strtotime($row['fecha_llegada'].' - '.$hora_desde[0].' hours'.' - '.$hora_desde[1].' minutes'));
+
+            //
+            $dataDuracion=explode(':',$duracion);
+            $flight->duracion=$dataDuracion[0].'h '.$dataDuracion[1].'m';
             $directos[]=$flight;
         }
         $vuelos=array();
@@ -153,8 +169,19 @@ class FlightRepository extends PDORepository {
             $flight->fechaLlegada = $row['fecha_llegada'];
             $flight->ciudadOrigen = $row['ciudad_origen'];
             $flight->ciudadDestino= $row['ciudad_destino'];
-            $flight->precio  = $row['precio'];
+            $flight->precio  = $row['precio'] + $suma;
             $flight->aerolinea=$row['aerolinea'];
+
+            //Codigo para obtener la duracion de los vuelos
+            $fecha_desde=date('H:i', strtotime($row['fecha_salida']));
+            $hora_desde=explode(':',$fecha_desde);
+
+            $duracion=date('H:i', strtotime($row['fecha_llegada'].' - '.$hora_desde[0].' hours'.' - '.$hora_desde[1].' minutes'));
+
+            //
+            $dataDuracion=explode(':',$duracion);
+            $flight->duracion= $dataDuracion[0].'h '.$dataDuracion[1].'m';
+
             if (!empty($aux)) {
                 foreach ($aux as $vuelo) {
                     $escala=array();
@@ -163,6 +190,9 @@ class FlightRepository extends PDORepository {
                         $escala['vuelos'][]=$flight;
                         $escala['precio']=$vuelo->precio+$flight->precio;
                         $escala['id']=$vuelo->id.'v'.$flight->id;
+
+                        $claseVuelo=explode('_',$clase);
+                        $escala['clase'] = $claseVuelo[1];
                         $vuelosEscala[]=$escala;
                     }
                 }
