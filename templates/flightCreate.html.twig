@@ -72,24 +72,24 @@
                         </div>
                         <div class="col-sm-4 form-group">
                              <label>Hora</label>
-                              <input type="time" class="form-control" name="hora" placeholder="Duracion" required="true">
+                              <input type="time" class="form-control" name="hora" min="00:00" max="24:00" placeholder="hora" required="true">
                         </div>
                         <div class="col-sm-4 form-group">
                             <label>Duracion</label>
-                            <input type="number" class="form-control" min="0.0" step="0.1" name="duracion" placeholder="Duracion" required="true">
+                            <input type="text" class="form-control" name="duracion" placeholder="hh:mm" required="true" pattern="^[0-9]{2}:[0-9]{2}$" maxlength="5">
                         </div>
                         <div class="col-sm-4 form-group">
-                            <label>Capacidad</label>
+                            <label>Capacidad </label>
                             <input type="number" min="0" class="form-control" name="economica" placeholder="Economica" required="true">
                         </div>
                         <div class="col-sm-4 form-group" style="margin-top: 0.6vh;">
-                            <label>Categoria</label>
+                            <label> </label>
                             <input type="number" min="0" class="form-control" name="ejecutiva" placeholder="Ejecutiva" required="true">
                         </div>
                       
                         <div class="col-sm-4 form-group" style="margin-top: 0.6vh;">
-                            <label>Escalas</label>
-                            <input type="number" min="0" class="form-control" name="escalas" required="true">
+                            <label></label>
+                            <input type="number" min="0" class="form-control" name="primera" placeholder="Primera Clase" required="true">
                         </div>
                     </div>
                     <div align="center">

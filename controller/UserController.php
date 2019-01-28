@@ -22,9 +22,10 @@ class UserController {
            $rol = $_SESSION['rol'];
            $userId = $_SESSION['user_id'];
            $username= $_SESSION['usuario'];
-           $compras= PurchaseRepository::getInstance()->user_purchases($userId);
+           $comprasVigentes= PurchaseRepository::getInstance()->userPurchasesCurrents($userId);
+           $comprasCerradas= PurchaseRepository::getInstance()->userPurchasesNotCurrents($userId);
            $view = new UserPurchases();
-           $view->show($compras, $rol, $username);
+           $view->show($rol, $username, $comprasVigentes, $comprasCerradas);
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -38,7 +39,7 @@ class UserController {
            $rol = $_SESSION['rol'];
            $userId = $_GET['userId'];
            $username= $_GET['username'];
-           $compras= PurchaseRepository::getInstance()->user_purchases($userId);
+           $compras= PurchaseRepository::getInstance()->userPurchases($userId);
            $view = new UserPurchases();
            $view->show($compras, $rol, $username);
        }
@@ -52,12 +53,14 @@ class UserController {
 
    public function userPurchasesDetail(){
         try{
-           $compraId = $_GET['compraId'];
+           $compraId = $_GET['id'];
            $rol = $_SESSION['rol'];
-           $compra= PurchaseRepository::getInstance()->purchase_by_id($compraId);
-           $compraDetalle = PurchaseRepository::getInstance()->user_purchases_detail($compraId);
+           $compra= PurchaseRepository::getInstance()->purchaseById($compraId);
+           $compraDetalle = PurchaseRepository::getInstance()->userPurchasesDetail($compraId);
+           $canceladas = PurchaseRepository::getInstance()->userPurchasesClosed($compraId);
            $view = new UserPurchasesDetail();
-           $view->show($compra, $rol, $compraDetalle);
+           $config = ConfigurationRepository::getInstance()->listConf();
+           $view->show($compra,$rol, $compraDetalle, $canceladas, $config);
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -362,6 +365,64 @@ class UserController {
            $view = new Error_display();
            $view->show($error);
        }
+   }
+
+   public function deletePurchaseRoom()
+   {
+    try{
+       $id_room=$_POST['id'];
+       $id_compra = $_POST['compraId'];
+       $precio = $_POST['precio'];
+       PurchaseRepository::getInstance()->deletePurchaseRoom($id_room,$id_compra,$precio);
+       $valor=new stdClass();
+       $valor->data='eliminado';
+       $info[]=$valor;
+       echo (json_encode($info));
+    }
+    catch  (PDOException $e){
+      $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+      $view = new Error_display();
+      $view->show($error);
+    }
+
+   }
+
+   public function deletePurchaseCar()
+   {
+     try{
+        $idCar=$_POST['id'];
+        $id_compra = $_POST['compraId'];
+        $precio = $_POST['precio'];
+        PurchaseRepository::getInstance()->deletePurchaseCar($idCar,$id_compra,$precio);
+        $valor=new stdClass();
+        $valor->data='eliminado';
+        $info[]=$valor;
+        echo (json_encode($info));
+     }
+     catch  (PDOException $e){
+       $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+       $view = new Error_display();
+       $view->show($error);
+     }
+   }
+
+   public function deletePurchaseFlight()
+   {
+     try{
+        $id_room=$_POST['id'];
+        $id_compra = $_POST['compraId'];
+        $precio = $_POST['precio'];
+        PurchaseRepository::getInstance()->deletePurchaseFlight($id_room,$id_compra,$precio);
+        $valor=new stdClass();
+        $valor->data='eliminado';
+        $info[]=$valor;
+        echo (json_encode($info));
+     }
+     catch  (PDOException $e){
+       $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
+       $view = new Error_display();
+       $view->show($error);
+     }
    }
 
 }

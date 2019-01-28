@@ -89,8 +89,10 @@ class CarController {
         if(!empty($ciudad) && !empty($concesionaria) && !empty($modelo) && !empty($precio) && !empty($capacidad) && !empty($patente) && !empty($gama) && !empty($autonomia)) {
                 $data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
                 CarRepository::getInstance()->carAdd($data);
-                $view = new Home();
-                $view->show();
+                $valor=new stdClass();
+                $valor->msj='Agregado';
+                $info[]=$valor;
+                echo (json_encode($info));
         }
         else{
             $view = new Home();

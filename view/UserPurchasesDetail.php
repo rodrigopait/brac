@@ -2,15 +2,17 @@
 
 class UserPurchasesDetail extends TwigView {
     
-    public function show($compras, $rol, $comprasDetalle) {
+    public function show($compras, $rol, $comprasDetalle, $canceladas, $config) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";
 		$loader = new Twig_Loader_Filesystem($templateDir);
-		$twig = new Twig_Environment($loader);
+		$twig = new Twig_Environment($loader, ['debug' => true]);
+		$twig->addExtension(new Twig_Extension_Debug());
+		$twig->getExtension('Twig_Extension_Core')->setNumberFormat(0, ',', '.');
     	$template = $twig->loadTemplate("userPurchasesDetail.html.twig");
     	
-    	$template->display(array('rol' => $rol, 'vuelos' => $comprasDetalle[0], 'habitaciones' => $comprasDetalle[1], 'autos' => $comprasDetalle[2], 'compras' => $compras)); 
+    	$template->display(array('rol' => $rol, 'carrito' => $comprasDetalle,'canceladas'=>$canceladas, 'compras' => $compras, 'config'=>$config)); 
                 
     }
     

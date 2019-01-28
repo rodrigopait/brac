@@ -41,7 +41,7 @@
                             <tr class="row">
                               <th class="col-md-3"><h3  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('d/m/Y')}}</h3></th>
                               <td class="col-md-2"><h3  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h3></td>
-                              <td class="col-md-3"><h6 style="font-family: 'Anton', sans-serif;  margin-left:15%;">_ Duración _ </h6><h5 style="font-family: 'Coiny', cursive; margin-left:15%;">  {{flight.duracion}}  </h5></td>
+                              <td class="col-md-3"><h6 style="font-family: 'Anton', sans-serif;">_ Duración _ </h6><h5 style="font-family: 'Coiny', cursive;">  {{flight.duracion}}  </h5></td>
                               <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;text-align:left">{{flight.fechaLlegada|date('H:i')}}</h3></td>
                               
                               <td class="col-md-2">
@@ -69,9 +69,9 @@
         </div>
         <br>
         <br>
-        <div class="panel panel-primary">
-         <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos Con Escala</h5></div>
         {% if flights.escalas %}
+          <div class="panel panel-primary">
+           <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos Con Escala</h5></div>
           <div class="panel-body">
             {% for flight in flights.escalas%}
                 <div class="panel panel-info">
@@ -85,7 +85,7 @@
                                 <th class="col-md-3"><h5 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-plane"></span>{{escala.aerolinea}}</h5></th>
                                 <th class="col-md-2"><h5  style="font-family: 'Anton', sans-serif;color:white;width=120%">{{escala.ciudadOrigen|capitalize}}</h5></th>
                                 <th class="col-md-3"><h5 style="font-family: 'Anton', sans-serif;color:white;"></h5></th>
-                                <th class="col-md-2 text-right"><h5  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadDestino|capitalize}}</h5></th>
+                                <th class="col-md-2"><h5  style="font-family: 'Anton', sans-serif;color:white">{{escala.ciudadDestino|capitalize}}</h5></th>
                                 <th class="col-md-2"></th>
                               </tr>
                             </thead>
@@ -94,8 +94,8 @@
                                 <div>
                                   <th class="col-md-3"><h3 style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('d/m/Y')}}</h3></th>
                                   <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;">{{escala.fechaSalida|date('H:i')}}</h3></td>
-                                  <td class="col-md-3 text-center"><h6 style="font-family: 'Anton', sans-serif; ">_ Duración _ </h6><h5 style="font-family: 'Coiny', cursive;">  {{escala.duracion}}  </h5></td>
-                                  <td class="col-md-2 text-right"><h3 style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h3></td>
+                                  <td class="col-md-3"><h6 style="font-family: 'Anton', sans-serif; ">_ Duración _ </h6><h5 style="font-family: 'Coiny', cursive;">  {{escala.duracion}}  </h5></td>
+                                  <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;">{{escala.fechaLlegada|date('H:i')}}</h3></td>
                                   <td class="col-md-2"></td>
                                 </div>
                               </tr>
@@ -121,8 +121,8 @@
                 </div>
             {% endfor %}
           </div>
+          </div>
         {% endif %}
-      </div>
   </div>
         {% if flights.directos is empty and flights.escalas is empty %}
             <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>

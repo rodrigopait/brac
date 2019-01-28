@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block main %}
 <div class="container" style="margin: auto">
+    <div id="alerta-msj" class="alert alert-warning alert-dismissible" role="alert" hidden>
+      <button id="boton-reset" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Agregado!</strong> El auto se dio de alta correctamente.
+    </div>
     <h1 class="col-lg-12 well">Alta de Auto</h1>
     <div class="col-lg-12 well">
         <div class="row">
-            <form name="form" method="post" action="index.php?controller=Car&method=carAdd" enctype="multipart/form-data">
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-6 form-group">
@@ -94,12 +98,14 @@
                         </div>                          
                     </div>
                     <div align="center">
-                        <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                        <button id="button-validacion" class="btn btn-success navbar-btn">Agregar</button>
                         <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/auto/carValidation.js"></script>
 {% endblock %}

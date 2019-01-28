@@ -113,16 +113,23 @@ class FlightController {
         $primera = $_POST['primera'];
         $hora = $_POST['hora'];
         $duracion = $_POST['duracion'];
-        $escalas = $_POST['escalas'];
 
         if(!empty($ciudadOrigen) && !empty($ciudadDestino) && !empty($aerolinea) && !empty($fechaPartida) && !empty($precio) && !empty($economica) && !empty($ejecutiva) && !empty($primera) && !empty($hora) && !empty($duracion)) {
                 /*$data=array($ciudad,$precio,$gama, $modelo,$capacidad,$patente, $autonomia,$concesionaria);
                 CarRepository::getInstance()->carAdd($data);
                 $view = new Home();
                 $view->show();*/
+
+                $origen= CityRepository::getInstance()->cityName($ciudadOrigen);
+                $destino= CityRepository::getInstance()->cityName($ciudadDestino);
                 $fechaSalida= $fechaPartida.' '.$hora;
-                $fechaLLegada =date('Y-m-d H:i:s', strtotime($fechaSalida.' + '.$duracion.' hours'));
-                $data=array($fechaSalida,$fechaLLegada,$ciudadOrigen,$ciudadDestino,$precio,$economica,$ejecutiva,$primera,$aerolinea);
+
+                $tiempo=explode(':',$duracion);
+                $hora=$tiempo[0];
+                $minutos=$tiempo[1];
+                var_dump($fechaSalida);
+                $fechaLLegada =date('Y-m-d H:i', strtotime($fechaSalida.' + '.$hora.' hours '.$minutos.' minutes'));
+                $data=array($fechaSalida,$fechaLLegada,$origen,$destino,$precio,$economica,$ejecutiva,$primera,$aerolinea);
                 FlightRepository::getInstance()->flightAdd($data);
                 $view = new Home();
                 $view->show();

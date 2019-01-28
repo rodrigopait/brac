@@ -89,16 +89,20 @@ class RoomController {
     }
 
     public function roomAdd(){
-        $ciudad= $_POST['ciudad'];
-        $pais= $_POST['pais'];
         $precio= $_POST['precio'];
         $capacidad = $_POST['capacidad'];
         $hotel = $_POST['hotel'];
-        if (!empty($precio) && !empty($ciudad) && !empty($pais) && !empty($capacidad) && !empty($hotel)){
+        if (!empty($precio) && !empty($capacidad) && !empty($hotel)){
             $data=array($capacidad,$precio,$hotel);
             RoomRepository::getInstance()->roomAdd($data);
-            RoomController::getInstance()->roomsListAll();
+  /*          RoomController::getInstance()->roomsListAll();*/
+
+            $valor=new stdClass();
+            $valor->msj='Agregado';
+            $info[]=$valor;
+            echo (json_encode($info));
         }else{
+            var_dump('entro aca');
             $message = 'No se pudo agregar la habitacion';
             RoomController::getInstance()->roomCreate($message);
         }

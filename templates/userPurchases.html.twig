@@ -1,23 +1,55 @@
 {% extends 'base.html.twig' %}
 {% block main %}
-    <div class="container" style="max-width: 55%;">
-        <h1 class="well">Compras de {{ usuario }}</h1>
-        {% if compras %}
-        <div class="panel panel-default">
-            <table class="table">
-                <tr>
-                    <td align="center"><strong>Fecha</strong></td>
-                    <td align="center"><strong>Total</strong></td>
-                    <td align="center"></td>
-                </tr>
-                {% for compra in compras %}
-                <tr>
-                    <td align="center">{{ compra.getFecha }}</td>
-                    <td align="center">${{ compra.getTotal }}</td>
-                    <td align="center"><a style="text-decoration: none;" href="./?action=userPurchasesDetail&compraId={{compra.getId}}">Ver detalle <i class="glyphicon glyphicon-eye-open"></i></a></td>
-                </tr>
-                {% endfor %}
-            </table>
+    <div class="container" style="max-width: 70%;">
+        {% if vigentes or cerradas %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 style="font-family: 'Alfa Slab One', cursive;">Mis Compras</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Activas</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cerradas</a></li>
+                </ul>
+                <div class="tab-content">
+                   <div role="tabpanel" class="tab-pane active" id="home">
+                       <table class="table" style="background-color:white">
+                           <tr class="bg-primary">
+                               <td><h4 align="center" style="font-family: 'Anton', sans-serif;"><strong>Fecha</strong></h4></td>
+                               <td align="center">
+                                   <h4 align="center" style="font-family: 'Anton', sans-serif;"><strong>Total</strong></h4>
+                               </td>
+                               <td align="center"></td>
+                           </tr>
+                           {% for compra in vigentes %}
+                           <tr class="bg-warning">
+                               <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">{{ compra.getFecha|date('d/m/Y') }}</h4></td>
+                               <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">$ {{ compra.getTotal|number_format }}</h4></td>
+                               <td align="center" style="padding-top:-1%"><a href="index.php?controller=User&method=userPurchasesDetail&id={{compra.getId}}" id="detalleCompra" style="text-decoration: none;" title="detalles"><h2><i class="glyphicon glyphicon-th-list"></i></h2></a></td>
+                           </tr>
+                           {% endfor %}
+                       </table>
+                   </div>
+                   <div role="tabpanel" class="tab-pane" id="profile">
+                       <table class="table" style="background-color:white">
+                           <tr class="bg-primary">
+                               <td><h4 align="center" style="font-family: 'Anton', sans-serif;"><strong>Fecha</strong></h4></td>
+                               <td align="center">
+                                   <h4 align="center" style="font-family: 'Anton', sans-serif;"><strong>Total</strong></h4>
+                               </td>
+                               <td align="center"></td>
+                           </tr>
+                           {% for compra in cerradas %}
+                           <tr class="bg-warning">
+                               <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">{{ compra.getFecha|date('d/m/Y') }}</h4></td>
+                               <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">$ {{ compra.getTotal|number_format }}</h4></td>
+                               <td align="center" style="padding-top:-1%"><a href="index.php?controller=User&method=userPurchasesDetail&id={{compra.getId}}" id="detalleCompra" style="text-decoration: none;" title="detalles"><h2><i class="glyphicon glyphicon-th-list"></i></h2></a></td>
+                           </tr>
+                           {% endfor %}
+                       </table>
+                   </div>
+                </div>
+            </div>
         </div>
         {% else %}
         <div class="alert alert-warning" role="alert"><strong>Oops!</strong> Aún no has realizado compras en el sistema.</div>
@@ -26,4 +58,9 @@
             <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
         </div>  
     </div>
+
+   
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/compra/compra.js"></script>
 {% endblock %}

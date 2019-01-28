@@ -254,7 +254,7 @@ function eliminarAutoCarrito(element_id, id) {
 			    		if (
 			    			(data[0].carrito.vuelos.escalas).length < 1 && 
 			    			(data[0].carrito.vuelos.directos).length < 1 &&
-			    			(data[0].carrito.rooms).length <1 
+			    			(data[0].carrito.rooms).length < 1 
 			    		) {
 			    			$('#compra').remove();
 			    		}
@@ -296,8 +296,9 @@ function comprar(){
 		    		    url:  'index.php?controller=Cart&method=cartPurchaseCheck',
 		    		    type:  'post',
 		    		    success:  function (response) {
-		    		    	var data = JSON.parse(response);
-		    		    	if (data[0].data == 'Comprado') {
+		    		    	console.log(response);
+		    		    	var valor = JSON.parse(response);
+		    		    	if (valor[0].data == 'Comprado') {
 		    		    		location.href ="index.php?controller=User&method=userPurchases"
 		    		    	}
 		    		    }

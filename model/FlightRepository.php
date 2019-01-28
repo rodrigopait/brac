@@ -83,7 +83,8 @@ class FlightRepository extends PDORepository {
                             ciudad_destino = ? 
                             AND fecha_salida BETWEEN ?  AND ? 
                             AND ciudad_origen = ? 
-                            AND ".$clase." >= ?";
+                            AND ".$clase." >= ?
+                      ORDER BY vuelo.fecha_salida";
 
                   
         $query=$this->queryList($sqlDirectos,$data);
@@ -154,6 +155,7 @@ class FlightRepository extends PDORepository {
             AND ciudad_origen != ?
             AND ".$clase." >= ?";
 
+
         $data1=array($origen,$fecha_desde,$fecha_hasta,$destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros);
 
         
@@ -185,7 +187,7 @@ class FlightRepository extends PDORepository {
             if (!empty($aux)) {
                 foreach ($aux as $vuelo) {
                     $escala=array();
-                    if ($vuelo->ciudadDestino == $flight->ciudadOrigen && $vuelo->aerolinea == $flight->aerolinea) {
+                    if ($vuelo->ciudadDestino == $flight->ciudadOrigen && $vuelo->aerolinea == $flight->aerolinea && $vuelo->fechaLlegada < $flight->fechaSalida) {
                         $escala['vuelos'][]=$vuelo;
                         $escala['vuelos'][]=$flight;
                         $escala['precio']=$vuelo->precio+$flight->precio;

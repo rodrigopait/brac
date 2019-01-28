@@ -18,14 +18,14 @@ class ConcessionaireRepository extends PDORepository {
     }
 
     public function concessionaireAdd($nombre,$ciudad){
-        $query = $this->queryList("INSERT INTO concesionaria (nombre,ciudad_id,reputacion_id) VALUES (?,?,?)", array($nombre,$ciudad,0));
+        $query = $this->queryList("INSERT INTO concesionaria (nombre,ciudad_id,reputacion) VALUES (?,?,?)", array($nombre,$ciudad,0));
     }
 
     public function listAll() {
 
         $query = $this->queryList("SELECT * FROM concesionaria", array());
         foreach ($query[0] as $row) {
-            $concessionaire = new Concessionaire( $row['id'], $row['nombre'], $row['ciudad_id'],$row['reputacion_id']);
+            $concessionaire = new Concessionaire( $row['id'], $row['nombre'], $row['ciudad_id'],$row['reputacion']);
             $concessionaires[]=$concessionaire;
         }
         return $concessionaires;

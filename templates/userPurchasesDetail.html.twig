@@ -2,128 +2,306 @@
 {% block main %}
     <div class="container">
         <h1 class="well">Detalle de la compra</h1>
-        <div class="panel panel-default">
-            <table class="table">
-                {% if vuelos != null %}
-                <tr>
-                    <td align="center"><strong>Vuelos</strong></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                </tr>
-                <tr>
-                    <td align="center"><strong>Origen</strong></td>
-                    <td align="center"><strong>Destino</strong></td>
-                    <td align="center"><strong>Fecha Salida</strong></td>
-                    <td align="center"><strong>Fecha Llegada</strong></td>
-                    <td align="center"></td>
-                    <td align="center"><strong>Precio</strong></td>
-                </tr>
-                {% for flight in vuelos %}
-                <tr>
-                    <td align="center">{{ flight.getCiudadOrigen }}, {{ flight.getPaisOrigen }}</td>
-                    <td align="center">{{ flight.getCiudadDestino }}, {{ flight.getPaisDestino }}</td>
-                    <td align="center">{{ flight.getFechaSalida }}</td>
-                    <td align="center">{{ flight.getFechaLlegada }}</td>
-                    <td align="center"></td>
-                    <td align="center">${{ flight.getPrecio }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                </tr>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active bg-success"><a href="#activos" aria-controls="activos" role="tab" data-toggle="tab"><h5 style="font-family: 'Anton', sans-serif;">Vigentes</h5></a></li>
+            <li role="presentation" class="bg-danger"><a href="#cancelados" aria-controls="cancelados" role="tab" data-toggle="tab"><h5 style="font-family: 'Anton', sans-serif;">Cancelados</h5></a></li>
+        </ul>
+
+        <div class="tab-content">
+           <div role="tabpanel" class="tab-pane active" id="activos">
+                
+                {% if carrito['vuelos']['directos'] is not empty or carrito['vuelos']['escalas'] is not empty or  carrito['rooms'] is not empty or carrito['cars'] is not empty %}
+
+                    {% if carrito['vuelos']['directos'] is not empty or carrito['vuelos']['escalas'] is not empty %}
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos</h5>
+                            </div>
+                            <div class="panel-body">
+                            {% if carrito['vuelos']['directos'] %}
+                                <table class="table" style="background-color:white">
+                                    <thead>
+                                        <tr style='background-color:#9B9999'>
+                                            <th align="left" ><h6><strong>Origen</strong></h6></th>
+                                            <th align="left" ><h6><strong>Destino</strong></h6></th>
+                                            <th align="left" ><h6><strong>Hora Salida</strong></h6></th>
+                                            <th align="left"><h6><strong>Hora Llegada</strong></h6></th></th>
+                                            <th align="left"><h6><strong>Precio</strong></h6></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    {% for flight in carrito['vuelos']['directos']  %}
+                                    <tbody>
+                                        <tr id="tableFlight{{flight.id}}" class="bg-success">
+                                            <td align="left">{{ flight.origen }}</td>
+                                            <td align="left">{{ flight.destino }}</td>
+                                            <td align="left">{{ flight.fechaSalida }}</td>
+                                            <td align="left">{{ flight.fechaLlegada }}</td>
+                                            <td align="left">${{ flight.precioCompraVuelo }}</td>
+                                            <th><a style="text-decoration: none;" onclick="removeFlight({{flight.vueloCompraVuelo}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                            {% if carrito['vuelos']['escalas'] is not empty %}
+                                <table class="table" style="background-color:white">
+                                    {% for flight in carrito['vuelos']['escalas']  %}
+                                        <thead>
+                                            <tr style='background-color:#9B9999'>
+                                                <th align="left" ><h6><strong>Origen</strong></h6></th>
+                                                <th align="left" ><h6><strong>Destino</strong></h6></th>
+                                                <th align="left" ><h6><strong>Fecha Salida</strong></h6></th>
+                                                <th align="left"><h6><strong>Fecha Llegada</strong></h6></th>
+                                            </tr>
+                                        </thead>
+                                        {% for escala in flight %}
+                                            <tbody>
+                                                <tr id="tableFlight{{flight.id}}">
+                                                    <td align="left">{{ escala.origen|capitalize}}</td>
+                                                    <td align="left">{{ escala.destino|capitalize}}</td>
+                                                    <td align="left">{{ escala.fechaSalida|date('d/m/Y H:i') }}</td>
+                                                    <td align="left" >{{ escala.fechaLlegada|date('Y/m/d H:i')}}</td>
+                                                </tr>
+                                                </tbody>
+                                        {% endfor %}
+                                            <tr class="bg.warning">                                     <tr id="tableFlight{{flight.id}}">
+                                                <td align="left"></td>
+                                                <td align="left"></td>
+                                                <td align="left"></td>
+                                                <td align="right">precio{{ flight[0].precioCompraVuelo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left"></td>
+                                                <td align="right"></td>
+                                                <td align="center">
+                                                    <button onclick="removeFlight('{{flight['0'].vueloCompraVuelo}}','{{compras['0'].getId}}','{{flight['0'].precioCompraVuelo}}');" class="btn btn-danger">
+                                                    Cancelar Vuelo</button>
+                                                <td align="left"></td>
+                                            </tr>
+                                            </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                {% if carrito['rooms'] is not empty %}
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Habitaciones</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" style="background-color:white">
+                            <thead>
+                                <tr style='background-color:#9B9999'>
+                                    <th align="left" ><h6><strong>Ubicacion</strong></h6></th>
+                                    <th align="left" ><h6><strong>Fecha Inicio</strong></h6></th>
+                                    <th align="left" ><h6><strong>Fecha Fin</strong></h6></th>
+                                    <th align="left"><h6><strong>Capacidad</strong></h6></th></th>
+                                    <th align="left"><h6><strong>Precio</strong></h6></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {% for habitacion in carrito['rooms'] %}
+                            <tr  id="tableRoom{{habitacion.id}}">
+                                <td align="left">{{ habitacion.ciudad }}, {{ habitacion.pais }}</td>
+                                <td align="left">{{ habitacion.desde }}</td>
+                                <td align="left">{{ habitacion.hasta }}</td>
+                                <td align="left">{{habitacion.capacidad}}</td>
+                                <td align="left">${{ habitacion.precio }}</td>
+                                <th><a  style="text-decoration: none;" 
+                                    onclick="removeRoom({{habitacion.id}},{{compras['0'].getId}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
                 {% endif %}
-                {% if habitaciones != null %}
-                <tr>
-                    <td align="center"><strong>Habitaciones</strong></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                </tr>
-                <tr>
-                    <td align="center"><strong>Ubicacion</strong></td>
-                    <td align="center"><strong>Fecha Inicio</strong></td>
-                    <td align="center"><strong>Fecha Fin</strong></td>
-                    <td align="center"><strong>Estrellas</strong></td>
-                    <td align="center"><strong>Capacidad</strong></td>
-                    <td align="center"><strong>Precio</strong></td>
-                </tr>
-                {% for habitacion in habitaciones %}
-                <tr>
-                    <td align="center">{{ habitacion.getCiudadDestino }}, {{ habitacion.getPaisDestino }}</td>
-                    <td align="center">{{ habitacion.getFechaDesde }}</td>
-                    <td align="center">{{ habitacion.getFechaHasta }}</td>
-                    <td align="center">{{ habitacion.getEstrellas }}</td>
-                    <td align="center">{{ habitacion.getCapacidad }}</td>
-                    <td align="center">${{ habitacion.getPrecio }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                </tr>
+
+                {% if carrito['cars'] is not empty %}
+                    <div class="panel panel-success">
+                    <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Autos</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" style="background-color:white">
+                        <thead>
+                            <tr style='background-color:#9B9999'>
+                                <th align="left" ><h6><strong>Ubicacion</strong></h6></th>
+                                <th align="left" ><h6><strong>Fecha Inicio</strong></h6></th>
+                                <th align="left" ><h6><strong>Fecha Fin</strong></h6></th>
+                                <th align="left"><h6><strong>Modelo</strong></h6></th></th>
+                                <th align="left"><h6><strong>Capacidad</strong></h6></th>
+                                <th align="left"><h6><strong>Precio</strong></h6></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        {% for car in carrito['cars'] %}
+                        <tr  id="tableCar{{car.id}}">
+                            <td align="left">{{ car.ciudad }}, {{ car.pais }}</td>
+                            <td align="left">{{ car.desde }}</td>
+                            <td align="left">{{ car.hasta }}</td>
+                            <td align="left">{{car.marca}},{{ car.modelo }}</td>
+                            <td align="left">{{ car.capacidad }}</td>
+                            <td align="left">${{ car.precio }}</td>
+                            <th><a style="text-decoration: none;" onclick="removeCar({{car.id}},{{compras['0'].getId}},{{car.precio}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                    </div>
                 {% endif %}
-                {% if autos != null %}
-                <tr>
-                    <td align="center"><strong>Autos</strong></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                </tr>
-                <tr>
-                    <td align="center"><strong>Ubicacion</strong></td>
-                    <td align="center"><strong>Fecha Inicio</strong></td>
-                    <td align="center"><strong>Fecha Fin</strong></td>
-                    <td align="center"><strong>Modelo</strong></td>
-                    <td align="center"><strong>Capacidad</strong></td>
-                    <td align="center"><strong>Precio</strong></td>
-                </tr>
-                {% for car in autos %}
-                <tr>
-                    <td align="center">{{ car.getCiudadDestino }}, {{ car.getPaisDestino }}</td>
-                    <td align="center">{{ car.getFechaDesde }}</td>
-                    <td align="center">{{ car.getFechaHasta }}</td>
-                    <td align="center">{{ car.getModelo }}</td>
-                    <td align="center">{{ car.getCapacidad }}</td>
-                    <td align="center">${{ car.getPrecio }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                    <td align="center" style="background-color: #f5f5f5;"></td>
-                </tr>
+                {% else %}
+                    <br>
+                    <br>
+                    <div class="alert alert-warning" role="alert"><strong>Oops!  No posee servicios activos para esta compra</strong></div>
                 {% endif %}
-                <tr>
-                    <td align="center"><strong>Total</strong></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"><strong>${{ compras[0].getTotal }}</strong></td>
-                </tr>
-            </table>
+           </div>
+
+           <div role="tabpanel" class="tab-pane" id="cancelados">
+                {% if canceladas['vuelos']['directos'] is not empty or canceladas['vuelos']['escalas'] is not empty or  canceladas['rooms'] is not empty or canceladas['cars'] is not empty %}
+
+                        {% if canceladas['vuelos']['directos'] is not empty %}
+                            <div class="panel panel-success">
+                            <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos</h5>
+                            </div>
+                            <div class="panel-body">
+                            <table class="table" style="background-color:white">
+                                <thead>
+                                    <tr style='background-color:#9B9999'>
+                                        <th align="left" ><h6><strong>Origen</strong></h6></th>
+                                        <th align="left" ><h6><strong>Destino</strong></h6></th>
+                                        <th align="left" ><h6><strong>Hora Salida</strong></h6></th>
+                                        <th align="left"><h6><strong>Hora Llegada</strong></h6></th></th>
+                                        <th align="left"><h6><strong>Precio</strong></h6></th>
+                                    </tr>
+                                </thead>
+                                {% for flight in canceladas['vuelos']['directos']  %}
+                                <tbody>
+                                <tr id="tableFlight{{flight.id}}">
+                                    <td align="left">{{ flight.origen }}</td>
+                                    <td align="left">{{ flight.destino }}</td>
+                                    <td align="left">{{ flight.fechaSalida }}</td>
+                                    <td align="left">{{ flight.fechaLlegada }}</td>
+                                    <td align="left">${{ flight.precioCompraVuelo }}</td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+
+                        {% endif %}
+                        {% if canceladas['vuelos']['escalas'] is not empty %}
+                            <table class="table" style="background-color:white">
+                                {% for flight in canceladas['vuelos']['escalas']  %}
+                                    <thead>
+                                        <tr style='background-color:#9B9999'>
+                                            <th align="left" ><h6><strong>Origen</strong></h6></th>
+                                            <th align="left" ><h6><strong>Destino</strong></h6></th>
+                                            <th align="left" ><h6><strong>Fecha Salida</strong></h6></th>
+                                            <th align="left"><h6><strong>Fecha Llegada</strong></h6></th>
+                                        </tr>
+                                    </thead>
+                                    {% for escala in flight %}
+                                        <tbody>
+                                            <tr id="tableFlight{{flight.id}}">
+                                                <td align="left">{{ escala.origen|capitalize}}</td>
+                                                <td align="left">{{ escala.destino|capitalize}}</td>
+                                                <td align="left">{{ escala.fechaSalida|date('d/m/Y H:i') }}</td>
+                                                <td align="left" >{{ escala.fechaLlegada|date('Y/m/d H:i')}}</td>
+                                            </tr>
+                                            </tbody>
+                                    {% endfor %}
+                                        <tr class="bg.warning">                                     <tr id="tableFlight{{flight.id}}">
+                                            <td align="left"></td>
+                                            <td align="left"></td>
+                                            <td align="left"></td>
+                                            <td align="right">precio{{ flight[0].precioCompraVuelo }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left"></td>
+                                            <td align="right"></td>
+                                            <td align="center">
+                                                <button onclick="removeFlight('{{flight['0'].vueloCompraVuelo}}','{{compras['0'].getId}}','{{flight['0'].precioCompraVuelo}}');" class="btn btn-danger">
+                                                Cancelar Vuelo</button>
+                                            <td align="left"></td>
+                                        </tr>
+                                        </tr>
+                                {% endfor %}
+                            </table>
+                        {% endif %}
+
+                {% if canceladas['rooms'] is not empty %}
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Habitaciones</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" style="background-color:white">
+                            <thead>
+                                <tr style='background-color:#9B9999'>
+                                    <th align="left" ><h6><strong>Ubicacion</strong></h6></th>
+                                    <th align="left" ><h6><strong>Fecha Inicio</strong></h6></th>
+                                    <th align="left" ><h6><strong>Fecha Fin</strong></h6></th>
+                                    <th align="left"><h6><strong>Capacidad</strong></h6></th></th>
+                                    <th align="left"><h6><strong>Precio</strong></h6></th>
+                                </tr>
+                            </thead>
+                            {% for habitacion in canceladas['rooms'] %}
+                            <tr  id="tableRoom{{habitacion.id}}">
+                                <td align="left">{{ habitacion.ciudad }}, {{ habitacion.pais }}</td>
+                                <td align="left">{{ habitacion.desde }}</td>
+                                <td align="left">{{ habitacion.hasta }}</td>
+                                <td align="left">{{habitacion.capacidad}}</td>
+                                <td align="left">${{ habitacion.precio }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if canceladas['cars'] is not empty %}
+                    <div class="panel panel-success">
+                    <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Autos</h5>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table" style="background-color:white">
+                        <thead>
+                            <tr style='background-color:#9B9999'>
+                                <th align="left" ><h6><strong>Ubicacion</strong></h6></th>
+                                <th align="left" ><h6><strong>Fecha Inicio</strong></h6></th>
+                                <th align="left" ><h6><strong>Fecha Fin</strong></h6></th>
+                                <th align="left"><h6><strong>Modelo</strong></h6></th></th>
+                                <th align="left"><h6><strong>Capacidad</strong></h6></th>
+                                <th align="left"><h6><strong>Precio</strong></h6></th>
+                            </tr>
+                        </thead>
+                        {% for car in canceladas['cars'] %}
+                        <tr  id="tableCar{{car.id}}">
+                            <td align="left">{{ car.ciudad }}, {{ car.pais }}</td>
+                            <td align="left">{{ car.desde }}</td>
+                            <td align="left">{{ car.hasta }}</td>
+                            <td align="left">{{car.marca}},{{ car.modelo }}</td>
+                            <td align="left">{{ car.capacidad }}</td>
+                            <td align="left">${{ car.precio }}</td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
+                    </div>
+                {% endif %}
+                <div class="alert alert-danger" role="alert"><strong>Por cada cancelacion se le devolverá el {{config.getPorcentajeDevolucion}}% del precio del servicio </strong></div>
+                {% else %}
+                    <br>
+                    <br>
+                    <div class="alert alert-warning" role="alert"><strong>Oops!  No posee servicios activos para esta compra</strong></div>
+                {% endif %}
+           </div>
+        </div>
         </div>
         <div align="center">
             <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>
         </div>  
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/compra/compra.js"></script>
 {% endblock %}

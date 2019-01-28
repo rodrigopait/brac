@@ -61,8 +61,6 @@ class CartController {
                ) 
             {
                 PurchaseRepository::getInstance()->purchaseAdd($usuarioId);
-
-                
                 $_SESSION['carrito']['vuelos']['directos'] = [];
                 $_SESSION['carrito']['directos']['datos'] = [];
                 $_SESSION['carrito']['vuelos']['escalas'] = [];

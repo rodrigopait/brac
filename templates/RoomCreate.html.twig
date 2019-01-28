@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block javascripts %}
-    <script src="assets/js/roomValidation.js"></script>
-{% endblock %}
 {% block main %}
     <div class="container" style="margin: auto">
         {% if message %}
             <div class="alert alert-danger" role="alert">{{message}}</div>
         {% endif %}
+        <div id="alerta-msj" class="alert alert-warning alert-dismissible" role="alert" hidden>
+          <button id="boton-reset" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Agregado!</strong> La habitación se dio de alta correctamente.
+        </div>
         <h1 class="col-lg-12 well">Alta de Habitación</h1>
         <div class="col-lg-12 well">
             <div class="row">
-                <form name="form" method="post" enctype="multipart/form-data" id="roomCreateValidation">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">
@@ -43,12 +43,14 @@
 
                         </div>           
                         <div align="center">
-                            <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                            <button id="button-validacion"s class="btn btn-success navbar-btn">Agregar</button>
                             <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/roomValidation.js"></script>
 {% endblock %}
