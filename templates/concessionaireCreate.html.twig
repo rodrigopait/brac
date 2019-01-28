@@ -1,40 +1,43 @@
 {% extends 'base.html.twig' %}
 {% block main %}
     <div class="container" style="margin: auto">
+        <div id="alerta-msj" class="alert alert-success alert-dismissible" role="alert" hidden>
+          <button id="boton-reset" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Agregada!</strong> La concesionaria se dio de alta correctamente.
+        </div>
         <h1 class="col-lg-12 well">Alta de Concesionaria</h1>
         <div class="col-lg-12 well">
             <div class="row">
-                <form name="form" method="post" action="index.php?controller=Concessionaire&method=concessionaireAdd" enctype="multipart/form-data">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre" required="true">
+                                <input id="nombre" type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre" required="true">
                             </div>
                              <div class="col-sm-6 form-group">
                                <dl class="form-group">
                                     <dt><label>Localidad</label></dt>
                                     <dd>
                                         <select name="pais" id="pais" type="text" class="form-control" required="true" onchange="ciudades(this.id,'ciudad')">
-                                            <option disabled selected>Elije un Pais</option>
+                                            <option value="a" disabled selected>Elije un Pais</option>
                                             {% for country in countries %}
                                                 <option value={{country.id}}>{{country.nombre}}</option>
                                             {% endfor %}
                                         </select>    
                                     </dd>
                                     <dd style="margin-top: 3%">
-                                        <select name="ciudad" id="ciudad" type="text" class="form-control" required="true">
+                                        <select disabled name="ciudad" id="ciudad" type="text" class="form-control" required="true">
                                         </select>    
                                     </dd>
                                 </dl>
                             </div>
                         </div>           
                         <div align="center">
-                            <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                            <button id="button-concessionaire" class="btn btn-success navbar-btn">Agregar</button>
                             <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>

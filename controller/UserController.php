@@ -41,7 +41,7 @@ class UserController {
            $username= $_GET['username'];
            $compras= PurchaseRepository::getInstance()->userPurchases($userId);
            $view = new UserPurchases();
-           $view->show($compras, $rol, $username);
+           $view->show($rol, $username,$compras);
        }
        catch (PDOException $e){
            $error="Se ha producido un error en la consulta: " . $e->getMessage() . "<br/>";
@@ -53,7 +53,7 @@ class UserController {
 
    public function userPurchasesDetail(){
         try{
-           $compraId = $_GET['id'];
+           $compraId = $_GET['id'];    
            $rol = $_SESSION['rol'];
            $compra= PurchaseRepository::getInstance()->purchaseById($compraId);
            $compraDetalle = PurchaseRepository::getInstance()->userPurchasesDetail($compraId);
@@ -311,8 +311,10 @@ class UserController {
       if (!empty($nombre)  && !empty($apellido)  && !empty($usuario) && !empty($email) && !empty($clave) && !empty($dni)){
           $data=array($usuario,$clave,$nombre,$apellido, $dni,$email,3);
           UserRepository::getInstance()->userComercialAdd($data);
-          $view = new Home();
-          $view->show();
+          $valor=new stdClass();
+          $valor->msj='Agregado';
+          $info[]=$valor;
+          echo (json_encode($info));
       }else{
           $view = new Home ();
           $view->show();

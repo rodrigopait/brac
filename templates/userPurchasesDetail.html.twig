@@ -37,7 +37,7 @@
                                             <td align="left">{{ flight.fechaSalida }}</td>
                                             <td align="left">{{ flight.fechaLlegada }}</td>
                                             <td align="left">${{ flight.precioCompraVuelo }}</td>
-                                            <th><a style="text-decoration: none;" onclick="removeFlight({{flight.vueloCompraVuelo}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                                                <th><button class="btn btn-danger" style="text-decoration: none;" onclick="removeFlight({{flight.vueloCompraVuelo}},'{{compras['0'].getId}}','{{flight.precioCompraVuelo}}')"><span class="glyphicon glyphicon-remove"></span>  Cancelar Vuelo</button></th>
                                         </tr>
                                     </tbody>
                                     {% endfor %}
@@ -64,20 +64,22 @@
                                                 </tr>
                                                 </tbody>
                                         {% endfor %}
-                                            <tr class="bg.warning">                                     <tr id="tableFlight{{flight.id}}">
-                                                <td align="left"></td>
-                                                <td align="left"></td>
-                                                <td align="left"></td>
-                                                <td align="right">precio{{ flight[0].precioCompraVuelo }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td align="left"></td>
-                                                <td align="right"></td>
-                                                <td align="center">
-                                                    <button onclick="removeFlight('{{flight['0'].vueloCompraVuelo}}','{{compras['0'].getId}}','{{flight['0'].precioCompraVuelo}}');" class="btn btn-danger">
-                                                    Cancelar Vuelo</button>
-                                                <td align="left"></td>
-                                            </tr>
+                                            <tr class="bg.warning">
+                                                <tr id="tableFlight{{flight.id}}">
+                                                    <td align="left"></td>
+                                                    <td align="left"></td>
+                                                    <td align="left"></td>
+                                                    <td align="right">precio{{ flight[0].precioCompraVuelo }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left"></td>
+                                                    <td align="right"></td>
+                                                    <td align="center">
+                                                            <button onclick="removeFlight('{{flight['0'].vueloCompraVuelo}}','{{compras['0'].getId}}','{{flight['0'].precioCompraVuelo}}');" class="btn btn-danger">
+                                                            Cancelar Vuelo</button>
+
+                                                    <td align="left"></td>
+                                                </tr>
                                             </tr>
                                     {% endfor %}
                                 </table>
@@ -110,8 +112,9 @@
                                 <td align="left">{{ habitacion.hasta }}</td>
                                 <td align="left">{{habitacion.capacidad}}</td>
                                 <td align="left">${{ habitacion.precio }}</td>
-                                <th><a  style="text-decoration: none;" 
-                                    onclick="removeRoom({{habitacion.id}},{{compras['0'].getId}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                                <th>
+                                    <button class="btn btn-danger" style="text-decoration: none;" onclick="removeRoom('{{habitacion.id}}','{{compras['0'].getId}}','{{habitacion.precio}}')"><span class="glyphicon glyphicon-remove"></span>  Cancelar Habitacion</button>
+                                </th>
                             </tr>
                             {% endfor %}
                         </table>
@@ -144,7 +147,9 @@
                             <td align="left">{{car.marca}},{{ car.modelo }}</td>
                             <td align="left">{{ car.capacidad }}</td>
                             <td align="left">${{ car.precio }}</td>
-                            <th><a style="text-decoration: none;" onclick="removeCar({{car.id}},{{compras['0'].getId}},{{car.precio}})"><span class="glyphicon glyphicon-remove" style="color:red; hight:14%"></span></a></th>
+                            <th>
+                                    <button class="btn btn-danger" style="text-decoration: none;" onclick="removeCar({{car.id}},{{compras['0'].getId}},{{car.precio}})"><span class="glyphicon glyphicon-remove"></span>  Cancelar Auto</button>
+                            </th>
                         </tr>
                         {% endfor %}
                         </table>
@@ -215,15 +220,12 @@
                                             <td align="left"></td>
                                             <td align="left"></td>
                                             <td align="left"></td>
-                                            <td align="right">precio{{ flight[0].precioCompraVuelo }}</td>
+                                            <td align="right">precio ${{ flight[0].precioCompraVuelo }}</td>
                                         </tr>
                                         <tr>
                                             <td align="left"></td>
                                             <td align="right"></td>
-                                            <td align="center">
-                                                <button onclick="removeFlight('{{flight['0'].vueloCompraVuelo}}','{{compras['0'].getId}}','{{flight['0'].precioCompraVuelo}}');" class="btn btn-danger">
-                                                Cancelar Vuelo</button>
-                                            <td align="left"></td>
+                                        </td>
                                         </tr>
                                         </tr>
                                 {% endfor %}
@@ -292,7 +294,7 @@
                 {% else %}
                     <br>
                     <br>
-                    <div class="alert alert-warning" role="alert"><strong>Oops!  No posee servicios activos para esta compra</strong></div>
+                    <div class="alert alert-danger" role="alert"><strong>Oops!  No posee servicios cancelados para esta compra</strong></div>
                 {% endif %}
            </div>
         </div>

@@ -1,55 +1,68 @@
 {% extends 'base.html.twig' %}
 {% block main %}
     <div class="container">
-        <h1 class="well">Listado de Autos</h1>
-        {% if cars %}
-        <div class="panel panel-default">
-            <table class="table">
-                <tr>
-                    <td align="center"><strong>Ubicacion</strong></td>
-                    <td align="center"><strong>Fecha Inicio</strong></td>
-                    <td align="center"><strong>Fecha Fin</strong></td>
-                    <td align="center"><strong>Marca</strong></td>
-                    <td align="center"><strong>Modelo</strong></td>
-                    <td align="center"><strong>Gama</strong></td>
-                    
-                    <td align="center"><strong>Capacidad</strong></td>
-                    <td align="center"><strong>Precio</strong></td>
-                </tr>
-                {% for car in cars %}
-                <tr>
-                    <td align="center">{{ car.getCiudadDestino }}</td>
-                    <td align="center">{{ fechaDesde }}</td>
-                    <td align="center">{{ fechaHasta }}</td>
-                    <td align="center">{{ car.getMarca }}</td>
-                    <td align="center">{{ car.getModelo }}</td>
-                    <td align="center">{{ car.getGama }}</td>
-                    <td align="center">{{ car.getCapacidad }}</td>
-                    <td align="center">${{ car.getPrecio }}</td>
-                    {% if rol == 'cliente' %}
-
-                        <div class="text-right">
-                      {% if cars_carrito is not null %}  
-                          {% if car.id not in cars_carrito %}              
-                                <button id="{{car.id}}" class="btn btn-primary btn-lg {{car.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                          {% else %}
-                                <button id="{{car.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                            {% endif %}
-                    {% else %}
-                          <button id="{{car.id}}" class="btn btn-primary btn-lg {{car.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                        {% endif %}
-
-
-                    </div>
-                {% endif %} 
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-
+        <h3 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-serif;color:white">Listado de Autos</h3>
+        <div class="panel panel-primary">
+           <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Autos</h5></div>
+           <div class="panel-body">
+           {% if cars %}
+              {% for car in cars %}
+                   <div class="panel panel-info">
+                      <div class="panel-heading">
+                        <h3 class="text-left" style="font-family: 'Anton', sans-serif;"><span class="glyphicon glyphicon-bed"></span>  {{ car.getMarca }}-{{ car.getModelo }}</h3></div>
+                         <table class="table table-responsive" style="background-color:white">
+                           <thead>
+                             <tr class="row" style="background-color:#6B9293">
+                               <th class="col-md-3"><h5 style="font-family: 'Coiny', cursive;color:white"> <span class="glyphicon glyphicon-pushpin"></span>Ubicación</h5></th>
+                               <th class="col-md-2"><h5  style="font-family: 'Anton', sans-serif;color:white">Fecha Desde</h5></th>
+                               <th class="col-md-2"><h5  style="font-family: 'Anton', sans-serif;color:white;">Fecha Hasta</h5></th>
+                               <th class="col-md-3"><h5 class="text-center" style="font-family: 'Anton', sans-serif;color:white;">Capacidad</h5></th>
+                               <th class="col-md-2"></th>
+                             </tr>
+                           </thead>
+                           <tbody>
+                             <tr class="row">
+                               <th class="col-md-3"><h3  style="font-family: 'Coiny', cursive;">{{ car.getCiudadDestino }}</h3></th>
+                               <td class="col-md-2"><h3  style="font-family: 'Coiny', cursive;">{{fechaDesde|date('d/m/Y')}}</h3></td>
+                               <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;">{{fechaHasta|date('d/m/Y')}}</h3></td>
+                               <td class="col-md-3"><h3 class="text-center" style="font-family: 'Coiny', cursive;">{{car.getGama}}</span></h3></td>
+                               <td  class="col-md-2">
+                               {% if rol == 'cliente' %}
+                                    <div class="text-right">
+                                        {% if cars_carrito is not null %}  
+                                            {% if car.id not in cars_carrito %}              
+                                                  <button id="{{car.id}}" class="btn btn-primary btn-lg {{car.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                            {% else %}
+                                                  <button id="{{car.id}}" class="btn btn-success btn-lg" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}');">Agregado   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                            {% endif %}
+                                        {% else %}
+                                            <button id="{{car.id}}" class="btn btn-primary btn-lg {{car.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarAutoCarrito('{{car.id}}','{{fechaDesde}}','{{fechaHasta}}');">Agregar   <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                        {% endif %}
+                                    </div>
+                              {% endif %} 
+                                </td>
+                             </tr>
+                           </tbody>
+                         </table>
+                         <div class="alert alert-info" role="alert">
+                           <div class="row">
+                             <div class="col-md-6 text-left" style="padding-top:6%">
+                               <h5 style="margin-right:7%;font-family: 'Anton', sans-serif;">Capacidad:{{car.getCapacidad}} personas</h5>
+                             </div>
+                             <div class="col-md-6 text-right" >
+                                <br>
+                                <br>
+                               <h4 style="margin-right:7%;font-family: 'Anton', sans-serif;">Precio.</h4>
+                               <h2 style="font-family: 'Coiny', cursive">$   {{car.getPrecio}}  </h2>
+                             </div>
+                           </div>
+                         </div>
+                     </div>
+               {% endfor %}
+           </div>
+         </div>
         {% else %}
-        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado autos con los filtros ingresados.
-        </div>
+            <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado habitaciones con los filtros ingresados.</div>
         {% endif %}
         <div align="center">
             <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>

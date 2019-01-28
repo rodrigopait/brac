@@ -1,6 +1,6 @@
 function removeRoom(id,compraId,precio){
-
 	var params= {'id' : id, 'compraId':compraId, 'precio':precio}
+	console.log(params)
 	$.ajax({
 	    data:  params,
 	    url:  'index.php?controller=User&method=deletePurchaseRoom',

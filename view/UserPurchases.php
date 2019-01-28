@@ -2,7 +2,7 @@
 
 class UserPurchases extends TwigView {
     
-    public function show($rol, $username, $vigentes, $cerradas) {
+    public function show($rol, $username, $vigentes, $cerradas=null) {
         
         $templateDir="./templates";
 		$templateDirCompi="./templates-c";

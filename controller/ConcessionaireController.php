@@ -37,8 +37,10 @@ class ConcessionaireController {
 
         if (isset($nombre) && !empty($nombre) && !empty($ciudad)){
             ConcessionaireRepository::getInstance()->concessionaireAdd($nombre,$ciudad,0);
-            $view = new Home();
-            $view->show();
+            $valor=new stdClass();
+            $valor->msj='Agregado';
+            $info[]=$valor;
+            echo (json_encode($info));
         }else{
             $view = new Home ();
             $view->show();

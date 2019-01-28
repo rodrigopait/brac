@@ -78,15 +78,15 @@ class RoomRepository extends PDORepository {
         $query = RoomRepository::getInstance()->queryList($sql, array($estrellas, $ciudadDestino, $paisDestino, $capacidad, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta, $fechaDesde, $fechaHasta));
         foreach ($query[0] as $row) {
             $hotel = new Hotel ($row['hotel_id'],
-                                $row['hotel_nombre'],
-                                $row['hotel_ciudad_id'],
+                                utf8_encode($row['hotel_nombre']),
+                                utf8_encode($row['hotel_ciudad_id']),
                                 $row['hotel_estrellas']);
             $room = new Room ( $row['habitacion_id'], 
                                 $row['capacidad'], 
                                 $row['precio'],
                                 $hotel, 
-                                $row['ciudad'], 
-                                $row['pais']);
+                                utf8_encode($row['ciudad']), 
+                                utf8_encode($row['pais']));
             $rooms[]=$room;
         }
 

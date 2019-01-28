@@ -3,27 +3,10 @@
 
     <div class="container">
           <h3 class="text-center well" style="background-color:#666666; color:white;font-family: 'Anton', sans-serif;color:white">Listado de Vuelos</h3>
-          <div class="row">
-              <div class="col-md-2 text-right">
-                <h4 style="font-family: 'Anton', sans-serif">Filtros:</h4>
-              </div>
-              <div class="col-md-10 text-left" style="padding-left:-15%">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Escalas</button>
-
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Directos</button>
-
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Primera</button>
-                
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Ejecutivo</button>
-
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Eliminar filtros</button>
-              </div>
-          
-        </div>
-       <div class="panel panel-primary">
-          <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos Directos</h5></div>
-          <div class="panel-body">
           {% if flights.directos %}
+            <div class="panel panel-primary">
+            <div class="panel-heading"><h5 style="font-family: 'Anton', sans-serif;">Vuelos Directos</h5></div>
+            <div class="panel-body">
               {% for flight in flights.directos%}
                   <div class="panel panel-info">
                      <div class="panel-heading"><h5 class="text-left" style="font-family: 'Anton', sans-serif;">{{flight.ciudadOrigen|capitalize}}<span class="glyphicon glyphicon-chevron-right"></span>{{flight.ciudadDestino|capitalize}}</h5></div>
@@ -43,10 +26,11 @@
                               <td class="col-md-2"><h3  style="font-family: 'Coiny', cursive;">{{flight.fechaSalida|date('H:i')}}</h3></td>
                               <td class="col-md-3"><h6 style="font-family: 'Anton', sans-serif;">_ Duración _ </h6><h5 style="font-family: 'Coiny', cursive;">  {{flight.duracion}}  </h5></td>
                               <td class="col-md-2"><h3 style="font-family: 'Coiny', cursive;text-align:left">{{flight.fechaLlegada|date('H:i')}}</h3></td>
-                              
-                              <td class="col-md-2">
-                                    <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
-                              </td>
+                              {% if rol == 'cliente' %}
+                                <td class="col-md-2">
+                                      <button id="{{flight.id}}" class="btn btn-primary btn-lg {{flight.id}}" style="font-family: 'Anton', sans-serif;color:white; width=120px" onclick="agregarCarrito('{{flight.id}}');">Agregar al Carrito  <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                </td>
+                              {% endif %}
                             </tr>
                           </tbody>
                         </table>
@@ -64,9 +48,10 @@
                         </div>
                     </div>
               {% endfor %}
+            </div>
+            </div>
           {% endif %}
-          </div>
-        </div>
+
         <br>
         <br>
         {% if flights.escalas %}
@@ -123,10 +108,10 @@
           </div>
           </div>
         {% endif %}
-  </div>
         {% if flights.directos is empty and flights.escalas is empty %}
             <div class="alert alert-warning" role="alert"><strong>Oops!</strong> No se han encontrado vuelos con los filtros ingresados.</div>
         {% endif %}
+  </div>
 {% endblock %}
 {% block javascripts %}
     <script src="assets/js/carrito/carrito.js"></script>

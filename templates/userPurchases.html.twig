@@ -3,13 +3,20 @@
     <div class="container" style="max-width: 70%;">
         {% if vigentes or cerradas %}
         <div class="panel panel-primary">
+          {% if rol == 'cliente' %}
             <div class="panel-heading">
-                <h3 style="font-family: 'Alfa Slab One', cursive;">Mis Compras</h3>
+              <h3 style="font-family: 'Alfa Slab One', cursive;">Mis Compras</h3>
             </div>
+          {% else %}
+            <div class="panel-heading">
+                    <h3 style="font-family: 'Alfa Slab One', cursive;">Compras de {{usuario|capitalize}}</h3>              
+            </div>
+          {% endif %}
+
             <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Activas</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cerradas</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Anteriores</a></li>
                 </ul>
                 <div class="tab-content">
                    <div role="tabpanel" class="tab-pane active" id="home">
@@ -43,7 +50,7 @@
                            <tr class="bg-warning">
                                <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">{{ compra.getFecha|date('d/m/Y') }}</h4></td>
                                <td align="center" style="padding-top:2%"><h4 style="font-family: 'Coiny', cursive;">$ {{ compra.getTotal|number_format }}</h4></td>
-                               <td align="center" style="padding-top:-1%"><a href="index.php?controller=User&method=userPurchasesDetail&id={{compra.getId}}" id="detalleCompra" style="text-decoration: none;" title="detalles"><h2><i class="glyphicon glyphicon-th-list"></i></h2></a></td>
+                               <td align="center" style="padding-top:-1%"><a href="index.php?controller=User&method=userPurchasesDetail&id={{compra.getId}}&valor=1" id="detalleCompra" style="text-decoration: none;" title="detalles"><h2><i class="glyphicon glyphicon-th-list"></i></h2></a></td>
                            </tr>
                            {% endfor %}
                        </table>
@@ -52,7 +59,7 @@
             </div>
         </div>
         {% else %}
-        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> Aún no has realizado compras en el sistema.</div>
+        <div class="alert alert-warning" role="alert"><strong>Oops!</strong> Aún no ha realizado compras en el sistema.</div>
         {% endif %}
         <div align="center">
             <button class="btn btn-primary navbar-btn" onClick="window.location.href='javascript:history.back(-1);'">Volver</button>

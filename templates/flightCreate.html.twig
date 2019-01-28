@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block main %}
 <div class="container" style="margin: auto">
+    <div id="alerta-msj" class="alert alert-warning alert-dismissible" role="alert" hidden>
+      <button id="boton-reset" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Agregado!</strong> El vuelo se dio de alta correctamente.
+    </div>
     <h1 class="col-lg-12 well">Alta de Vuelo</h1>
     <div class="col-lg-12 well">
         <div class="row">
-            <form name="form" method="post" action="index.php?controller=Flight&method=flightAdd" enctype="multipart/form-data">
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-6 form-group">
@@ -68,32 +72,32 @@
 
                         <div class="col-sm-4 form-group">
                             <label>Fecha de partida</label>
-                            <input type="date" class="form-control" name="fechaPartida" required="true">
+                            <input type="date" class="form-control" name="fechaPartida" required="true" id="fechaPartida">
                         </div>
                         <div class="col-sm-4 form-group">
                              <label>Hora</label>
-                              <input type="time" class="form-control" name="hora" min="00:00" max="24:00" placeholder="hora" required="true">
+                              <input type="time" class="form-control" name="hora" min="00:00" max="24:00" placeholder="hora" id="hora" required="true" >
                         </div>
                         <div class="col-sm-4 form-group">
                             <label>Duracion</label>
-                            <input type="text" class="form-control" name="duracion" placeholder="hh:mm" required="true" pattern="^[0-9]{2}:[0-9]{2}$" maxlength="5">
+                            <input type="text" class="form-control" name="duracion" placeholder="hh:mm" required="true" pattern="^[0-9]{2}:[0-9]{2}$" maxlength="5" id="duracion">
                         </div>
                         <div class="col-sm-4 form-group">
                             <label>Capacidad </label>
-                            <input type="number" min="0" class="form-control" name="economica" placeholder="Economica" required="true">
+                            <input type="number" min="0" class="form-control" name="economica" placeholder="Economica" id="economica" required="true">
                         </div>
                         <div class="col-sm-4 form-group" style="margin-top: 0.6vh;">
                             <label> </label>
-                            <input type="number" min="0" class="form-control" name="ejecutiva" placeholder="Ejecutiva" required="true">
+                            <input type="number" min="0" class="form-control" name="ejecutiva" placeholder="Ejecutiva" id="ejecutiva" required="true">
                         </div>
                       
                         <div class="col-sm-4 form-group" style="margin-top: 0.6vh;">
                             <label></label>
-                            <input type="number" min="0" class="form-control" name="primera" placeholder="Primera Clase" required="true">
+                            <input id="primera" type="number" min="0" class="form-control" name="primera" placeholder="Primera Clase" required="true">
                         </div>
                     </div>
                     <div align="center">
-                        <button type="submit" class="btn btn-success navbar-btn">Agregar</button>
+                        <button id="button-validacion" class="btn btn-success navbar-btn">Agregar</button>
                         <button type="reset" class="btn btn-default navbar-btn">Restablecer</button>
                     </div>
                 </div>
@@ -101,4 +105,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="assets/js/flight/flightValidation.js"></script>
 {% endblock %}

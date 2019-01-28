@@ -33,10 +33,11 @@ class AirlineController {
     public function airlineAdd(){
         $nombre = $_POST['nombre'];
         if (isset($nombre) && !empty($nombre)){
-            AirlineRepository::getInstance()->airlineAdd($nombre,0);
-            sleep(2);
-            $view = new Home ();
-            $view->show();
+            AirlineRepository::getInstance()->airlineAdd($nombre,0);         
+            $valor=new stdClass();
+            $valor->msj='Agregado';
+            $info[]=$valor;
+            echo (json_encode($info));
         }else{
             $view = new Home ();
             $view->show();

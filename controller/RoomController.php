@@ -102,7 +102,6 @@ class RoomController {
             $info[]=$valor;
             echo (json_encode($info));
         }else{
-            var_dump('entro aca');
             $message = 'No se pudo agregar la habitacion';
             RoomController::getInstance()->roomCreate($message);
         }

@@ -52,8 +52,8 @@ class FlightController {
 
             $rol = $_SESSION['rol'];
 
-            $ciudadOrigen = $_POST['ciudadOrigen'];
-            $ciudadDestino = $_POST['ciudadDestino'];
+            $ciudadOrigen=$_POST['ciudadOrigen'];
+            $ciudadDestino=$_POST['ciudadDestino'];
             $fechaPartida = new DateTime($_POST['fechaPartida']);
             $fecha = $fechaPartida->format('Y-m-d');
             $clase = $_POST['clase'];
@@ -64,8 +64,8 @@ class FlightController {
                 $fecha_desde=$fecha.' 00:00:00';
                 $fecha_hasta=$fecha.' 23:59:59';
 
-                $origen= CityRepository::getInstance()->cityName($ciudadOrigen);
-                $destino= CityRepository::getInstance()->cityName($ciudadDestino);
+                $origen=  (CityRepository::getInstance()->cityName($ciudadOrigen));
+                $destino= (CityRepository::getInstance()->cityName($ciudadDestino));
 
                 $flights=FlightRepository::getInstance()->flightSearch($destino,$fecha_desde,$fecha_hasta,$origen,$pasajeros,$clase);
                 
@@ -119,7 +119,6 @@ class FlightController {
                 CarRepository::getInstance()->carAdd($data);
                 $view = new Home();
                 $view->show();*/
-
                 $origen= CityRepository::getInstance()->cityName($ciudadOrigen);
                 $destino= CityRepository::getInstance()->cityName($ciudadDestino);
                 $fechaSalida= $fechaPartida.' '.$hora;
@@ -127,12 +126,14 @@ class FlightController {
                 $tiempo=explode(':',$duracion);
                 $hora=$tiempo[0];
                 $minutos=$tiempo[1];
-                var_dump($fechaSalida);
                 $fechaLLegada =date('Y-m-d H:i', strtotime($fechaSalida.' + '.$hora.' hours '.$minutos.' minutes'));
                 $data=array($fechaSalida,$fechaLLegada,$origen,$destino,$precio,$economica,$ejecutiva,$primera,$aerolinea);
                 FlightRepository::getInstance()->flightAdd($data);
-                $view = new Home();
-                $view->show();
+
+                $valor=new stdClass();
+                $valor->msj='Agregado';
+                $info[]=$valor;
+                echo (json_encode($info));
         }
         else{
             $view = new Home();

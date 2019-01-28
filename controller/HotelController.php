@@ -38,8 +38,11 @@ class HotelController {
 
         if (!empty($nombre)  && !empty($ciudad)   && !empty($estrellas) ){
             HotelRepository::getInstance()->hotelAdd($nombre,$ciudad,$estrellas);
-            $view = new Home();
-            $view->show();
+            
+            $valor=new stdClass();
+            $valor->msj='Agregado';
+            $info[]=$valor;
+            echo (json_encode($info));
         }else{
             $view = new Home ();
             $view->show();
