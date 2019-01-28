@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-01-2019 a las 22:33:06
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.1.16
+-- Tiempo de generación: 28-01-2019 a las 07:19:03
+-- Versión del servidor: 10.1.32-MariaDB
+-- Versión de PHP: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -88,7 +88,8 @@ INSERT INTO `auto` (`id`, `ciudad_id`, `precio`, `gama`, `modelo_id`, `capacidad
 (5, 2, 800, 'Media', 26, 5, 'LKJ-6D2', 16, 3),
 (6, 5, 400, 'Baja', 13, 5, 'AG8-SS6', 10, 4),
 (7, 5, 950, 'Media', 14, 5, 'POA-65A', 14, 4),
-(8, 96, 4000, 'Alta', 19, 2, 'AXX-253', 100, 9);
+(8, 96, 4000, 'Alta', 19, 2, 'AXX-253', 100, 9),
+(9, 82, 2100, 'Media', 7, 4, 'bfr-hah', 300, 5);
 
 -- --------------------------------------------------------
 
@@ -101,17 +102,17 @@ CREATE TABLE `auto_alquiler` (
   `desde` date NOT NULL,
   `hasta` date NOT NULL,
   `id_auto` int(11) NOT NULL,
-  `compra_id` int(11) NOT NULL
+  `precio_alquiler` int(11) NOT NULL,
+  `compra_id` int(11) NOT NULL,
+  `cancelado` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `auto_alquiler`
 --
 
-INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `compra_id`) VALUES
-(6, '2017-12-30', '2017-12-31', 4, 35),
-(7, '2017-12-30', '2017-12-31', 3, 36),
-(8, '2017-12-08', '2017-12-09', 4, 39);
+INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `precio_alquiler`, `compra_id`, `cancelado`) VALUES
+(1, '2019-02-10', '2019-02-20', 1, 0, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -250,13 +251,9 @@ CREATE TABLE `compra` (
 --
 
 INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
-(35, '2017-12-10 01:23:42', 11499, 1),
-(36, '2017-12-10 01:35:50', 7055, 1),
-(37, '2017-12-10 01:54:31', 1000, 1),
-(38, '2017-12-10 01:55:46', 500, 1),
-(39, '2017-12-10 01:56:15', 9999, 1),
-(40, '2017-12-10 03:01:34', 1000, 1),
-(47, '2019-01-25 18:26:08', 75000, 13);
+(4, '2019-01-27 12:12:08', 29900, 13),
+(5, '2019-01-25 18:35:05', 180, 13),
+(6, '2019-01-28 02:13:48', 159500, 13);
 
 -- --------------------------------------------------------
 
@@ -309,7 +306,7 @@ CREATE TABLE `configuracion` (
 --
 
 INSERT INTO `configuracion` (`id`, `gap_max`, `descuento_escala`, `precio_puntos`, `precio_peso`, `porcentaje_devolucion`, `intentos_sesion`, `precio_ejecutiva`, `precio_primera`) VALUES
-(1, 5, 20, 150, 200, 15, 6, 250, 500);
+(1, 5, 20, 150, 200, 15, 6, 850, 1700);
 
 -- --------------------------------------------------------
 
@@ -331,7 +328,22 @@ CREATE TABLE `habitacion` (
 INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `hotel_id`) VALUES
 (1, 5, 450, 10),
 (2, 3, 600, 11),
-(3, 3, 450, 10);
+(3, 3, 450, 10),
+(4, 4, 1200, 7),
+(5, 4, 1500, 3),
+(6, 3, 1000, 9),
+(7, 5, 1288, 5),
+(8, 2, 2199, 4),
+(9, 3, 1299, 4),
+(10, 3, 1235, 4),
+(11, 2, 2311, 7),
+(12, 3, 1299, 7),
+(13, 2, 1233, 7),
+(14, 4, 1200, 7),
+(15, 3, 1299, 7),
+(16, 2, 12331, 4),
+(17, 2, 1244, 8),
+(18, 4, 1500, 7);
 
 -- --------------------------------------------------------
 
@@ -344,17 +356,18 @@ CREATE TABLE `habitacion_alquiler` (
   `desde` date NOT NULL,
   `hasta` date NOT NULL,
   `id_habitacion` int(11) NOT NULL,
-  `compra_id` int(11) NOT NULL
+  `precio_alquiler` int(11) NOT NULL,
+  `compra_id` int(11) NOT NULL,
+  `cancelado` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `habitacion_alquiler`
 --
 
-INSERT INTO `habitacion_alquiler` (`id`, `desde`, `hasta`, `id_habitacion`, `compra_id`) VALUES
-(8, '2017-12-16', '2017-12-17', 2, 35),
-(9, '2017-12-30', '2017-12-31', 2, 36),
-(10, '2017-12-13', '2017-12-14', 2, 38);
+INSERT INTO `habitacion_alquiler` (`id`, `desde`, `hasta`, `id_habitacion`, `precio_alquiler`, `compra_id`, `cancelado`) VALUES
+(1, '2018-02-10', '2018-02-12', 2, 0, 4, '1'),
+(2, '2019-01-17', '2019-01-20', 4, 0, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -564,12 +577,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `email`, `rol_id`, `nro_tarjeta`, `pregunta`, `respuesta`, `cant_intentos`, `bloqueado`) VALUES
-(0, 'administrador', 'Admin951.', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 5, 0),
-(1, 'comerciante', 'Comer753.', 'Comerciante', 'cazzulos', '23812814', 'comerciante@comerciante.com', 3, '5486-6233-4877-8965', 2, 'playa', 0, 0),
+(0, 'administrador', 'negro', 'Lorenzo', 'Perez', '', 'juan.perez@gmail.com', 2, '5486-5595-4877-8966', 1, 'verde', 3, 0),
+(1, 'comerciante', 'negro', 'Comerciante', 'cazzulos', '23812815', 'comerciante@comerciante.com', 3, NULL, 2, 'playa', 0, 0),
 (4, 'juanperezzs', 'Clien852.', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, 'rojo', 0, 0),
 (6, 'josesito', 'Clien852.', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 1, '1536-6233-4877-1592', 2, 'campo', 0, 0),
 (8, 'pedrito', 'Clien852.', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 1, '1234-1234-1334-1343', 2, 'ciudad', 0, 0),
-(13, 'alex', 'Clien852.', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 4, 0);
+(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -595,17 +608,21 @@ CREATE TABLE `vuelo` (
 --
 
 INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ciudad_destino`, `precio`, `capacidad_economica`, `capacidad_ejecutiva`, `capacidad_primera`, `aerolinea_id`) VALUES
-(6, '2018-01-10 13:00:00', '2018-01-11 03:00:00', 'buenos aires', 'lisboa', 30000, 100, 20, 10, 1),
-(7, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'buenos aires', 'montevideo', 2000, 50, 7, 0, 3),
-(8, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'montevideo', 'lisboa', 28000, 90, 10, 10, 3),
+(5, '2018-01-10 08:10:00', '2018-01-10 15:15:00', 'buenos aires', 'lisboa', 28000, 178, 97, 29, 1),
+(6, '2018-01-10 13:00:00', '2018-01-11 03:00:00', 'buenos aires', 'lisboa', 30000, 99, 17, 10, 1),
+(7, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'buenos aires', 'montevideo', 2000, 39, 5, 0, 3),
+(8, '2018-01-10 13:00:00', '2018-01-10 15:00:00', 'montevideo', 'lisboa', 22000, 80, 5, 10, 3),
 (10, '2018-01-10 19:00:00', '2018-01-11 07:00:00', 'montevideo', 'lisboa', 2800, 90, 10, 10, 5),
 (11, '2018-01-11 04:00:00', '2018-01-11 07:00:00', 'lisboa', 'madrid', 5800, 50, 10, 20, 1),
 (12, '2018-01-11 08:00:00', '2018-01-11 11:00:00', 'lisboa', 'madrid', 6500, 50, 10, 20, 3),
-(13, '2018-04-15 05:00:00', '2018-04-15 18:00:00', 'buenos aires', 'madrid', 2500, 10, 0, 0, 1),
-(14, '2018-04-15 07:00:00', '2018-04-15 21:00:00', 'buenos aires', 'madrid', 1900, 20, 20, 22, 1),
+(13, '2018-01-10 09:00:00', '2018-01-10 16:00:00', 'buenos aires', 'madrid', 25000, -3, -8, 0, 1),
+(14, '2018-01-10 17:00:00', '2018-01-10 20:00:00', 'madrid', 'lisboa', 1900, 11, 12, 22, 1),
 (15, '2018-04-15 12:00:00', '2018-04-16 06:00:00', 'buenos aires', 'madrid', 22000, 15, 18, 13, 1),
-(16, '2018-01-10 08:00:00', '2018-01-10 12:00:00', 'buenos aires', 'Goias', 10000, 100, 47, 20, 4),
-(17, '2018-01-10 13:00:00', '2018-01-10 23:00:00', 'Goias', 'lisboa', 15000, 230, 100, 50, 4);
+(16, '2018-01-10 17:45:00', '2018-01-10 20:00:00', 'buenos aires', 'Roma', 19890, 287, 97, 80, 4),
+(17, '2018-01-10 21:00:00', '2018-01-11 04:15:00', 'Roma', 'lisboa', 3567, 1231, 108, 23, 4),
+(18, '2018-02-10 22:10:00', '2018-02-11 03:40:00', 'Melbourne', 'Madrid', 18000, 120, 60, 10, 5),
+(19, '2018-02-10 07:15:00', '2018-02-10 09:25:00', 'Melbourne', 'Lisboa', 10000, 20, 10, 5, 2),
+(20, '2018-02-10 10:20:00', '2018-02-10 11:40:00', 'Lisboa', 'Madrid', 7500, 80, 40, 20, 2);
 
 -- --------------------------------------------------------
 
@@ -616,19 +633,20 @@ INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ci
 CREATE TABLE `vuelo_compra` (
   `id` int(11) NOT NULL,
   `vuelo` varchar(64) NOT NULL,
-  `compra_id` int(11) NOT NULL
+  `pasajeros` int(11) NOT NULL,
+  `clase_vuelo` varchar(64) NOT NULL,
+  `precio_vuelo` varchar(255) NOT NULL,
+  `compra_id` int(11) NOT NULL,
+  `cancelado` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `vuelo_compra`
 --
 
-INSERT INTO `vuelo_compra` (`id`, `vuelo`, `compra_id`) VALUES
-(8, '1', 35),
-(9, '1', 36),
-(10, '1', 37),
-(11, '1', 40),
-(23, '16v17', 47);
+INSERT INTO `vuelo_compra` (`id`, `vuelo`, `pasajeros`, `clase_vuelo`, `precio_vuelo`, `compra_id`, `cancelado`) VALUES
+(1, '6', 1, 'economica', '30000', 4, NULL),
+(2, '13v14', 4, 'economica', '26900', 6, '1');
 
 --
 -- Índices para tablas volcadas
@@ -752,8 +770,8 @@ ALTER TABLE `vuelo`
 --
 ALTER TABLE `vuelo_compra`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `vuelo` (`vuelo`),
-  ADD KEY `compra` (`compra_id`);
+  ADD KEY `compra` (`compra_id`),
+  ADD KEY `vuelo` (`vuelo`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -775,13 +793,13 @@ ALTER TABLE `aeropuerto`
 -- AUTO_INCREMENT de la tabla `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `auto_alquiler`
 --
 ALTER TABLE `auto_alquiler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ciudad`
@@ -793,7 +811,7 @@ ALTER TABLE `ciudad`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `concesionaria`
@@ -805,13 +823,13 @@ ALTER TABLE `concesionaria`
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
 --
 ALTER TABLE `habitacion_alquiler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `hotel`
@@ -859,13 +877,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
 --
 ALTER TABLE `vuelo_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
