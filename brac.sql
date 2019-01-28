@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-01-2019 a las 07:19:03
--- Versión del servidor: 10.1.32-MariaDB
--- Versión de PHP: 7.2.5
+-- Tiempo de generación: 28-01-2019 a las 18:11:19
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +43,8 @@ INSERT INTO `aerolinea` (`id`, `nombre`, `reputacion_id`) VALUES
 (2, 'Transavia Airlines ', 0),
 (3, 'Denim Air ', 0),
 (4, 'Qatar Airways', 0),
-(5, 'Singapore Airlines', 0);
+(5, 'Singapore Airlines', 0),
+(6, 'airline Chile', 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,7 @@ CREATE TABLE `auto_alquiler` (
 --
 
 INSERT INTO `auto_alquiler` (`id`, `desde`, `hasta`, `id_auto`, `precio_alquiler`, `compra_id`, `cancelado`) VALUES
-(1, '2019-02-10', '2019-02-20', 1, 0, 4, NULL);
+(1, '2019-02-10', '2019-02-20', 1, 0, 4, '1');
 
 -- --------------------------------------------------------
 
@@ -132,23 +133,23 @@ CREATE TABLE `ciudad` (
 
 INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 (1, 'Buenos Aires', 2),
-(2, 'Córdoba', 2),
+(2, 'Cordoba', 2),
 (3, 'Mendoza', 2),
 (4, 'Rio Negro', 2),
 (5, 'Santa Fe', 2),
 (7, 'La Paz', 3),
 (8, 'Cochabamba', 3),
 (11, 'Oruro', 3),
-(12, 'Potosí', 3),
+(12, 'Potosi', 3),
 (17, 'Rio de Jainero', 4),
 (18, 'Bahia', 4),
-(19, 'São Paulo', 4),
+(19, 'Sao Paulo', 4),
 (20, 'Goias', 4),
 (21, 'Santiago', 5),
 (22, 'Iquique', 5),
 (23, 'Tacna', 5),
 (24, 'Valparaiso', 5),
-(25, 'Medellín', 6),
+(25, 'Medellin', 6),
 (26, 'Barranquilla', 6),
 (27, 'Cartagena', 6),
 (28, 'Bogota', 6),
@@ -156,8 +157,8 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 (30, 'Guayaquil', 7),
 (31, 'Zamora', 7),
 (32, 'Itapua', 8),
-(33, 'Asunción', 8),
-(34, 'Concepción', 8),
+(33, 'Asuncion', 8),
+(34, 'Concepcion', 8),
 (35, 'San Pedro', 8),
 (36, 'Lima', 9),
 (37, 'Cuzco', 9),
@@ -165,20 +166,20 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 (39, 'Cajamarca', 9),
 (40, 'Montevideo', 10),
 (41, 'Paysandu', 10),
-(42, 'Tacuarembó', 10),
+(42, 'Tacuarembo', 10),
 (43, 'Colonia', 10),
-(44, 'san José', 11),
+(44, 'san Jose', 11),
 (45, 'Cartago', 11),
 (46, 'Guanascate', 11),
 (47, 'Puntarenas', 11),
 (48, 'Veraguas', 12),
 (49, 'Los Santos', 12),
-(50, 'Panamá Oeste', 12),
-(51, 'Colón', 12),
+(50, 'Panama Oeste', 12),
+(51, 'Colon', 12),
 (52, 'San Juan', 13),
 (53, 'Ponce', 13),
 (54, 'Cabo Rojo', 13),
-(55, 'Mayagüez', 13),
+(55, 'Mayaguez', 13),
 (56, 'La Habana', 14),
 (57, 'Varadero', 14),
 (58, 'Santiago de Cuba', 14),
@@ -195,8 +196,8 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 (79, 'Florida', 17),
 (80, 'Colorado', 17),
 (81, 'Mississippi', 17),
-(82, 'Berlín', 18),
-(83, 'Múnich', 18),
+(82, 'Berlin', 18),
+(83, 'Munich', 18),
 (84, 'Hamburgo', 18),
 (85, 'Bruselas', 19),
 (86, 'Gante', 19),
@@ -208,24 +209,24 @@ INSERT INTO `ciudad` (`id`, `nombre`, `pais_id`) VALUES
 (92, 'Barcelona', 21),
 (93, 'Valencia', 21),
 (94, 'Sevilla', 21),
-(95, 'Málaga', 21),
-(96, 'París', 22),
-(97, 'Mónaco', 22),
+(95, 'Malaga', 21),
+(96, 'Paris', 22),
+(97, 'Monaco', 22),
 (98, 'Atenas', 23),
 (99, 'Roma', 24),
-(100, 'Milán', 24),
+(100, 'Milan', 24),
 (101, 'Venecia', 24),
 (102, 'Toscana', 24),
-(103, 'Ámsterdam', 25),
+(103, 'Amsterdam', 25),
 (104, 'La Haya', 25),
 (105, 'Lisboa', 26),
 (106, 'Oporto', 26),
 (107, 'Braga', 26),
-(108, 'Moscú', 27),
+(108, 'Moscu', 27),
 (109, 'Tokio', 28),
 (110, 'Yokohama', 28),
 (111, 'Osaka', 28),
-(112, 'Pekín', 29),
+(112, 'Pekin', 29),
 (113, 'Shanghaí', 29),
 (114, 'Sydney', 30),
 (115, 'Melbourne', 30),
@@ -253,7 +254,8 @@ CREATE TABLE `compra` (
 INSERT INTO `compra` (`id`, `fecha`, `total`, `usuario_id`) VALUES
 (4, '2019-01-27 12:12:08', 29900, 13),
 (5, '2019-01-25 18:35:05', 180, 13),
-(6, '2019-01-28 02:13:48', 159500, 13);
+(6, '2019-01-28 02:13:48', 159500, 13),
+(7, '2019-01-28 09:27:38', 195961, 13);
 
 -- --------------------------------------------------------
 
@@ -281,7 +283,11 @@ INSERT INTO `concesionaria` (`id`, `nombre`, `ciudad_id`, `reputacion`) VALUES
 (6, 'AUTOCENTER SCHMOLKE GMBH & CO. KG', 84, 0),
 (7, ' Autostar', 17, 0),
 (8, 'Audi Lounge', 17, 0),
-(9, 'Paris Car', 96, 0);
+(9, 'Paris Car', 96, 0),
+(10, 'alex adasd', 3, 0),
+(11, 'alex adasd', 3, 0),
+(12, 'sdfsdf', 82, 0),
+(13, 'dasdasd', 114, 0);
 
 -- --------------------------------------------------------
 
@@ -306,7 +312,7 @@ CREATE TABLE `configuracion` (
 --
 
 INSERT INTO `configuracion` (`id`, `gap_max`, `descuento_escala`, `precio_puntos`, `precio_peso`, `porcentaje_devolucion`, `intentos_sesion`, `precio_ejecutiva`, `precio_primera`) VALUES
-(1, 5, 20, 150, 200, 15, 6, 850, 1700);
+(1, 5, 20, 150, 200, 25, 6, 850, 1700);
 
 -- --------------------------------------------------------
 
@@ -343,7 +349,8 @@ INSERT INTO `habitacion` (`id`, `capacidad`, `precio`, `hotel_id`) VALUES
 (15, 3, 1299, 7),
 (16, 2, 12331, 4),
 (17, 2, 1244, 8),
-(18, 4, 1500, 7);
+(18, 4, 1500, 7),
+(19, 2, 1233, 11);
 
 -- --------------------------------------------------------
 
@@ -397,7 +404,11 @@ INSERT INTO `hotel` (`id`, `nombre`, `ciudad_id`, `estrellas`, `reputacion`) VAL
 (8, ' Holiday Inn Munich - Westpark', 83, 5, '4.02'),
 (9, 'Centro Hotel City Gate', 84, 2, '4.53'),
 (10, 'iQ Hotel Roma', 99, 3, '4.66'),
-(11, 'Hotel Paris', 96, 3, '3.22');
+(11, 'Hotel Paris', 96, 3, '3.22'),
+(12, 'hotel chile', 21, 4, ''),
+(13, 'Hotel Maderopo', 86, 4, ''),
+(14, 'alex hotel', 86, 3, ''),
+(15, 'Hotel Madero99', 114, 3, '');
 
 -- --------------------------------------------------------
 
@@ -582,7 +593,8 @@ INSERT INTO `usuario` (`id`, `usuario`, `clave`, `nombre`, `apellido`, `dni`, `e
 (4, 'juanperezzs', 'Clien852.', 'Lorenzo', 'Peraz', '89945213', 'juan.perez@gmail.com', 3, '5486-6233-4896-8966', 1, 'rojo', 0, 0),
 (6, 'josesito', 'Clien852.', 'JosÃ©', 'Lopez', '28901092', 'jose.lopez@gmail.com', 1, '1536-6233-4877-1592', 2, 'campo', 0, 0),
 (8, 'pedrito', 'Clien852.', 'Pedro ', 'Garcia', '28917299', 'pedro.garcia@gmail.com', 1, '1234-1234-1334-1343', 2, 'ciudad', 0, 0),
-(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 2, 0);
+(13, 'alex', 'negro', 'Alex', 'Velasquez', NULL, 'alex@gmail.com', 1, '5486-6233-4877-8966', 2, 'mar', 3, 0),
+(16, 'mariano', '1234', 'mariano', 'Martinez', '23812813', 'mariano@gmail.com', 3, NULL, 0, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -615,14 +627,22 @@ INSERT INTO `vuelo` (`id`, `fecha_salida`, `fecha_llegada`, `ciudad_origen`, `ci
 (10, '2018-01-10 19:00:00', '2018-01-11 07:00:00', 'montevideo', 'lisboa', 2800, 90, 10, 10, 5),
 (11, '2018-01-11 04:00:00', '2018-01-11 07:00:00', 'lisboa', 'madrid', 5800, 50, 10, 20, 1),
 (12, '2018-01-11 08:00:00', '2018-01-11 11:00:00', 'lisboa', 'madrid', 6500, 50, 10, 20, 3),
-(13, '2018-01-10 09:00:00', '2018-01-10 16:00:00', 'buenos aires', 'madrid', 25000, -3, -8, 0, 1),
-(14, '2018-01-10 17:00:00', '2018-01-10 20:00:00', 'madrid', 'lisboa', 1900, 11, 12, 22, 1),
+(13, '2018-01-10 09:00:00', '2018-01-10 16:00:00', 'buenos aires', 'madrid', 25000, -5, -8, 0, 1),
+(14, '2018-01-10 17:00:00', '2018-01-10 20:00:00', 'madrid', 'lisboa', 1900, 9, 12, 22, 1),
 (15, '2018-04-15 12:00:00', '2018-04-16 06:00:00', 'buenos aires', 'madrid', 22000, 15, 18, 13, 1),
-(16, '2018-01-10 17:45:00', '2018-01-10 20:00:00', 'buenos aires', 'Roma', 19890, 287, 97, 80, 4),
-(17, '2018-01-10 21:00:00', '2018-01-11 04:15:00', 'Roma', 'lisboa', 3567, 1231, 108, 23, 4),
+(16, '2018-01-10 17:45:00', '2018-01-10 20:00:00', 'buenos aires', 'Roma', 19890, 285, 97, 80, 4),
+(17, '2018-01-10 21:00:00', '2018-01-11 04:15:00', 'Roma', 'lisboa', 3567, 1229, 108, 23, 4),
 (18, '2018-02-10 22:10:00', '2018-02-11 03:40:00', 'Melbourne', 'Madrid', 18000, 120, 60, 10, 5),
 (19, '2018-02-10 07:15:00', '2018-02-10 09:25:00', 'Melbourne', 'Lisboa', 10000, 20, 10, 5, 2),
-(20, '2018-02-10 10:20:00', '2018-02-10 11:40:00', 'Lisboa', 'Madrid', 7500, 80, 40, 20, 2);
+(20, '2018-02-10 10:20:00', '2018-02-10 11:40:00', 'Lisboa', 'Madrid', 7500, 80, 40, 20, 2),
+(21, '2018-01-15 17:50:00', '2018-01-15 23:05:00', 'Bruselas', 'Santiago', 23000, 200, 100, 10, 2),
+(22, '2018-01-15 17:50:00', '2018-01-15 23:05:00', 'Bruselas', 'Santiago', 23000, 200, 100, 10, 2),
+(23, '2018-10-10 13:50:00', '2018-10-11 05:10:00', 'Berlin', 'Melbourne', 1500, 100, 50, 10, 2),
+(24, '2018-10-10 13:50:00', '2018-10-11 05:10:00', 'Berlin', 'Melbourne', 1500, 100, 50, 10, 2),
+(25, '2018-10-10 17:50:00', '2018-10-10 23:05:00', 'Hamburgo', 'California', 23000, 60, 20, 10, 1),
+(26, '2018-10-10 17:50:00', '2018-10-10 23:05:00', 'Hamburgo', 'California', 23000, 60, 20, 10, 1),
+(27, '2018-05-15 05:45:00', '2018-05-15 09:00:00', 'Paris', 'Liverpool', 25000, 50, 100, 50, 4),
+(29, '2019-01-24 15:10:00', '2019-01-24 17:25:00', 'Goias', 'Zamora', 15000, 100, 50, 20, 4);
 
 -- --------------------------------------------------------
 
@@ -645,8 +665,10 @@ CREATE TABLE `vuelo_compra` (
 --
 
 INSERT INTO `vuelo_compra` (`id`, `vuelo`, `pasajeros`, `clase_vuelo`, `precio_vuelo`, `compra_id`, `cancelado`) VALUES
-(1, '6', 1, 'economica', '30000', 4, NULL),
-(2, '13v14', 4, 'economica', '26900', 6, '1');
+(1, '6', 1, 'economica', '30000', 4, '1'),
+(2, '13v14', 4, 'economica', '26900', 6, '1'),
+(3, '16v17', 2, 'economica', '23457', 7, '1'),
+(4, '13v14', 2, 'economica', '26900', 7, '1');
 
 --
 -- Índices para tablas volcadas
@@ -781,7 +803,7 @@ ALTER TABLE `vuelo_compra`
 -- AUTO_INCREMENT de la tabla `aerolinea`
 --
 ALTER TABLE `aerolinea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `aeropuerto`
@@ -811,19 +833,19 @@ ALTER TABLE `ciudad`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `concesionaria`
 --
 ALTER TABLE `concesionaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion_alquiler`
@@ -835,7 +857,7 @@ ALTER TABLE `habitacion_alquiler`
 -- AUTO_INCREMENT de la tabla `hotel`
 --
 ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -871,19 +893,19 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo`
 --
 ALTER TABLE `vuelo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `vuelo_compra`
 --
 ALTER TABLE `vuelo_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
